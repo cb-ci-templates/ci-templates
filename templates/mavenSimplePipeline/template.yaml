@@ -1,7 +1,7 @@
 type: pipeline-template
 version: 1
-name: Multibranch Pipeline Template
-description: Multibranch Pipeline Template
+name: Maven Pipeline Template
+description: Maven Pipeline Template
 templateType: MULTIBRANCH
 parameters:
   - name: repoName
