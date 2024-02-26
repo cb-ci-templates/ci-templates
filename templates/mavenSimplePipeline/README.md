@@ -5,9 +5,8 @@
   * https://docs.cloudbees.com/docs/release-notes/latest/plugins/cloudbees-s3-cache-plugin
   * https://docs.cloudbees.com/docs/release-notes/latest/plugins/cloudbees-cache-step-plugin
 * WarningsNextNG
-* Asci-code
-* Timestamper
 * Pipeline Maven 
+  * https://plugins.jenkins.io/pipeline-maven/
 * TODO add other that are required for this Pipeline 
 
 
