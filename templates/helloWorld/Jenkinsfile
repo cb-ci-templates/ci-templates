@@ -1,14 +1,14 @@
 library identifier: 'custom-lib@master', retriever: modernSCM(
   [$class: 'GitSCMSource',
-   remote: 'git@git.mycorp.com:my-jenkins-utils.git',
+   remote: 'git@github.com:cb-ci-templates/ci-shared-library.git',
    credentialsId: 'github-user-ssh'])
+
 def agentPod = libraryResource 'podtemplates/podTemplate-curl.yaml'
 def testName="TESTNAME"
 // Uses Declarative syntax to run commands inside a container.
 pipeline {
     agent {
         kubernetes {
-            //#deprectatedlabel 'mavenPod'
             defaultContainer "custom-agent"
             yaml agentPod
         }
@@ -19,12 +19,6 @@ pipeline {
                 sh 'hostname'
                 helloWorld "${firstname}"
                 helloWorld "${testName}"
-            }
-        }
-        stage('Hello 2') {
-            steps {
-                sh 'hostname'
-                helloWorld "${firstname}"
             }
         }
     }
