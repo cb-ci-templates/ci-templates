@@ -55,7 +55,7 @@ pipeline {
 
         stage("Docker") {
             when {
-                branch 'master'
+                branch 'main'
             }
             options {
                 skipDefaultCheckout(true)
