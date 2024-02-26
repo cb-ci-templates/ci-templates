@@ -4,8 +4,6 @@ library identifier: 'custom-lib@master', retriever: modernSCM(
    credentialsId: 'github-user-ssh'])
 
 def agentPod = libraryResource 'podtemplates/podTemplate-curl.yaml'
-def testName="TESTNAME"
-// Uses Declarative syntax to run commands inside a container.
 pipeline {
     agent {
         kubernetes {
