@@ -1,4 +1,7 @@
-library 'cb-ci-shared-library' _
+library identifier: 'ci-shared-library@main', retriever: modernSCM(
+        [$class: 'GitSCMSource',
+         remote: 'git@github.com:cb-ci-templates/ci-shared-library.git',
+         credentialsId: 'github-user-ssh'])
 def mavenPod = libraryResource 'podtemplates/podTemplate-maven.yaml'
 def testScript = libraryResource 'scripts/script.sh'
 
