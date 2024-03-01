@@ -1,6 +1,6 @@
 # About 
-This repo contains CloudBees CI Pipeline Templates.
-This repository can be referenced from  
+This repository contains CloudBees CI Pipeline Templates.
+It can be referenced from:
 
 * [Marker files](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#custom-pac-scripts) in 
   * [MultiBranchSource Pipelines](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#_multibranch_pipeline_projects)
