@@ -9,7 +9,7 @@ It can be referenced from:
 
 # Structure 
 The repository structure follows the recommended repository design for Pipeline Template catalogs, however, the Jenkinsfiles can be referenced as well from MultiBranch and Organisation Folder Pipelines (Custom Marker).
-Pipeline Templates are stored under a `/templates` folder in your source code repository, and each Pipeline Template is defined as a `subfolder` containing two files:
+Pipeline Templates are stored under the `/templates` folder, and each Pipeline Template is defined as a `subfolder` containing two files:
 
 * Jenkinsfile: A standard Pipeline `Jenkinsfile`, which supports either Declarative Pipeline syntax or Groovy scripting.
 
