@@ -35,16 +35,30 @@ The structure follows the recomened repository design for Pipeline Template cata
 
 # Docs & Videos
 
-* YouTube: [How to Create a GitHub Branch Source Multibranch Pipeline](https://www.youtube.com/watch?v=ZWwmh4gqia4)
+MultiBranchSource Pipelines
+* YouTube: [How to Create a GitHub Branch Source Multibranch Pipeline in CloudBees CI](https://www.youtube.com/watch?v=ZWwmh4gqia4)
+* [MultiBranchSource Pipelines](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#_multibranch_pipeline_projects)
+
+Pipeline Template Catalogs
+* YouTube: [Introduction to Pipeline Template Catalogs with CloudBees CI](https://www.youtube.com/watch?v=pPwI_kTSCmA)
+* [Pipeline Template catalogs](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipeline-templates-user-guide/)
+
+Pipeline Organisation Folders
+* YouTube: [How to Create a GitHub Organization in CloudBees CI](https://www.youtube.com/watch?v=w5YupbQ1vHI)
+* [Pipeline Organisation Folders](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#_organization_folders)
+
+MarkerFiles
+* [Marker files](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#custom-pac-scripts)
+
+GitHub App Authentication
+* [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
 
 
+## Pre-requirements: 
 
-## Pre-requirerments: Set up credentials for GitHub
-
-Setup the following credentials:  (used by some pipelines)
-
-* githubuserssh= GH User and SSH key (Type SSH user and private key)
-* githubaccesstoken= GH Access token (Type secret text)
+* Set up credentials for GitHub
+  * GH User and SSH key (Type SSH user and private key)
+  * GH Access token (Type secret text)
 
 ## A simple-docker-kaniko-pipeline-example
 A simple Dockerfile to build with kaniko
