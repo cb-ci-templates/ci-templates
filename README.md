@@ -28,6 +28,8 @@ Pipeline Templates are stored under a `/templates` folder in your source code re
     ├── ....  # more template folders 
 ```
 
+![Diagram](images/CI Diagramms-CustomMarkerFiles.drawio.svg)
+
 # How to use
 
 ## Pre-requirements:
