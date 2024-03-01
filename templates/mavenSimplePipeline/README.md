@@ -17,8 +17,10 @@ Create dockersecrets
 ```
 kubectl delete secret docker-credentials
 kubectl create secret docker-registry docker-credentials   --docker-username=$DOCKER_REGISTRY_USER --docker-password=$DOCKER_REGISTRY_PASSWORD --docker-email=$DOCKER_EMAIL
-
 ```
+
+A simple Dockerfile to build with kaniko, see https://docs.cloudbees.com/docs/cloudbees-core/latest/cloud-admin-guide/using-kaniko#_create_a_new_kubernetes_secret   for further details
+
 
 # Maven workspace caching 
 

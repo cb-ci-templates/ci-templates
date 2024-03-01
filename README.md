@@ -31,6 +31,14 @@ The structure follows the recomened repository design for Pipeline Template cata
         └── template.yaml
 ```
 
+# How to use
+
+## Pre-requirements:
+
+* Set up credentials for GitHub
+    * GH User and SSH key (Type SSH user and private key)
+    * GH Access token (Type secret text)
+
 
 
 # Docs & Videos
@@ -52,18 +60,6 @@ MarkerFiles
 
 GitHub App Authentication
 * [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
-
-
-## Pre-requirements: 
-
-* Set up credentials for GitHub
-  * GH User and SSH key (Type SSH user and private key)
-  * GH Access token (Type secret text)
-
-## A simple-docker-kaniko-pipeline-example
-A simple Dockerfile to build with kaniko
-see https://docs.cloudbees.com/docs/cloudbees-core/latest/cloud-admin-guide/using-kaniko#_create_a_new_kubernetes_secret   for further details
-
 
 # MultiBranch Pipeline Branch Protection
 
