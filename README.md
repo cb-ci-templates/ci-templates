@@ -33,7 +33,7 @@ The structure follows the recomened repository design for Pipeline Template cata
 
 
 
-# Docs 
+# Docs & Videos
 
 * YouTube: [How to Create a GitHub Branch Source Multibranch Pipeline](https://www.youtube.com/watch?v=ZWwmh4gqia4)
 
@@ -51,10 +51,15 @@ A simple Dockerfile to build with kaniko
 see https://docs.cloudbees.com/docs/cloudbees-core/latest/cloud-admin-guide/using-kaniko#_create_a_new_kubernetes_secret   for further details
 
 
-# Git Hub Branch Protection
+# MultiBranch Pipeline Branch Protection
 
-see: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/managing-a-branch-protection-rule
+Some teams might have the requirements in MultiBranch Pipelines that not all branches should be scanned.
 
+* use filter branches
+* setup branch protection in GitHub
+
+
+# Setup GitHub Branch Protection
 Certainly, for GitHub, you can follow these steps to give teams push/pull permissions for dedicated branches:
 
 ## Create a Team:
@@ -63,19 +68,19 @@ Certainly, for GitHub, you can follow these steps to give teams push/pull permis
 * Click on the "Settings" tab.
 * Select "Teams" from the left sidebar.
 * Create a team and add the relevant members to it.
-  * Protect Branches:
+  * [Protect Branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches):
     * Go back to the "Settings" tab of your repository.
     * Select "Branches" in the left sidebar.
     * Choose the branch you want to protect (e.g., main or master).
     * Enable "Require pull request reviews before merging" and other desired settings.
     * Click on "Save changes."
-  * Branch Protection Rules:
+  * [Branch Protection Rules](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/managing-a-branch-protection-rule):
     * Still in the "Branches" settings, click on "Add rule."
     * Define the rules for the branch protection, such as:
     * Require pull request reviews.
     * Disallow force pushes.
     * Restrict who can push to the branch.
-  * Team Permissions:
+  * [Team Permissions](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/managing-teams-and-people-with-access-to-your-repository):
     * Go back to the "Settings" tab.
     * Click on "Branches" in the left sidebar.
     * Scroll down to the "Protected branches" section and click on the branch you want to manage.
