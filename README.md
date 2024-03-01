@@ -8,7 +8,14 @@ This repository can be referenced from
 * [Pipeline Template catalogs](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipeline-templates-user-guide/)
 
 # Structure 
-The structure follows the recomened repository design for Pipeline Template catalogs
+The repository structure follows the recommended repository design for Pipeline Template catalogs, however, the Jenkinsfiles can be referenced as well from MultiBranch and organisation Folder pipelines
+Pipeline Templates are stored under a `/templates` folder in your source code repository, and each Pipeline Template is defined as a `subfolder` containing two files:
+
+* Jenkinsfile: A standard Pipeline Jenkinsfile, which supports either Declarative Pipeline syntax or Groovy scripting.
+
+* template.yaml: A YAML file containing the template’s parameters.
+
+
 ```
 ├── README.md
 ├── catalog.yaml
@@ -38,8 +45,6 @@ The structure follows the recomened repository design for Pipeline Template cata
 * Set up credentials for GitHub
     * GH User and SSH key (Type SSH user and private key)
     * GH Access token (Type secret text)
-
-
 
 # Docs & Videos
 
