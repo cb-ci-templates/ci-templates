@@ -8,34 +8,24 @@ This repository can be referenced from
 * [Pipeline Template catalogs](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipeline-templates-user-guide/)
 
 # Structure 
-The repository structure follows the recommended repository design for Pipeline Template catalogs, however, the Jenkinsfiles can be referenced as well from MultiBranch and organisation Folder pipelines
+The repository structure follows the recommended repository design for Pipeline Template catalogs, however, the Jenkinsfiles can be referenced as well from MultiBranch and Organisation Folder Pipelines (Custom Marker).
 Pipeline Templates are stored under a `/templates` folder in your source code repository, and each Pipeline Template is defined as a `subfolder` containing two files:
 
-* Jenkinsfile: A standard Pipeline Jenkinsfile, which supports either Declarative Pipeline syntax or Groovy scripting.
+* Jenkinsfile: A standard Pipeline `Jenkinsfile`, which supports either Declarative Pipeline syntax or Groovy scripting.
 
-* template.yaml: A YAML file containing the template’s parameters.
+* template.yaml: A YAML file containing the template’s parameters. This file is just required when using Pipeline Template Catalogs, not required when referencing from Custom Marker files
+  
 
 
 ```
 ├── README.md
-├── catalog.yaml
+├── catalog.yaml #Pipeline Template Catalog descriptor
 └── templates
-    ├── helloWorld
-    │   ├── Jenkinsfile
+    ├── helloWorld  #tenplate folder
+    │   ├── Jenkinsfile # Jenkins file used as temlate
     │   │── README.md    
-    │   └── template.yaml
-    ├── helloWorldGolang
-    │   ├── Jenkinsfile
-    │   │── README.md
-    │   └── template.yaml
-    ├── mavenSimplePipeline
-    │   ├── Jenkinsfile
-    │   ├── README.md
-    │   └── template.yaml
-    └── parametrizedPipeline
-        ├── Jenkinsfile
-        │── README.md
-        └── template.yaml
+    │   └── template.yaml #Pipeline Template Catalog descriptor
+    ├── ....  # more template folders 
 ```
 
 # How to use
