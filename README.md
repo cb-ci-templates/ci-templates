@@ -40,12 +40,12 @@ Certainly, for GitHub, you can follow these steps to give teams push/pull permis
 * Click on the "Settings" tab.
 * Select "Teams" from the left sidebar.
 * Create a team and add the relevant members to it.
- * Protect Branches:
-  * Go back to the "Settings" tab of your repository.
-  * Select "Branches" in the left sidebar.
-  * Choose the branch you want to protect (e.g., main or master).
-  * Enable "Require pull request reviews before merging" and other desired settings.
-  * Click on "Save changes."
+  * Protect Branches:
+   * Go back to the "Settings" tab of your repository.
+   * Select "Branches" in the left sidebar.
+   * Choose the branch you want to protect (e.g., main or master).
+   * Enable "Require pull request reviews before merging" and other desired settings.
+   * Click on "Save changes."
  * Branch Protection Rules:
   * Still in the "Branches" settings, click on "Add rule."
   * Define the rules for the branch protection, such as:
