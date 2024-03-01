@@ -67,9 +67,9 @@ Some teams might have the requirements in MultiBranch Pipelines that not all bra
 # Setup GitHub Branch Protection
 Certainly, for GitHub, you can follow these steps to give teams push/pull permissions for dedicated branches:
 
-## Create a Team:
+## Create a Team: 
 
-* Navigate to your GitHub repository.
+* Navigate to your GitHub Organisation.
 * Click on the "Settings" tab.
 * Select "Teams" from the left sidebar.
 * Create a team and add the relevant members to it.
