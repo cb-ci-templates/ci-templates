@@ -1,25 +1,8 @@
-This repo contains sample Jenkins Pipelines, Shared Libraries and Pipeline Template catalogs.
+This repo contains CloudBees CI Pipeline Templates.
+
 
 Directories
-* jobs: contains sample Pipelines
 * templates: contains sample [Pipeline Template catalogs](https://docs.cloudbees.com/docs/admin-resources/latest/pipeline-templates-user-guide/)
-* resources: contains sample Shared Library resources
-* vars: contains sample Shared Library custom steps
-* src: contains a sample Shared Library Helper class
-
-Files:
-* catalog.yaml: Pipeline Template catalog descriptor
-* Jenkinsfile: generate all jobs from jobs dir by Jobs DSL (optional)
-
-# Optional steps for generating the sample jobs (inside jobs dir) by JOB-DSL 
-For CloudBees, Job DSL is not recommended because we are using [Configuration as Code/CasC](https://docs.cloudbees.com/docs/cloudbees-ci/latest/casc-controller/items)
-
-1. Install the  [JobDSL](https://wiki.jenkins.io/display/JENKINS/Job+DSL+Plugin) Plugin
-
-2. Create and run a new Pipeline job that points to `Jenkinsfile`  
-   (http://github-api.kohsuke.org/ is used to scan the GH organization, see `resources/groovy/Seed.groovy` to adjust the values if required)
-
-3. Jobs are generated in the pipeline-example folder
 
 
 if you try to run the Jenkinsfiles standalone, you have to fix the path to the yamlFile of some `jobs/Jenkinsfile-*` in this area to your belongings
@@ -33,40 +16,47 @@ agent {
 
 
 
-## Pre-requirerments: Set up credentials
+## Pre-requirerments: Set up credentials for GitHub
 
 Setup the following credentials:  (used by some pipelines)
 
-* githubuserssh =GH User and SSH key (Type SSH user and private key)
-* githubaccesstoken=GH Access token (Type secret text)
-* as well as the dockerhub  credentials for the kaniko  docker build/push job: (see  jobs/Jenkinsfile-docker-build-kaniko.groovy)
-for how to add the k8s secret for dockerhub. *Note#: GCR is not implemented yet, docker hub is used in the example pipeline  See instructions below to set up 
+* githubuserssh= GH User and SSH key (Type SSH user and private key)
+* githubaccesstoken= GH Access token (Type secret text)
 
 ## A simple-docker-kaniko-pipeline-example
 A simple Dockerfile to build with kaniko
 see https://docs.cloudbees.com/docs/cloudbees-core/latest/cloud-admin-guide/using-kaniko#_create_a_new_kubernetes_secret   for further details
-### Configure
 
-### rename kubctl-create-secret.sh.default
-```
-cp -f scripts/kubctl-create-secret.sh.default kubctl-create-secret.sh
-```
-#### adjust your docker registry values
-NORTE: Special characters in password must escape!
-```
-kubectl create secret docker-registry docker-credentials \
-    --docker-username=><USER>  \
-    --docker-password=<PASSWORD> \
-    --docker-email=<EMAIL>
-```
-#### create the scercet
-```
-./kubctl-create-secret.sh
-```
-#### docker push manually
-```
-docker login
-sudo docker build -t caternberg/hellonode:1.1 .
-docker push caternberg/hellonode:1.1
-```
 
+# Git Hub Branch Protection
+
+see: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/managing-a-branch-protection-rule
+
+Certainly, for GitHub, you can follow these steps to give teams push/pull permissions for dedicated branches:
+
+## Create a Team:
+
+* Navigate to your GitHub repository.
+* Click on the "Settings" tab.
+* Select "Teams" from the left sidebar.
+* Create a team and add the relevant members to it.
+ * Protect Branches:
+  * Go back to the "Settings" tab of your repository.
+  * Select "Branches" in the left sidebar.
+  * Choose the branch you want to protect (e.g., main or master).
+  * Enable "Require pull request reviews before merging" and other desired settings.
+  * Click on "Save changes."
+ * Branch Protection Rules:
+  * Still in the "Branches" settings, click on "Add rule."
+  * Define the rules for the branch protection, such as:
+  * Require pull request reviews.
+  * Disallow force pushes.
+* Restrict who can push to the branch.
+ * Team Permissions:
+  * Go back to the "Settings" tab.
+  * Click on "Branches" in the left sidebar.
+  * Scroll down to the "Protected branches" section and click on the branch you want to manage.
+  * Under "Who can push to this branch," add the team you created.
+* This setup ensures that only team members with the required permissions (as defined in the team settings and branch protection rules) can push directly to the protected branch. Others will need to fork the repository, create a feature branch, and open a pull request to propose changes.
+
+Always remember to adjust the settings based on your specific requirements, and the exact steps might change slightly if GitHub updates its interface or features in the future.
