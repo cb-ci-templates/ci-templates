@@ -1,18 +1,41 @@
+# About 
 This repo contains CloudBees CI Pipeline Templates.
+This repository can be referenced from  
 
+* [Marker files](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#custom-pac-scripts) in 
+  * [MultiBranchSource Pipelines](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#_multibranch_pipeline_projects)
+  * [Pipeline Organisation Folders](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#_organization_folders)
+* [Pipeline Template catalogs](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipeline-templates-user-guide/)
 
-Directories
-* templates: contains sample [Pipeline Template catalogs](https://docs.cloudbees.com/docs/admin-resources/latest/pipeline-templates-user-guide/)
-
-
-if you try to run the Jenkinsfiles standalone, you have to fix the path to the yamlFile of some `jobs/Jenkinsfile-*` in this area to your belongings
+# Structure 
+The structure follows the recomened repository design for Pipeline Template catalogs
 ```
-agent {
-    kubernetes {
-        yamlFile 'yaml/podTemplate.yml'
-    }
-}
+├── README.md
+├── catalog.yaml
+└── templates
+    ├── helloWorld
+    │   ├── Jenkinsfile
+    │   │── README.md    
+    │   └── template.yaml
+    ├── helloWorldGolang
+    │   ├── Jenkinsfile
+    │   │── README.md
+    │   └── template.yaml
+    ├── mavenSimplePipeline
+    │   ├── Jenkinsfile
+    │   ├── README.md
+    │   └── template.yaml
+    └── parametrizedPipeline
+        ├── Jenkinsfile
+        │── README.md
+        └── template.yaml
 ```
+
+
+
+# Docs 
+
+* YouTube: [How to Create a GitHub Branch Source Multibranch Pipeline](https://www.youtube.com/watch?v=ZWwmh4gqia4)
 
 
 
