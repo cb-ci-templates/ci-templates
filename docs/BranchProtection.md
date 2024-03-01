@@ -1,4 +1,3 @@
-
 # MultiBranch Pipeline Branch Protection
 
 Some teams might have the requirements in MultiBranch Pipelines that not all branches should be scanned.
