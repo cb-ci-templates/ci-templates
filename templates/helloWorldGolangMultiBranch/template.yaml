@@ -1,21 +1,21 @@
 type: pipeline-template
 version: 1
-name: Maven Pipeline Template
-description: Maven Pipeline Template
+name: Template MB Hello World Golang
+description: Template MB Hello World Golang
 templateType: MULTIBRANCH
 parameters:
   - name: repoName
     displayName: Git Repoistory
     type: string
-    defaultValue: spring-boot-demo
+    defaultValue: helloworld-golang
   - name: organsisation
     displayName: GH organsisation
     type: string
-    defaultValue: pipeline-demo-caternberg
+    defaultValue: cb-ci-templates
   - name: githubToken
     displayName: GitHubUserToken
     type: CREDENTIALS
-    defaultValue: githubuseraccesstoken
+    defaultValue: gh-token-new
 #see https://docs.cloudbees.com/docs/admin-resources/latest/pipeline-templates-user-guide/managing-multibranch-pipeline-options#_example
 multibranch:
   branchSource:
@@ -23,4 +23,13 @@ multibranch:
       repoOwner: ${organsisation}
       repository: ${repoName}
       credentialsId: ${githubToken}
-  markerFile: pom.xml
+      traits:
+        - gitHubPullRequestDiscovery:
+            strategyId: 1
+        - gitHubBranchDiscovery:
+            strategyId: 1
+        - gitHubForkDiscovery:
+            strategyId: 1
+            trust:
+              $class: TrustPermission
+  markerFile: main.go

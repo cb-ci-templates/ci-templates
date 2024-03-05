@@ -1,8 +1,7 @@
-library identifier: 'custom-lib@main', retriever: modernSCM(
-  [$class: 'GitSCMSource',
-   remote: 'git@github.com:cb-ci-templates/ci-shared-library.git',
-   credentialsId: 'github-user-ssh'])
-
+library identifier: 'ci-shared-library@main', retriever: modernSCM(
+        [$class: 'GitSCMSource',
+         remote: 'git@github.com:cb-ci-templates/ci-shared-library.git',
+         credentialsId: 'github-user-ssh'])
 def agentPod = libraryResource 'podtemplates/podTemplate-curl.yaml'
 pipeline {
     agent {

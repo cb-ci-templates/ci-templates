@@ -1,0 +1,9 @@
+type: pipeline-template
+version: 1
+name: Template Hello World Simple
+description: Template Hello World Simple
+parameters:
+  - name: firstName
+    displayName: your firstMame
+  - name: lastName
+    displayName: your lastName

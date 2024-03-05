@@ -1,0 +1,5 @@
+type: pipeline-template
+version: 1
+name: Template MB Parametrized Pipeline
+description: Template MB Parametrized Pipeline
+
