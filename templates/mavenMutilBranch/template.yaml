@@ -11,7 +11,7 @@ parameters:
   - name: organsisation
     displayName: GH organsisation
     type: string
-    defaultValue: pipeline-demo-caternberg
+    defaultValue: ci-templates
   - name: githubToken
     displayName: GitHubUserToken
     type: CREDENTIALS
