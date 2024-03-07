@@ -6,6 +6,11 @@
 * YouTube: [Scripted vs. declarative Pipelines:What is the difference?](https://www.youtube.com/watch?v=GJBlskiaRrI=)
 * [Scripted vs. declarative Pipelines](https://e.printstacktrace.blog/jenkins-scripted-pipeline-vs-declarative-pipeline-the-4-practical-differences/)
 
+# About sh steps and shell scripts/steps
+
+* When to use shell: https://google.github.io/styleguide/shellguide.html#s1.2-when-to-use-shell
+* Bash settings: http://redsymbol.net/articles/unofficial-bash-strict-mode/
+* Shell exit codes https://www.cyberciti.biz/faq/bash-get-exit-code-of-command/
 
 # Parametrized Pipelines
 
