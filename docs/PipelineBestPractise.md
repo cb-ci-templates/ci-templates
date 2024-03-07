@@ -9,5 +9,14 @@
 
 # Parametrized Pipelines
 
+# Parameters
+
+* https://www.baeldung.com/ops/jenkins-parameterized-builds
+
 ## Dynamic
+
 * https://stackoverflow.com/questions/44570163/jenkins-dynamic-declarative-pipeline-parameters
+
+## Active Choice 
+
+* https://www.infracloud.io/blogs/render-jenkins-build-parameters-dynamically/#:~:text=Go%20to%20Jenkins%20Home%2C%20select,Application%20Tiers%20as%20a%20Dropdown. 
