@@ -1,7 +1,7 @@
 type: pipeline-template
 version: 1
-name: Template MB Hello World Golang
-description: Template MB Hello World Golang
+name: Template MB Golang
+description: Template MB Golang
 templateType: MULTIBRANCH
 parameters:
   - name: repoName
