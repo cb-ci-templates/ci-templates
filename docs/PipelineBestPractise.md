@@ -6,6 +6,10 @@
 * YouTube: [Scripted vs. declarative Pipelines:What is the difference?](https://www.youtube.com/watch?v=GJBlskiaRrI=)
 * [Scripted vs. declarative Pipelines](https://e.printstacktrace.blog/jenkins-scripted-pipeline-vs-declarative-pipeline-the-4-practical-differences/)
 
+# GitHub Rate Limits
+
+* https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28#primary-rate-limit-for-unauthenticated-users
+
 # Use Templates from a shared Library 
 
 * https://github.com/cloudbees-oss/pipeline-home-demo/blob/master/templates/docker-java-maven-app-m-ghe/Jenkinsfile 
