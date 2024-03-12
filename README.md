@@ -62,7 +62,8 @@ Be sure to consult the official CloudBees documentation or a knowledgeable colle
 
 * Set up credentials for GitHub
     * GH User and SSH key (Type SSH user and private key)
-    * GH Access token (Type secret text)
+    * GH Access token (Type secret text). See  [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
+
 
 # Docs & Videos
 
