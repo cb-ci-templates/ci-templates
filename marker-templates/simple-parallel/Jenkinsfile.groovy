@@ -67,11 +67,11 @@ pipeline {
                 axes {
                     axis {
                         name 'PLATFORM'
-                        values testPlatform
+                        values "${testPlatform}"
                     }
                     axis {
                         name 'BROWSER'
-                        values testBrowser
+                        values "${testBrowser}"
                     }
                 }
                 stages {
