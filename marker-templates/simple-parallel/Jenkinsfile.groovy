@@ -13,10 +13,6 @@ param_greetings : 'Greetings to the rest of the World!'
 Map pipelineParams = readYaml text: "${configYaml}"
 println pipelineParams
 
-def testPlatform ="'linux', 'windows', 'mac'"
-def testBrowser ="'firefox', 'chrome', 'safari', 'edge'"
-
-
 //We could call the Pipeline template from a shared library method
 //However, the more templates we add to the library the bigger the size of the shared library
 //pipelineHelloWorld (pipelineParams)
@@ -57,6 +53,7 @@ pipeline {
             }
         }
         stage('Test') {
+
             matrix {
                 //Using one dedicated agent for all parallel stages below
                 agent {
@@ -64,14 +61,16 @@ pipeline {
                         yaml libraryResource("podtemplates/${pipelineParams.k8_agent_yaml}")
                     }
                 }
+                //If axis need to be dynamic we need to do it scripted in shared lib
+                //https://www.jenkins.io/blog/2019/12/02/matrix-building-with-scripted-pipeline/
                 axes {
                     axis {
                         name 'PLATFORM'
-                        values testPlatform
+                        values 'linux', 'windows', 'mac'
                     }
                     axis {
                         name 'BROWSER'
-                        values "${testBrowser}"
+                        values 'firefox', 'chrome', 'safari', 'edge'
                     }
                 }
                 stages {
