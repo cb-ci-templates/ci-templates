@@ -75,7 +75,7 @@ pipeline {
                 // Create a parallel block for dynamic stages
                 script{
                      //parallelStages dynamicStages
-                    parallelTestStages.groovy dynamicStages
+                    parallelTestStages dynamicStages
                 }
 
             }
