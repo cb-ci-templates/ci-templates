@@ -53,7 +53,6 @@ pipeline {
             }
         }
         stage('Test') {
-
             matrix {
                 //Using one dedicated agent for all parallel stages below
                 agent {
@@ -99,10 +98,35 @@ pipeline {
             when {
                 branch 'main'
             }
-            steps {
-                echo """Here scan the code (NexusIQ, Sonar etc
-                        Optional, Scans can be executed in parallel using parallel stages
-                """
+            parallel {
+                stage("NexusIQ") {
+                    stages {
+                        stage("scan") {
+                            steps {
+                                sh "echo scan NexusIQ"
+                            }
+                        }
+                        stage("results") {
+                            steps {
+                                sh "echo results NexusIQ"
+                            }
+                        }
+                    }
+                }
+                stage("Sonar") {
+                    stages {
+                        stage("scan") {
+                            steps {
+                                sh "echo scan Sonar"
+                            }
+                        }
+                        stage("results") {
+                            steps {
+                                sh "echo results Sonar"
+                            }
+                        }
+                    }
+                }
             }
         }
         stage('Deploy') {
