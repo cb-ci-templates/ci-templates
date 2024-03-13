@@ -32,22 +32,24 @@ pipeline {
     stages {
         stage("Init") {
             steps {
-              //Init from yaml. It uses the `readYaml` step which can not use defaults
-              //initFromYaml "./ci-config.yaml"
+                //Init from yaml. It uses the `readYaml` step which can not use defaults
+                //initFromYaml "./ci-config.yaml"
 
-              //So better init from properties with defaults   (here ansible tower f.e)
-              defineProps('ci-config.properties', [default_key1: 'default_value1'])
-              echo "Greetings: ${params.greeting}"
-              echo "${pipelineParams.app}"
-              sh "echo default_key1 ${env.default_key1}"
-              sh "echo key1 ${env.branch_key1}"
+                //So better init from properties with defaults  (here "default_key1" f.e)
+                defineProps('ci-config.properties', [default_key1: 'default_value1'])
+
+                echo "###### SAMPLE OUTPUT OF VARS#####"
+                echo "Greetings: ${params.greeting}"
+                echo "${pipelineParams.app}"
+                sh "echo default_key1 ${env.default_key1}"
+                sh "echo key1 ${env.branch_key1}"
+                echo "###### END SAMPLE OUTPUT OF VARS#####"
 
             }
         }
         stage('Build') {
             steps {
                 echo "here we execute the build"
-
             }
         }
         stage('Test') {
