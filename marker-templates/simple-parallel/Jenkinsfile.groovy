@@ -13,6 +13,8 @@ param_greetings : 'Greetings to the rest of the World!'
 Map pipelineParams = readYaml text: "${configYaml}"
 println pipelineParams
 
+def dynamicStages = ['Stage1', 'Stage2', 'Stage3']
+
 //We could call the Pipeline template from a shared library method
 //However, the more templates we add to the library the bigger the size of the shared library
 //pipelineHelloWorld (pipelineParams)
@@ -53,44 +55,9 @@ pipeline {
             }
         }
         stage('Test') {
-            matrix {
-                //Using one dedicated agent for all parallel stages below
-                agent {
-                    kubernetes {
-                        yaml libraryResource("podtemplates/${pipelineParams.k8_agent_yaml}")
-                    }
-                }
-                //If axis need to be dynamic we need to do it scripted in shared lib
-                //https://www.jenkins.io/blog/2019/12/02/matrix-building-with-scripted-pipeline/
-                axes {
-                    axis {
-                        name 'PLATFORM'
-                        values 'linux', 'windows', 'mac'
-                    }
-                    axis {
-                        name 'BROWSER'
-                        values 'firefox', 'chrome', 'safari', 'edge'
-                    }
-                }
-                stages {
-                    stage('Build') {
-                         /** Using one dedicated agent for just the one stage below
-                         agent {
-                            kubernetes {
-                                yaml libraryResource("podtemplates/${pipelineParams.k8_agent_yaml}")
-                            }
-                        }
-                        */
-                        steps {
-                            echo "Do Build for ${PLATFORM} - ${BROWSER}"
-                        }
-                    }
-                    stage('Test') {
-                        steps {
-                            echo "Do Test for ${PLATFORM} - ${BROWSER}"
-                        }
-                    }
-                }
+            steps {
+                // Create a parallel block for dynamic stages
+                parallelStages(dynamicStages)
             }
         }
         stage('Quality Gate') {
