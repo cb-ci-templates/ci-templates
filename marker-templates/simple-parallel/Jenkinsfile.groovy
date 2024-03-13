@@ -15,6 +15,21 @@ println pipelineParams
 
 def dynamicStages = ["Test1", "Test2", "Test3"]
 
+
+// Convert array of regions to map of stages
+def getParallelTestStages() {
+    return dynamicStages.collectEntries { mystage ->
+        [
+                (mystage): {
+                    stage("Deploy region ${mystage}") {
+                        echo  "sample test command ${mystage}"
+                    }
+                }
+        ]
+    }
+}
+
+
 //We could call the Pipeline template from a shared library method
 //However, the more templates we add to the library the bigger the size of the shared library
 //pipelineHelloWorld (pipelineParams)
@@ -58,7 +73,7 @@ pipeline {
             steps {
                 // Create a parallel block for dynamic stages
                 script{
-                    parallel parallelTestStages dynamicStages
+                    parallel getParallelTestStages
                 }
 
             }
