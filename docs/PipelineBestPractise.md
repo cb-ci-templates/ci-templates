@@ -20,6 +20,19 @@
 * Bash settings: http://redsymbol.net/articles/unofficial-bash-strict-mode/
 * Shell exit codes https://www.cyberciti.biz/faq/bash-get-exit-code-of-command/
 
+# ParallelSteps/Stages
+
+* https://www.jenkins.io/blog/2017/09/25/declarative-1/
+* https://www.cloudbees.com/blog/parallelism-and-distributed-builds-jenkins
+* https://docs.cloudbees.com/docs/cloudbees-ci-kb/latest/client-and-managed-controllers/pipeline-parallel-execution-of-tasks
+* https://www.jenkins.io/blog/2019/11/22/welcome-to-the-matrix/ 
+* https://www.jenkins.io/blog/2019/12/02/matrix-building-with-scripted-pipeline/
+* https://medium.com/@atamarzban/dynamic-parallel-stages-in-jenkins-declarative-pipelines-ce2ee8536d63
+* https://github.com/pipeline-demo-caternberg/pipeline-examples/blob/master/jobs/Jenkins-parallel-dynamic-declaractive.groovy
+* https://github.com/pipeline-demo-caternberg/pipeline-examples/blob/master/jobs/Jenkinsfile-parrallel-sequential-stages.groovy
+
+
+
 # Parametrized Pipelines
 
 # Parameters
