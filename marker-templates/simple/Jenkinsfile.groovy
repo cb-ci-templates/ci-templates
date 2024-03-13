@@ -39,8 +39,8 @@ pipeline {
                 defineProps('ci-config.properties', [default_key1: 'default_value1'])
 
                 echo "###### SAMPLE OUTPUT OF VARS#####"
-                echo "Greetings: ${params.greeting}"
-                echo "${pipelineParams.app}"
+                echo "Pipeline parameter: ${params.greeting}"
+                echo "Pipeline Template parameter: ${pipelineParams.app}"
                 sh "echo default_key1 ${env.default_key1}"
                 sh "echo branch_key1 ${env.key1}"
                 echo "###### END SAMPLE OUTPUT OF VARS#####"
