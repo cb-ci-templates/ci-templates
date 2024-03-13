@@ -30,7 +30,7 @@ Pipeline Templates are stored under the `/templates` folder, and each Pipeline T
 │   ├── ....  # more template folders 
 └── marker-templates  # Marker Templates
     ├── simple  #tenplate folder
-    │   ├── Jenkinsfile # Jenkins file used as temlate
+    │   ├── Jenkinsfile # Jenkins file used as template
     │   │── README.md    
     ├── ....  # more template folders 
 ```
@@ -83,7 +83,7 @@ Pipeline Best Practice
 * YouTube: [Scripted vs. declarative Pipelines:What is the difference?](https://www.youtube.com/watch?v=GJBlskiaRrI=)
 * [Scripted vs. declarative Pipelines](https://e.printstacktrace.blog/jenkins-scripted-pipeline-vs-declarative-pipeline-the-4-practical-differences/)
 
-* MultiBranchSource Pipelines
+MultiBranchSource Pipelines
 * YouTube: [How to Create a GitHub Branch Source Multibranch Pipeline in CloudBees CI](https://www.youtube.com/watch?v=ZWwmh4gqia4)
 * [MultiBranchSource Pipelines](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#_multibranch_pipeline_projects)
 
