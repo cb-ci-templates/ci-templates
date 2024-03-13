@@ -13,7 +13,7 @@ param_greetings : 'Greetings to the rest of the World!'
 Map pipelineParams = readYaml text: "${configYaml}"
 println pipelineParams
 
-def dynamicStages = ['Stage1', 'Stage2', 'Stage3']
+def dynamicStages = ["Test1", "Test2", "Test3"]
 
 //We could call the Pipeline template from a shared library method
 //However, the more templates we add to the library the bigger the size of the shared library
