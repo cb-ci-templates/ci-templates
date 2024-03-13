@@ -53,6 +53,12 @@ pipeline {
             }
         }
         stage('Test') {
+            //Using one dedicated agent for all parallel stages below
+            agent {
+                kubernetes {
+                    yaml libraryResource("podtemplates/${pipelineParams.k8_agent_yaml}")
+                }
+            }
             matrix {
                 axes {
                     axis {
@@ -65,12 +71,13 @@ pipeline {
                     }
                 }
                 stages {
-                    agent {
-                        kubernetes {
-                            yaml libraryResource("podtemplates/${pipelineParams.k8_agent_yaml}")
-                        }
-                    }
                     stage('Build') {
+                        //Using one dedicated agent for just the one stage below
+                         agent {
+                            kubernetes {
+                                yaml libraryResource("podtemplates/${pipelineParams.k8_agent_yaml}")
+                            }
+                        }
                         steps {
                             echo "Do Build for ${PLATFORM} - ${BROWSER}"
                         }
