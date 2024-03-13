@@ -1,1 +1,1 @@
-![Diagram](../images/CI-Pipeline-1.png)
+![Diagram](../../images/CI-Pipeline-1.png)
