@@ -42,7 +42,7 @@ pipeline {
                 echo "Greetings: ${params.greeting}"
                 echo "${pipelineParams.app}"
                 sh "echo default_key1 ${env.default_key1}"
-                sh "echo branch_key1 ${env.branch_key1}"
+                sh "echo branch_key1 ${env.key1}"
                 echo "###### END SAMPLE OUTPUT OF VARS#####"
 
             }
