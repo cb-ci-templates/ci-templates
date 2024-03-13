@@ -55,10 +55,9 @@ pipeline {
             }
         }
         stage('Test') {
-            steps {
-                // Create a parallel block for dynamic stages
+                 // Create a parallel block for dynamic stages
                 parallelStages(dynamicStages)
-            }
+
         }
         stage('Quality Gate') {
             //Skip the stage on other branches, execute just on "main"
