@@ -16,8 +16,8 @@ println pipelineParams
 def dynamicStages = ["Test1", "Test2", "Test3"]
 
 
-// Convert array of regions to map of stages
-def getParallelTestStages(stages) {
+// Convert array of stages to map of stages
+def parallelStages(stages) {
     stageList=stages.collectEntries { mystage ->
         [
                 (mystage): {
@@ -74,7 +74,8 @@ pipeline {
             steps {
                 // Create a parallel block for dynamic stages
                 script{
-                     getParallelTestStages dynamicStages
+                     //parallelStages dynamicStages
+                    parallelTestStages.groovy dynamicStages
                 }
 
             }
