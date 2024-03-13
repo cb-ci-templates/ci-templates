@@ -13,8 +13,8 @@ param_greetings : 'Greetings to the rest of the World!'
 Map pipelineParams = readYaml text: "${configYaml}"
 println pipelineParams
 
-def testPlatform =['linux', 'windows', 'mac']
-def testBrowser =['firefox', 'chrome', 'safari', 'edge']
+def testPlatform ="'linux', 'windows', 'mac'"
+def testBrowser ="'firefox', 'chrome', 'safari', 'edge'"
 
 
 //We could call the Pipeline template from a shared library method
