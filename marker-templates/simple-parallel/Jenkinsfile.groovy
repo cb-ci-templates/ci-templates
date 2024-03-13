@@ -57,7 +57,10 @@ pipeline {
         stage('Test') {
             steps {
                 // Create a parallel block for dynamic stages
-                parallelTestStages ['One','two','three']
+                script{
+                    parallelTestStages dynamicStages
+                }
+
             }
         }
         stage('Quality Gate') {
