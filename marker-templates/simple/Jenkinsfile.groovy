@@ -33,7 +33,7 @@ pipeline {
         stage("Init") {
             steps {
               //Init from yaml. It uses the `readYaml` step which can not use defaults
-              //init "./ci-config.yaml"
+              //initFromYaml "./ci-config.yaml"
 
               //So better init from properties with defaults   (here ansible tower f.e)
               defineProps('ci-config.properties', [ansibletower_async: 'true'])
