@@ -13,23 +13,8 @@ param_greetings : 'Greetings to the rest of the World!'
 Map pipelineParams = readYaml text: "${configYaml}"
 println pipelineParams
 
+//Need to be configured by parameters or properties
 def dynamicStages = ["Test1", "Test2", "Test3"]
-
-
-// Convert array of stages to map of stages
-def parallelStages(stages) {
-    stageList=stages.collectEntries { mystage ->
-        [
-                (mystage): {
-                    stage("Deploy region ${mystage}") {
-                        echo  "sample test command ${mystage}"
-                    }
-                }
-        ]
-    }
-    parallel stageList
-}
-
 
 //We could call the Pipeline template from a shared library method
 //However, the more templates we add to the library the bigger the size of the shared library
@@ -73,7 +58,6 @@ pipeline {
         stage('Test') {
             steps {
                 // Create a parallel block for dynamic stages
-                //parallelStages dynamicStages
                 parallelTestStages dynamicStages
             }
         }
