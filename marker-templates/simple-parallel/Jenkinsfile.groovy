@@ -13,6 +13,10 @@ param_greetings : 'Greetings to the rest of the World!'
 Map pipelineParams = readYaml text: "${configYaml}"
 println pipelineParams
 
+def testPlatform =['linux', 'windows', 'mac']
+def testBrowser =['firefox', 'chrome', 'safari', 'edge']
+
+
 //We could call the Pipeline template from a shared library method
 //However, the more templates we add to the library the bigger the size of the shared library
 //pipelineHelloWorld (pipelineParams)
@@ -63,21 +67,22 @@ pipeline {
                 axes {
                     axis {
                         name 'PLATFORM'
-                        values 'linux', 'windows', 'mac'
+                        values testPlatform
                     }
                     axis {
                         name 'BROWSER'
-                        values 'firefox', 'chrome', 'safari', 'edge'
+                        values testBrowser
                     }
                 }
                 stages {
                     stage('Build') {
-                        //Using one dedicated agent for just the one stage below
+                         /** Using one dedicated agent for just the one stage below
                          agent {
                             kubernetes {
                                 yaml libraryResource("podtemplates/${pipelineParams.k8_agent_yaml}")
                             }
                         }
+                        */
                         steps {
                             echo "Do Build for ${PLATFORM} - ${BROWSER}"
                         }
