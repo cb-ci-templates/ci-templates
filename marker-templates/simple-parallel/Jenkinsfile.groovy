@@ -18,7 +18,7 @@ def dynamicStages = ["Test1", "Test2", "Test3"]
 
 // Convert array of regions to map of stages
 def getParallelTestStages(stages) {
-    return stages.collectEntries { mystage ->
+    stageList=stages.collectEntries { mystage ->
         [
                 (mystage): {
                     stage("Deploy region ${mystage}") {
@@ -27,6 +27,7 @@ def getParallelTestStages(stages) {
                 }
         ]
     }
+    parallel stageList
 }
 
 
@@ -73,7 +74,7 @@ pipeline {
             steps {
                 // Create a parallel block for dynamic stages
                 script{
-                    parallel getParallelTestStages ($dynamicStages)
+                     getParallelTestStages dynamicStages
                 }
 
             }
