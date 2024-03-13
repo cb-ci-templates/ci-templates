@@ -95,6 +95,20 @@ pipeline {
                         }
                     }
                 }
+                stage("Checkmarx") {
+                    stages {
+                        stage("scan") {
+                            steps {
+                                sh "echo scan Checkmarx"
+                            }
+                        }
+                        stage("results") {
+                            steps {
+                                sh "echo results Checkmarx"
+                            }
+                        }
+                    }
+                }
             }
         }
         stage('Deploy') {
