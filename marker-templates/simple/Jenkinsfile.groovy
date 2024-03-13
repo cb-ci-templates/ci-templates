@@ -36,16 +36,18 @@ pipeline {
               //initFromYaml "./ci-config.yaml"
 
               //So better init from properties with defaults   (here ansible tower f.e)
-              defineProps('ci-config.properties', [ansibletower_async: 'true'])
+              defineProps('ci-config.properties', [default_key1: 'default_value1'])
+              echo "Greetings: ${params.greeting}"
+              echo "${pipelineParams.app}"
+              sh "echo default_key1 ${env.default_key1}"
+              sh "echo key1 ${env.branch_key1}"
+
             }
         }
         stage('Build') {
             steps {
                 echo "here we execute the build"
-                echo "Greetings: ${params.greeting}"
-                echo "${pipelineParams.app}"
-                sh "echo ansibletower_async ${env.ansibletower_async}"
-                sh "echo key1 ${env.key1}"
+
             }
         }
         stage('Test') {
