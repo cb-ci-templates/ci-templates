@@ -73,7 +73,7 @@ pipeline {
             steps {
                 // Create a parallel block for dynamic stages
                 script{
-                    parallel getParallelTestStages dynamicStages
+                    parallel getParallelTestStages ($dynamicStages)
                 }
 
             }
