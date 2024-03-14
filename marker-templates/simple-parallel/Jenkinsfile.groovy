@@ -109,7 +109,7 @@ pipeline {
                 }
                 stage("Checkmarx") {
                     when {
-                        expression { env.scanCheckmarx }
+                        expression { "${env.scanCheckmarx}" }
                     }
                     stages {
                         stage("scan") {
