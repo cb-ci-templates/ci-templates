@@ -15,7 +15,7 @@ Map pipelineParams = readYaml text: "${configYaml}"
 println pipelineParams
 
 //Need to be configured by parameters or properties
-def dynamicStages = ["Test1", "Test2", "Test3"]
+def dynamicStages = ["UnitTests", "IntegrationTests", "SmokeTests","RegressionTests","AccessibilityTests"]
 
 //We could call the Pipeline template from a shared library method
 //However, the more templates we add to the library the bigger the size of the shared library
@@ -143,13 +143,6 @@ pipeline {
             steps {
                 echo """Here deploy the artifacts to integration test environment"""
                 evaluate("${env.deploy} ()")
-            }
-        }
-        stage('Integration Test') {
-            steps {
-                echo """Here run integration test and acceptance test
-                        can be done in parallel
-                    """
             }
         }
     }
