@@ -43,7 +43,6 @@ pipeline {
 
                 //init from properties with defaults  (here "default_key1" f.e)
                 initFromProperties('ci-config.properties', pipelineParams)
-                evaluate("${env.deploy} ()")
 
                 echo "###### SAMPLE OUTPUT OF VARS#####"
                 echo "Pipeline parameter: ${params.greeting}"
@@ -144,7 +143,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo """Here deploy the artifacts to integration test environment"""
-                evaluate "${env.deploy}"
+                evaluate("${env.deploy} ['deploykey1=testdeployparam']")
             }
         }
         stage('Integration Test') {
