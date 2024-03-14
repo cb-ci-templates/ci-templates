@@ -66,7 +66,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh "echo UnitTests"
+                sh "echo UnitTests/ maybe not required when Unit tests are executed in the build stage"
             }
         }
         stage('Quality Gate') {
