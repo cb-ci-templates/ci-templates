@@ -10,7 +10,7 @@ It can be referenced from:
 # Goal
 The goal is to serve opinionated Pipeline templates wih proper CI stages and phases as shown below
 
-![CI-Pipeline.png](images/CI-Pipeline.png)
+![CI-Pipeline.png](images/CI-Pipeline-1.png)
 
 # Structure 
 The repository structure follows the recommended repository design for Pipeline Template catalogs, however, the Jenkinsfiles can be referenced as well from MultiBranch and Organisation Folder Pipelines (Custom Marker).
