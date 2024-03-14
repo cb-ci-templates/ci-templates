@@ -40,12 +40,13 @@ pipeline {
 
                 //So better init from properties with defaults  (here "default_key1" f.e)
                 defineProps('ci-config.properties', [default_key1: 'default_value1'])
-
+                initFromYaml "./ci-config.yaml"
                 echo "###### SAMPLE OUTPUT OF VARS#####"
                 echo "Pipeline parameter: ${params.greeting}"
                 echo "Pipeline Template parameter: ${pipelineParams.app}"
                 sh "echo default_key1 ${env.default_key1}"
                 sh "echo branch_key1 ${env.key1}"
+                sh "echo property EXAMPLE_KEY1 from yaml config:${env.EXAMPLE_KEY1}"
                 echo "###### END SAMPLE OUTPUT OF VARS#####"
 
             }
