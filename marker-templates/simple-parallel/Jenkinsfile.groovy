@@ -109,6 +109,20 @@ pipeline {
                         }
                     }
                 }
+                post {
+                    always {
+                        echo 'send always notification, or update Jira'
+                    }
+                    success {
+                        echo 'on success send  notification, or update Jira'
+                    }
+                    unsuccess {
+                        echo 'do something when not successfull'
+                    }
+                    /*
+                    see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
+                     */
+                }
             }
         }
         stage('Deploy') {
@@ -122,6 +136,20 @@ pipeline {
                         can be done in parallel
                     """
             }
+        }
+        post {
+            always {
+                echo 'send always notification, or update Jira'
+            }
+            success {
+                echo 'on success send  notification, or update Jira'
+            }
+            unsuccess {
+                echo 'do something when not successfull'
+            }
+            /*
+            see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
+             */
         }
     }
 }
