@@ -124,19 +124,16 @@ pipeline {
                 }
             }
             post {
+                /**
+                    see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
+                */
                 always {
-                    echo 'send always notification, or update Jira'
+                    echo "do something on success"
                 }
                 success {
-                    echo 'on success send  notification, or update Jira'
+                    echo "do something on success"
                 }
-                unsuccess {
-                    echo 'do something when not successfull'
-                }
-                /*
-                see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
-                 */
-            }
+             }
         }
         stage('Deploy') {
             steps {
@@ -151,18 +148,17 @@ pipeline {
             }
         }
         post {
-            always {
-                echo 'send always notification, or update Jira'
+            post {
+                /**
+                 see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
+                 */
+                always {
+                    echo "do something on success"
+                }
+                success {
+                    echo "do something on success"
+                }
             }
-            success {
-                echo 'on success send  notification, or update Jira'
-            }
-            unsuccess {
-                echo 'do something when not successfull'
-            }
-            /*
-            see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
-             */
         }
     }
 }
