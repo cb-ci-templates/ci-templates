@@ -11,7 +11,7 @@ param_greetings : 'Greetings to the rest of the World!'
 default_key1: 'default_value1'
 scanCheckmarx: true
 """
-//Create a pipelineParams Map for the Pipeline template
+//Create a pipelineParams Map for the Pipeline template below
 Map pipelineParams = readYaml text: "${configYaml}"
 println pipelineParams
 
@@ -19,13 +19,12 @@ println pipelineParams
 dynamicStages test list to generate dynamicStages
 Need to be configured by parameters or properties
  */
-//def dynamicStages = ["UnitTests", "IntegrationTests", "SmokeTests","RegressionTests","AccessibilityTests"]
+def dynamicStages = ["UnitTests", "IntegrationTests", "SmokeTests","RegressionTests","AccessibilityTests"]
 
-
+//###### START PIPELINE TEMPLATE###########
 //We could call the Pipeline template from a shared library method
 //However, the more templates we add to the library the bigger the size of the shared library
 //pipelineHelloWorld (pipelineParams)
-
 
 //So we can use the template also directly from here instead calling a shared library function
 pipeline {
