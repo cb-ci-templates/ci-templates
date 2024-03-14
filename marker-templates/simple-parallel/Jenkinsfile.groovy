@@ -151,11 +151,13 @@ pipeline {
               *Cross Platform/Browser tests? -> Matrix parallel stages might be an option
               * ???
               Depending on the test types the parallel structure and approach might be different
-             */
-            steps {
+
+              steps {
                 // Create a parallel block for dynamic stages, not sure yet if dynamic is  required
                 parallelTestStages dynamicStages
             }
+
+             */
         }
         stage('Quality Gate') {
             //Skip the stage on other branches, execute just on "main"
