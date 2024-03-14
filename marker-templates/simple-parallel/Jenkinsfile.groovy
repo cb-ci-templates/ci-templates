@@ -8,6 +8,7 @@ def configYaml = """---
 app : 'App Hello World'
 k8_agent_yaml : 'podTemplate-curl.yaml'
 param_greetings : 'Greetings to the rest of the World!'
+default_key1: 'default_value1'
 """
 //Create a pipelineParams Map for the Pipeline template
 Map pipelineParams = readYaml text: "${configYaml}"
@@ -36,12 +37,13 @@ pipeline {
         stage("Init") {
             steps {
 
+                //Init from yaml. It uses the `readYaml` step which can not use defaults
+                //initFromYaml "./ci-config.yaml"
 
                 //init from properties with defaults  (here "default_key1" f.e)
-                initFromProperties('ci-config.properties', [default_key1: 'default_value1'])
+                initFromProperties('ci-config.properties', pipelineParams)
 
-                //Init from yaml. It uses the `readYaml` step which can not use defaults
-                initFromYaml "./ci-config.yaml"
+
                 echo "###### SAMPLE OUTPUT OF VARS#####"
                 echo "Pipeline parameter: ${params.greeting}"
                 echo "Pipeline Template parameter: ${pipelineParams.app}"
