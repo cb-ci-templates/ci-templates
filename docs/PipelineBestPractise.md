@@ -31,6 +31,10 @@
 * https://github.com/pipeline-demo-caternberg/pipeline-examples/blob/master/jobs/Jenkins-parallel-dynamic-declaractive.groovy
 * https://github.com/pipeline-demo-caternberg/pipeline-examples/blob/master/jobs/Jenkinsfile-parrallel-sequential-stages.groovy
 
+# Maven parallel Tests
+
+* https://maven.apache.org/surefire/maven-surefire-plugin/examples/fork-options-and-parallel-execution.html
+* https://www.baeldung.com/maven-junit-parallel-tests
 
 
 # Parametrized Pipelines
