@@ -50,8 +50,8 @@ pipeline {
                 echo "Pipeline Template parameter: ${pipelineParams.app}"
                 sh "echo default_key1 ${env.default_key1}"
                 sh "echo branch_key1 ${env.key1}"
-                sh "echo property EXAMPLE_KEY1 from yaml config:${env.EXAMPLE_KEY1}"
-                sh "echo property EXAMPLE_KEY1 from yaml config:${env.deploy}"
+                //sh "echo property EXAMPLE_KEY1 from yaml config:${env.EXAMPLE_KEY1}"
+                sh "echo property DEPLOY from default config:${env.deploy}"
                 echo "###### END SAMPLE OUTPUT OF VARS#####"
 
             }
