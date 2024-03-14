@@ -108,10 +108,10 @@ pipeline {
                     }
                 }
                 stage("Checkmarx") {
-                    when {
-                        environment name: 'scanCheckmarx', value: 'true'
-                    }
                     stages {
+                        when {
+                            environment name: 'scanCheckmarx', value: 'true'
+                        }
                         stage("scan") {
                             steps {
                                 sh "echo scan Checkmarx"
