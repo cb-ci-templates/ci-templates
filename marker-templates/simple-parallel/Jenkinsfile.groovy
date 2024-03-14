@@ -9,6 +9,7 @@ app : 'App Hello World'
 k8_agent_yaml : 'podTemplate-curl.yaml'
 param_greetings : 'Greetings to the rest of the World!'
 default_key1: 'default_value1'
+deploy: deployCloudRun
 """
 //Create a pipelineParams Map for the Pipeline template
 Map pipelineParams = readYaml text: "${configYaml}"
@@ -142,6 +143,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo """Here deploy the artifacts to integration test environment"""
+                evaluate "${env.deploy}"
             }
         }
         stage('Integration Test') {
