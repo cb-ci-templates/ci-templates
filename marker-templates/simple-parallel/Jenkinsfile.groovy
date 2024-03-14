@@ -60,6 +60,88 @@ pipeline {
             }
         }
         stage('Test') {
+            parallel {
+                stage("UnitTests") {
+                    stages {
+                        stage("test") {
+                            steps {
+                                sh "echo UnitTests"
+                            }
+                        }
+                    }
+                    post {
+                        /**
+                         see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
+                         */
+                        always {
+                            echo "do something on success"
+                        }
+                        success {
+                            echo "do something on success"
+                        }
+                    }
+                }
+                stage("IntegrationTests") {
+                    stages {
+                        stage("test") {
+                            steps {
+                                sh "echo IntegrationTests"
+                            }
+                        }
+                    }
+                    post {
+                        /**
+                         see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
+                         */
+                        always {
+                            echo "do something on success"
+                        }
+                        success {
+                            echo "do something on success"
+                        }
+                    }
+                }
+                stage("SmokeTests") {
+                    stages {
+                        stage("test") {
+                            steps {
+                                sh "echo SmokeTests"
+                            }
+                        }
+                    }
+                    post {
+                        /**
+                         see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
+                         */
+                        always {
+                            echo "do something on success"
+                        }
+                        success {
+                            echo "do something on success"
+                        }
+                    }
+                }
+                stage("AccessibilityTests") {
+                    stages {
+                        stage("test") {
+                            steps {
+                                sh "echo AccessibilityTests"
+                            }
+                        }
+                    }
+                    post {
+                        /**
+                         see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
+                         */
+                        always {
+                            echo "do something on success"
+                        }
+                        success {
+                            echo "do something on success"
+                        }
+                    }
+                }
+            }
             /*TODO: dynamic parallel stages are possible, however, they lead to more complexity and should be avoided when possible
               TODO: Verify: Instead of using dynamic parallel stages Maven parallel test  might be a better choice
               https://www.baeldung.com/maven-junit-parallel-tests
