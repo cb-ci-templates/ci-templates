@@ -17,7 +17,7 @@ println pipelineParams
 
 //Need to be configured by parameters or properties
 def dynamicStages = ["Test1", "Test2", "Test3"]
-def deployConfig = [deploykey1:'John', lastName:'Doe', fullName:'John Doe']
+def deployConfig = [deploykey1:'John', lastName:'Doe', fullName:'John_Doe']
 
 //We could call the Pipeline template from a shared library method
 //However, the more templates we add to the library the bigger the size of the shared library
