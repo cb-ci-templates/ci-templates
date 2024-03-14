@@ -144,7 +144,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo """Here deploy the artifacts to integration test environment"""
-                evaluate("${env.deploy}")
+                evaluate("${env.deploy} ()")
             }
         }
         stage('Integration Test') {
