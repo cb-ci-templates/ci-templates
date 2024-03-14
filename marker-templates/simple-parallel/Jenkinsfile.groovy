@@ -10,6 +10,7 @@ k8_agent_yaml : 'podTemplate-curl.yaml'
 param_greetings : 'Greetings to the rest of the World!'
 default_key1: 'default_value1'
 deploy: deployCloudRun
+deployConfig: 'deployValue'
 """
 //Create a pipelineParams Map for the Pipeline template
 Map pipelineParams = readYaml text: "${configYaml}"
@@ -17,7 +18,6 @@ println pipelineParams
 
 //Need to be configured by parameters or properties
 def dynamicStages = ["Test1", "Test2", "Test3"]
-def deployConfig = "[deploykey1:'John', lastName:'Doe', fullName:'John_Doe']"
 
 //We could call the Pipeline template from a shared library method
 //However, the more templates we add to the library the bigger the size of the shared library
@@ -144,7 +144,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo """Here deploy the artifacts to integration test environment"""
-                evaluate("${env.deploy} ${deployConfig}")
+                evaluate("${env.deploy}")
             }
         }
         stage('Integration Test') {
