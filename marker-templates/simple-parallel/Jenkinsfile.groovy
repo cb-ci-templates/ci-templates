@@ -125,15 +125,15 @@ pipeline {
             }
             post {
                 /**
-                    see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
-                */
+                 see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
+                 */
                 always {
                     echo "do something on success"
                 }
                 success {
                     echo "do something on success"
                 }
-             }
+            }
         }
         stage('Deploy') {
             steps {
@@ -148,16 +148,14 @@ pipeline {
             }
         }
         post {
-            post {
-                /**
-                 see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
-                 */
-                always {
-                    echo "do something on success"
-                }
-                success {
-                    echo "do something on success"
-                }
+            /**
+             see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
+             */
+            always {
+                echo "do something on success"
+            }
+            success {
+                echo "do something on success"
             }
         }
     }
