@@ -80,181 +80,157 @@ pipeline {
              */
             parallel {
                 stage("NexusIQ") {
-                    stages {
-                        stage("scan") {
-                            steps {
-                                sh "echo scan NexusIQ"
-                            }
-                        }
-                        stage("results") {
-                            steps {
-                                sh "echo results NexusIQ"
-                            }
-                        }
+                    steps {
+                        sh "echo results NexusIQ"
                     }
                 }
                 stage("Sonar") {
-                    stages {
-                        stage("scan") {
-                            steps {
-                                sh "echo scan Sonar"
-                            }
-                        }
-                        stage("results") {
-                            steps {
-                                sh "echo results Sonar"
-                            }
-                        }
+
+                    steps {
+                        sh "echo scan Sonar"
                     }
                 }
                 stage("Checkmarx") {
-                    stages {
-                        when {
-                            environment name: 'scanCheckmarx', value: 'true'
-                        }
-                        stage("scan") {
-                            steps {
-                                sh "echo scan Checkmarx"
-                            }
-                        }
-                        stage("results") {
-                            steps {
-                                sh "echo results Checkmarx"
-                            }
-                        }
+                    //Example for an optional QA stage
+                    when {
+                        environment name: 'scanCheckmarx', value: 'true'
                     }
-                }
-            }
-            post {
-                /**
-                 see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
-                 */
-                always {
-                    echo "do something on success"
-                }
-                success {
-                    echo "do something on success"
+                    steps {
+                        sh "echo scan Checkmarx"
+                    }
                 }
             }
         }
-        stage('Deploy') {
-            steps {
-                echo """Here deploy the artifacts to integration test environment"""
-                evaluate("${env.deploy} ()")
+        post {
+            /**
+             see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
+             */
+            always {
+                echo "do something on success"
+            }
+            success {
+                echo "do something on success"
             }
         }
-        stage('PostDeployTest') {
-            /*TODO: dynamic parallel stages are possible, however, they lead to more complexity and should be avoided when possible
-             TODO: Verify: Instead of using dynamic parallel stages Maven parallel test  might be a better choice
-             https://maven.apache.org/surefire/maven-surefire-plugin/examples/fork-options-and-parallel-execution.html
-             https://www.baeldung.com/maven-junit-parallel-tests
-             TBD: What exactly  are the test types?
-             * Junit Tests?
-             * UI Tests (Selenium f.e.)
-             *Cross Platform/Browser tests? -> Matrix parallel stages might be an option
-             * ???
-             Depending on the test types the parallel structure and approach might be different
+    }
+    stage('Deploy') {
+        steps {
+            echo """Here deploy the artifacts to integration test environment"""
+            evaluate("${env.deploy} ()")
+        }
+    }
+    stage('PostDeployTest') {
+        /*TODO: dynamic parallel stages are possible, however, they lead to more complexity and should be avoided when possible
+         TODO: Verify: Instead of using dynamic parallel stages Maven parallel test  might be a better choice
+         https://maven.apache.org/surefire/maven-surefire-plugin/examples/fork-options-and-parallel-execution.html
+         https://www.baeldung.com/maven-junit-parallel-tests
+         TBD: What exactly  are the test types?
+         * Junit Tests?
+         * UI Tests (Selenium f.e.)
+         *Cross Platform/Browser tests? -> Matrix parallel stages might be an option
+         * ???
+         Depending on the test types the parallel structure and approach might be different
 
-             steps {
-               // Create a parallel block for dynamic stages, not sure yet if dynamic is  required
-               parallelTestStages dynamicStages
-           }
+         steps {
+           // Create a parallel block for dynamic stages, not sure yet if dynamic is  required
+           parallelTestStages dynamicStages
+       }
 
-            */
-            parallel {
-                stage("SeleniumTests") {
-                    stages {
-                        stage("test") {
-                            steps {
-                                sh "echo UnitTests"
-                            }
-                        }
-                    }
-                    post {
-                        /**
-                         see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
-                         */
-                        always {
-                            echo "do something on success"
-                        }
-                        success {
-                            echo "do something on success"
+        */
+        parallel {
+            stage("SeleniumTests") {
+                stages {
+                    stage("test") {
+                        steps {
+                            sh "echo UnitTests"
                         }
                     }
                 }
-                stage("APITest") {
-                    stages {
-                        stage("test") {
-                            steps {
-                                sh "echo IntegrationTests"
-                            }
-                        }
+                post {
+                    /**
+                     see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
+                     */
+                    always {
+                        echo "do something on success"
                     }
-                    post {
-                        /**
-                         see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
-                         */
-                        always {
-                            echo "do something on success"
-                        }
-                        success {
-                            echo "do something on success"
+                    success {
+                        echo "do something on success"
+                    }
+                }
+            }
+            stage("APITest") {
+                stages {
+                    stage("test") {
+                        steps {
+                            sh "echo IntegrationTests"
                         }
                     }
                 }
-                stage("CocumberTest") {
-                    stages {
-                        stage("test") {
-                            steps {
-                                sh "echo SmokeTests"
-                            }
-                        }
+                post {
+                    /**
+                     see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
+                     */
+                    always {
+                        echo "do something on success"
                     }
-                    post {
-                        /**
-                         see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
-                         */
-                        always {
-                            echo "do something on success"
-                        }
-                        success {
-                            echo "do something on success"
+                    success {
+                        echo "do something on success"
+                    }
+                }
+            }
+            stage("CocumberTest") {
+                stages {
+                    stage("test") {
+                        steps {
+                            sh "echo SmokeTests"
                         }
                     }
                 }
-                stage("ToscaTest") {
-                    stages {
-                        stage("test") {
-                            steps {
-                                sh "echo AccessibilityTests"
-                            }
+                post {
+                    /**
+                     see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
+                     */
+                    always {
+                        echo "do something on success"
+                    }
+                    success {
+                        echo "do something on success"
+                    }
+                }
+            }
+            stage("ToscaTest") {
+                stages {
+                    stage("test") {
+                        steps {
+                            sh "echo AccessibilityTests"
                         }
                     }
-                    post {
-                        /**
-                         see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
-                         */
-                        always {
-                            echo "do something on success"
-                        }
-                        success {
-                            echo "do something on success"
-                        }
+                }
+                post {
+                    /**
+                     see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
+                     */
+                    always {
+                        echo "do something on success"
+                    }
+                    success {
+                        echo "do something on success"
                     }
                 }
             }
         }
     }
-    post {
-        /**
-         see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
-         */
-        always {
-            echo "do something on success"
-        }
-        success {
-            echo "do something on success"
-        }
+}
+post {
+    /**
+     see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
+     */
+    always {
+        echo "do something on success"
     }
+    success {
+        echo "do something on success"
+    }
+}
 }
 
