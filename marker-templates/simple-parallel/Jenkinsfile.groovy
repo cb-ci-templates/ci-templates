@@ -56,8 +56,18 @@ pipeline {
             }
         }
         stage('Test') {
+            /*TODO: dynamic parallel stages are possible, however, they lead to more complexity and should be avoided when possible
+              TODO: Verify: Instead of using dynamic parallel stages Maven parallel test  might be a better choice
+              https://www.baeldung.com/maven-junit-parallel-tests
+              TBD: What exactly  are the test types?
+              * Junit Tests?
+              * UI Tests (Selenium f.e.)
+              *Cross Platform/Browser tests? -> Matrix parallel stages might be an option
+              * ???
+              Depending on the test types the parallel structure and approach might be different
+             */
             steps {
-                // Create a parallel block for dynamic stages
+                // Create a parallel block for dynamic stages, not sure yet if dynamic is  required
                 parallelTestStages dynamicStages
             }
         }
@@ -66,6 +76,9 @@ pipeline {
             when {
                 branch 'main'
             }
+            /*
+            We know the quality gates so we can use static parallel structure
+             */
             parallel {
                 stage("NexusIQ") {
                     stages {
