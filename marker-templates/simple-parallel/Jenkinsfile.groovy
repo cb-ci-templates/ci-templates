@@ -17,6 +17,7 @@ println pipelineParams
 
 //Need to be configured by parameters or properties
 def dynamicStages = ["Test1", "Test2", "Test3"]
+def deployConfig = [deploykey1:'John', lastName:'Doe', fullName:'John Doe']
 
 //We could call the Pipeline template from a shared library method
 //However, the more templates we add to the library the bigger the size of the shared library
@@ -143,7 +144,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo """Here deploy the artifacts to integration test environment"""
-                evaluate("${env.deploy} (['deploykey1: testdeployparam'])")
+                evaluate(env.deploy deployConfig)
             }
         }
         stage('Integration Test') {
