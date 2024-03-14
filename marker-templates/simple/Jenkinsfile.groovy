@@ -25,10 +25,10 @@ pipeline {
             yaml libraryResource("podtemplates/${pipelineParams.k8_agent_yaml}")
         }
     }
-    parameters {
+/*    parameters {
         string(name: 'greeting', defaultValue: "${pipelineParams.param_greetings}",
                 description: 'How should I greet the world?')
-    }
+    }*/
     stages {
         stage("Init") {
             steps {
