@@ -43,7 +43,7 @@ pipeline {
 
                 //init from properties with defaults  (here "default_key1" f.e)
                 initFromProperties('ci-config.properties', pipelineParams)
-
+                evaluate "${env.deploy}"
 
                 echo "###### SAMPLE OUTPUT OF VARS#####"
                 echo "Pipeline parameter: ${params.greeting}"
@@ -51,6 +51,7 @@ pipeline {
                 sh "echo default_key1 ${env.default_key1}"
                 sh "echo branch_key1 ${env.key1}"
                 sh "echo property EXAMPLE_KEY1 from yaml config:${env.EXAMPLE_KEY1}"
+                sh "echo property EXAMPLE_KEY1 from yaml config:${env.deploy}"
                 echo "###### END SAMPLE OUTPUT OF VARS#####"
 
             }
