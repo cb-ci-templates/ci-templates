@@ -147,16 +147,16 @@ pipeline {
                     """
             }
         }
-        post {
-            /**
-             see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
-             */
-            always {
-                echo "do something on success"
-            }
-            success {
-                echo "do something on success"
-            }
+    }
+    post {
+        /**
+         see all post options https://www.jenkins.io/doc/book/pipeline/syntax/#post
+         */
+        always {
+            echo "do something on success"
+        }
+        success {
+            echo "do something on success"
         }
     }
 }
