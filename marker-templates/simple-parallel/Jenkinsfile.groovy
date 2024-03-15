@@ -70,8 +70,26 @@ pipeline {
             }
         }
         stage('Test') {
+            /*TODO: dynamic parallel stages are possible, however, they lead to more complexity and should be avoided when possible
+              TODO: Verify: Instead of using dynamic parallel stages Maven parallel test  might be a better choice
+              https://maven.apache.org/surefire/maven-surefire-plugin/examples/fork-options-and-parallel-execution.html
+              https://www.baeldung.com/maven-junit-parallel-tests
+              TBD: What exactly  are the test types?
+              * Junit Tests?
+              * UI Tests (Selenium f.e.)
+              *Cross Platform/Browser tests? -> Matrix parallel stages might be an option
+              * ???
+              Depending on the test types the parallel structure and approach might be different
+              def dynamicStages = ["UnitTests", "IntegrationTests", "SmokeTests","RegressionTests","AccessibilityTests"]
+               steps {
+                // Create a parallel block for dynamic stages, not sure yet if dynamic is  required
+                parallelTestStages dynamicStages
+            }
+
+             */
             steps {
-                sh "echo UnitTests/ maybe not required when Unit tests are executed in the build stage"
+               // sh "echo UnitTests/ maybe not required when Unit tests are executed in the build stage"
+                parallelTestStages "${emv.dynamicStages}"
             }
         }
         stage('Quality Gate') {
@@ -113,23 +131,6 @@ pipeline {
             }
         }
         stage('PostDeployTest') {
-            /*TODO: dynamic parallel stages are possible, however, they lead to more complexity and should be avoided when possible
-             TODO: Verify: Instead of using dynamic parallel stages Maven parallel test  might be a better choice
-             https://maven.apache.org/surefire/maven-surefire-plugin/examples/fork-options-and-parallel-execution.html
-             https://www.baeldung.com/maven-junit-parallel-tests
-             TBD: What exactly  are the test types?
-             * Junit Tests?
-             * UI Tests (Selenium f.e.)
-             *Cross Platform/Browser tests? -> Matrix parallel stages might be an option
-             * ???
-             Depending on the test types the parallel structure and approach might be different
-
-             steps {
-               // Create a parallel block for dynamic stages, not sure yet if dynamic is  required
-               parallelTestStages dynamicStages
-           }
-
-            */
             parallel {
                 stage("SeleniumTests") {
                     stages {
