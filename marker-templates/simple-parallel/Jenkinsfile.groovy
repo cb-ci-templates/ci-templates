@@ -43,8 +43,9 @@ pipeline {
                 //Init from yaml. It uses the `readYaml` step which can not use defaults
                 //initFromYaml "./ci-config.yaml"
 
+                init.validatePropertyFile('ci-config.properties')
                 //init from properties with defaults  (here "default_key1" f.e)
-                initFromProperties('ci-config.properties', pipelineParams)
+                init('ci-config.properties', pipelineParams)
 
                 echo "###### SAMPLE OUTPUT OF VARS#####"
                 echo "Pipeline parameter: ${params.greeting}"
