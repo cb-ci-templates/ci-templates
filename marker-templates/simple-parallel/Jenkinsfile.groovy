@@ -10,6 +10,12 @@ k8_agent_yaml : 'podTemplate-curl.yaml'
 param_greetings : 'Greetings to the rest of the World!'
 default_key1: 'default_value1'
 scanCheckmarx: true
+dynamicStages = ["UnitTests", "IntegrationTests", "SmokeTests","RegressionTests","AccessibilityTests"]
+dynamicStages:
+  UnitTests: 123 Main Street
+  IntegrationTests: New York
+  SmokeTests: NY
+  RegressionTests: 10001
 """
 //Create a pipelineParams Map for the Pipeline template below
 Map pipelineParams = readYaml text: "${configYaml}"
@@ -19,7 +25,7 @@ println pipelineParams
 dynamicStages test list to generate dynamicStages
 Need to be configured by parameters or properties
  */
-def dynamicStages = ["UnitTests", "IntegrationTests", "SmokeTests","RegressionTests","AccessibilityTests"]
+//def dynamicStages = ["UnitTests", "IntegrationTests", "SmokeTests","RegressionTests","AccessibilityTests"]
 
 //###### START PIPELINE TEMPLATE###########
 //We could call the Pipeline template from a shared library method
@@ -53,6 +59,7 @@ pipeline {
                 default_key1 ${env.default_key1}
                 branch_key1 ${env.key1}
                 property DEPLOY from default config:${env.deploy}
+                default dynamicStages from default config:${env.dynamicStages}
                 ###### END SAMPLE OUTPUT OF VARS#####
                 """
 
