@@ -89,7 +89,7 @@ pipeline {
              */
             steps {
                // sh "echo UnitTests/ maybe not required when Unit tests are executed in the build stage"
-                parallelTestStages "${emv.dynamicStages}"
+                parallelTestStages "${env.dynamicStages}"
             }
         }
         stage('Quality Gate') {
