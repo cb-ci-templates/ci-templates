@@ -47,14 +47,14 @@ pipeline {
                 //init from properties with defaults  (here "default_key1" f.e)
                 init('ci-config.properties', pipelineParams)
 
-                echo "###### SAMPLE OUTPUT OF VARS#####"
-                echo "Pipeline parameter: ${params.greeting}"
-                echo "Pipeline Template parameter: ${pipelineParams.app}"
-                sh "echo default_key1 ${env.default_key1}"
-                sh "echo branch_key1 ${env.key1}"
-                //sh "echo property EXAMPLE_KEY1 from yaml config:${env.EXAMPLE_KEY1}"
-                sh "echo property DEPLOY from default config:${env.deploy}"
-                echo "###### END SAMPLE OUTPUT OF VARS#####"
+                echo """###### SAMPLE OUTPUT OF VARS#####
+                Pipeline parameter: ${params.greeting}
+                Pipeline Template parameter: ${pipelineParams.app}
+                default_key1 ${env.default_key1}
+                branch_key1 ${env.key1}
+                property DEPLOY from default config:${env.deploy}
+                ###### END SAMPLE OUTPUT OF VARS#####
+                """
 
             }
         }
