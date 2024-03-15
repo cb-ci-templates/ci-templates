@@ -10,7 +10,6 @@ k8_agent_yaml : 'podTemplate-curl.yaml'
 param_greetings : 'Greetings to the rest of the World!'
 default_key1: 'default_value1'
 scanCheckmarx: true
-dynamicStages = ["UnitTests", "IntegrationTests", "SmokeTests","RegressionTests","AccessibilityTests"]
 dynamicStages:
   UnitTests: 123 Main Street
   IntegrationTests: New York
