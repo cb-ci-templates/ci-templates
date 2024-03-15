@@ -43,7 +43,7 @@ pipeline {
                 //Init from yaml. It uses the `readYaml` step which can not use defaults
                 //initFromYaml "./ci-config.yaml"
 
-                init.validatePropertyFile('ci-config.properties')
+                validate('ci-config.properties',pipelineParams,params)
                 //init from properties with defaults  (here "default_key1" f.e)
                 init('ci-config.properties', pipelineParams)
 
