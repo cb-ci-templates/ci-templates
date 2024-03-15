@@ -85,11 +85,9 @@ pipeline {
                 // Create a parallel block for dynamic stages, not sure yet if dynamic is  required
                 parallelTestStages dynamicStages
             }
-
              */
             steps {
-               // sh "echo UnitTests/ maybe not required when Unit tests are executed in the build stage"
-                parallelTestStages "${env.dynamicStages}"
+                sh "echo UnitTests/ maybe not required when Unit tests are executed in the build stage"
             }
         }
         stage('Quality Gate') {
