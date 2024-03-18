@@ -22,7 +22,7 @@ parameters:
   - name: githubToken
     displayName: GitHubUserToken
     type: CREDENTIALS
-    defaultValue: githubuseraccesstoken
+    defaultValue: github-user-accesstoken
 #see https://docs.cloudbees.com/docs/admin-resources/latest/pipeline-templates-user-guide/managing-multibranch-pipeline-options#_example
 multibranch:
   branchSource:
