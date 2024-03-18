@@ -9,7 +9,7 @@ library identifier: 'ci-shared-library_pt@main', retriever: modernSCM(
 def configYaml = """---
 app : 'sample-app-helloworld'
 k8_agent_yaml : 'podTemplate-curl.yaml'
-branchPropertiesFiles: "ci-config.properties"
+branchPropertiesFile: "ci-config.properties"
 param_greetings : 'Greetings to the rest of the World!'
 default_key1: 'default_value1'
 scanCheckmarx: true
