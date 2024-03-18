@@ -41,7 +41,7 @@ TODO: description and design
 
 # Custom marker files and Pipeline templates
 
-![Diagram](images/CI-Diagramms-CustomMarkerFiles.drawio.svg)
+![Diagram](images/CI-Diagramms-CustomMarkerFiles.svg)
 
 [Custom marker files](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#custom-pac-scripts) in the context of CloudBees CI are special files that you can place in a repository to control the behavior of your build. 
 They are typically named and placed according to certain conventions recognized by your build system or CI/CD pipeline, and they can signal to CloudBees CI or Jenkins to perform specific actions or apply certain configurations.
