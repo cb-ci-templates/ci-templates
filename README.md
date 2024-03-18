@@ -26,7 +26,7 @@ Pipeline Templates are stored under the `/templates` folder, and each Pipeline T
 │   ├── helloWorldSimple  #tenplate folder
 │   │   ├── Jenkinsfile # Jenkins file used as temlate
 │   │   │── README.md    
-│   │   └── template.yaml #Pipeline Template Catalog descriptor
+│   │   └── template.yaml #Pipeline Template descriptor
 │   ├── ....  # more template folders 
 └── marker-templates  # Marker Templates
     ├── simple  #tenplate folder
@@ -34,10 +34,14 @@ Pipeline Templates are stored under the `/templates` folder, and each Pipeline T
     │   │── README.md    
     ├── ....  # more template folders 
 ```
+# Component diagram
+![Diagram](images/CI-Component-diagram.svg)
 
-![Diagram](images/CI-Diagramms-CustomMarkerFiles.drawio.svg)
+TODO: description and design
 
 # Custom marker files and Pipeline templates
+
+![Diagram](images/CI-Diagramms-CustomMarkerFiles.drawio.svg)
 
 [Custom marker files](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#custom-pac-scripts) in the context of CloudBees CI are special files that you can place in a repository to control the behavior of your build. 
 They are typically named and placed according to certain conventions recognized by your build system or CI/CD pipeline, and they can signal to CloudBees CI or Jenkins to perform specific actions or apply certain configurations.
