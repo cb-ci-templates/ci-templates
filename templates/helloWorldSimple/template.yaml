@@ -7,3 +7,6 @@ parameters:
     displayName: your firstMame
   - name: lastName
     displayName: your lastName
+  - name: k8_agent_yaml
+    displayName: k8_agent_yaml
+    defaultValue: podTemplate-curl.yaml
