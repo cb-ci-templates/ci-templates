@@ -6,6 +6,12 @@
 * YouTube: [Scripted vs. declarative Pipelines:What is the difference?](https://www.youtube.com/watch?v=GJBlskiaRrI=)
 * [Scripted vs. declarative Pipelines](https://e.printstacktrace.blog/jenkins-scripted-pipeline-vs-declarative-pipeline-the-4-practical-differences/)
 
+# MultiBranch job and Organisation Folder setup using GitHub App token
+
+* https://www.cloudbees.com/blog/jenkins-multibranch-pipeline-with-git-tutorial
+* https://docs.cloudbees.com/docs/cloudbees-jenkins-platform/latest/github-app-auth
+* https://docs.cloudbees.com/docs/cloudbees-jenkins-platform/latest/github-branch-source 
+
 # GitHub Rate Limits
 
 * https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28#primary-rate-limit-for-unauthenticated-users
