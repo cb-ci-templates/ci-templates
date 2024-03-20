@@ -1,9 +1,31 @@
+@Grab(group='org.yaml', module='snakeyaml', version='1.29')
+import org.yaml.snakeyaml.Yaml
+import java.nio.file.Files
+import java.nio.file.Paths
+
 library identifier: 'ci-shared-library@main', retriever: modernSCM(
         [$class: 'GitSCMSource',
          remote: 'https://github.com/cb-ci-templates/ci-shared-library.git'])
 library identifier: 'ci-shared-library_pt@main', retriever: modernSCM(
         [$class: 'GitSCMSource',
          remote: 'https://github.com/cb-ci-templates/ci-shared-library-pt.git'])
+
+
+
+def myMap = [:]
+
+// Read YAML file
+def yamlText = new String(Files.readAllBytes(Paths.get("./template.yaml")))
+
+// Parse YAML
+def templateYaml = new Yaml().load(yamlText)
+templateYaml.parameters.each { property ->
+    //println("Name: ${property.name},DefaultValue: ${property.defaultValue}")
+    myMap["$property.name"] = "${property.defaultValue}"
+}
+println(myMap)
+
+
 
 // Building the data object
 def configYaml = """---
@@ -15,7 +37,8 @@ default_key1: 'default_value1'
 scanCheckmarx: true
 """
 //Create a pipelineParams Map for the Pipeline template below
-Map pipelineParams = readYaml text: "${configYaml}"
+//Map pipelineParams = readYaml text: "${configYaml}"
+Map pipelineParams = myMap
 println pipelineParams
 
 //###### START PIPELINE TEMPLATE###########
