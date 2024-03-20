@@ -1,11 +1,11 @@
-
-
 library identifier: 'ci-shared-library@main', retriever: modernSCM(
         [$class: 'GitSCMSource',
          remote: 'https://github.com/cb-ci-templates/ci-shared-library.git'])
 library identifier: 'ci-shared-library_pt@main', retriever: modernSCM(
         [$class: 'GitSCMSource',
          remote: 'https://github.com/cb-ci-templates/ci-shared-library-pt.git'])
+
+
 
 
 
@@ -22,7 +22,7 @@ scanCheckmarx: true
 */
 //Create a pipelineParams Map for the Pipeline template below
 //Map pipelineParams = readYaml text: "${configYaml}"
-Map pipelineParams = _initMap ("./template.yaml")
+Map pipelineParams = _initMap("./template.yaml")
 println pipelineParams
 
 //###### START PIPELINE TEMPLATE###########
