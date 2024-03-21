@@ -4,13 +4,6 @@ name: Template MB Simple CI
 description: Template MB MB Simple CI
 templateType: MULTIBRANCH
 parameters:
-  - name: appName
-    displayName: Application Name
-    type: string
-    defaultValue: sample-app-helloworld
-  - name: k8AgentPodyaml
-    displayName: k8_agent_yaml
-    defaultValue: podTemplate-curl.yaml
   - name: repoName
     displayName: Git Repoistory
     type: string
