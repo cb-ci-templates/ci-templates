@@ -19,6 +19,8 @@
 # Use Templates from a shared Library 
 
 * https://github.com/cloudbees-oss/pipeline-home-demo/blob/master/templates/docker-java-maven-app-m-ghe/Jenkinsfile 
+* https://edwin-philip.medium.com/jenkins-declarative-pipeline-as-shared-library-101091fddbc1
+* https://www.jenkins.io/blog/2017/10/02/pipeline-templates-with-shared-libraries/
 
 # About sh steps and shell scripts/steps
 
