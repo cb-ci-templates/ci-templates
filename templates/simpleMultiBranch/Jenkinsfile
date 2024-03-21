@@ -4,7 +4,11 @@ library identifier: 'ci-shared-library@main', retriever: modernSCM(
 library identifier: 'ci-shared-library_pt@main', retriever: modernSCM(
         [$class: 'GitSCMSource',
          remote: 'https://github.com/cb-ci-templates/ci-shared-library-pt.git'])
+ library identifier: 'ci-templates@main', retriever: modernSCM(
+         [$class: 'GitSCMSource',
+          remote: 'https://github.com/cb-ci-templates/ci-templates.git'])
 
+def templateYaml=ci-templates.readTemplateYaml ("simpleMultiBranch")
 
 
 
