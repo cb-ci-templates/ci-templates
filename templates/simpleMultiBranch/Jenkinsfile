@@ -7,9 +7,10 @@ library identifier: 'ci-shared-library_pt@main', retriever: modernSCM(
  library identifier: 'ci-templates@main', retriever: modernSCM(
          [$class: 'GitSCMSource',
           remote: 'https://github.com/cb-ci-templates/ci-templates.git'])
-println  "WORKSPACE: ${env.WORKSPACE}"
-println  "WORKSPACE: ${WORKSPACE}"
+println  "WORKSPACE: ${env.workspace}"
+
 def templateYaml=readTemplateYaml("simpleMultiBranch")
+println  "WORKSPACE: ${workspace}"
 
 
 
