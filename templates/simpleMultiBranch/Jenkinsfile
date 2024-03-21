@@ -8,7 +8,7 @@ library identifier: 'ci-shared-library_pt@main', retriever: modernSCM(
          [$class: 'GitSCMSource',
           remote: 'https://github.com/cb-ci-templates/ci-templates.git'])
 
-def templateYaml=ci-templates.readTemplateYaml ("simpleMultiBranch")
+def templateYaml=readTemplateYaml("simpleMultiBranch")
 
 
 
