@@ -10,6 +10,7 @@ library identifier: 'ci-shared-library_pt@main', retriever: modernSCM(
 
 // Building the data object
 def configYaml = """---
+k8_agent_yaml : "podTemplate-simple.yaml"
 branchPropertiesFile: "ci-config.properties"
 param_greetings : 'Greetings to the rest of the World!'
 default_key1: 'default_value1'
