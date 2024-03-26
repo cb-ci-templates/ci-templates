@@ -23,16 +23,12 @@ Pipeline Templates are stored under the `/templates` folder, and each Pipeline T
 ├── README.md
 ├── catalog.yaml #Pipeline Template Catalog descriptor
 └── templates  # Pipeline Tenplate Catalog
-│   ├── helloWorldSimple  #tenplate folder
-│   │   ├── Jenkinsfile # Jenkins file used as temlate
-│   │   │── README.md    
-│   │   └── template.yaml #Pipeline Template descriptor
-│   ├── ....  # more template folders 
-└── marker-templates  # Marker Templates
-    ├── simple  #tenplate folder
-    │   ├── Jenkinsfile # Jenkins file used as template
-    │   │── README.md    
-    ├── ....  # more template folders 
+   ├── helloWorldSimple  #tenplate folder
+   │   ├── Jenkinsfile # Jenkins file used as temlate
+   │   │── README.md    
+   │   └── template.yaml #Pipeline Template descriptor
+   ├── ....  # more template folders 
+
 ```
 # Component diagram
 ![Diagram](images/CI-Component-diagram.svg)
