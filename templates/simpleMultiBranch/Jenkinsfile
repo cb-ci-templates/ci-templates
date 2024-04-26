@@ -1,5 +1,5 @@
 //env.SHARED_LIB_TAG should be injected from (Folder) environment properties
-env.SHARED_LIB_TAG=main
+env.SHARED_LIB_TAG="main"
 
 library identifier: "ci-shared-library@${env.SHARED_LIB_TAG}", retriever: modernSCM(
         [$class: 'GitSCMSource',
