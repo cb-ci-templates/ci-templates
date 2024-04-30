@@ -14,15 +14,18 @@ library identifier: "ci-shared-library_pt@${env.SHARED_LIB_TAG}", retriever: mod
 // Building the data object
 def configYaml = """---
 k8_agent_yaml : "podTemplate-simple.yaml"
-branchPropertiesFile: "ci-config.properties"
+branchPropertiesFile: "ci-config.yaml"
 param_greetings : 'Greetings to the rest of the World!'
 """
-
+//branchPropertiesFile: "ci-config.yaml"
 
 //Create a pipelineParams Map for the Pipeline template below
 Map pipelineParams = readYaml text: "${configYaml}"
 println pipelineParams
 
+
+
 //###### START PIPELINE TEMPLATE###########
 //We call the template from ci_shared_library_pt
-pt_ci_simple (pipelineParams)
+//pt_ci_simple (pipelineParams)
+testPipeline (pipelineParams)
