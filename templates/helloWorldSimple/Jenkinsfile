@@ -4,14 +4,14 @@ library identifier: "ci-shared-library@${env.SHARED_LIB_TAG}", retriever: modern
         [$class: 'GitSCMSource',
          remote: 'https://github.com/cb-ci-templates/ci-shared-library.git'])
 
-
+def pod = libraryResource 'podtemplates/podTemplate-curl.yaml'
 
 // Uses Declarative syntax to run commands inside a container.
 pipeline {
     agent {
         kubernetes {
             defaultContainer "custom-agent"
-            yaml libraryResource 'podtemplates/podTemplate-curl.yaml'
+            yaml pod
         }
     }
     stages {
