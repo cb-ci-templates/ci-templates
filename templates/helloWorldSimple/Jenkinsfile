@@ -1,17 +1,28 @@
-library identifier: 'ci-shared-library@main', retriever: modernSCM(
-        [$class: 'GitSCMSource',
-         remote: 'https://github.com/cb-ci-templates/ci-shared-library.git'])
-library identifier: 'ci-shared-library_pt@main', retriever: modernSCM(
-        [$class: 'GitSCMSource',
-         remote: 'https://github.com/cb-ci-templates/ci-shared-library-pt.git'])
-
-// Building the data object
-def configYaml = """---
-app : 'Hello World'
-k8_agent_yaml : ${k8_agent_yaml}
-firstName: ${firstName}
-lastName: ${lastName}
-"""
-
-Map configMap = readYaml text: "${configYaml}"
-pt_ci_sample_helloworld (configMap)
+library '_github.com_pipeline-demo-caternberg_pipeline_examples' _
+def agentPod = libraryResource 'podtemplates/podTemplate-curl.yaml'
+def testName="TESTNAME"
+// Uses Declarative syntax to run commands inside a container.
+pipeline {
+    agent {
+        kubernetes {
+            //#deprectatedlabel 'mavenPod'
+            defaultContainer "custom-agent"
+            yaml agentPod
+        }
+    }
+    stages {
+        stage('Hello') {
+            steps {
+                sh 'hostname'
+                helloWorld "${firstname}"
+                helloWorld "${testName}"
+            }
+        }
+        stage('Hello 2') {
+            steps {
+                sh 'hostname'
+                helloWorld "${firstname}"
+            }
+        }
+    }
+}
