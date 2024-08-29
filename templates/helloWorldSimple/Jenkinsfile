@@ -19,13 +19,7 @@ pipeline {
             steps {
                 sh 'hostname'
                 helloWorld "${firstname}"
-                helloWorld "${testName}"
-            }
-        }
-        stage('Hello 2') {
-            steps {
-                sh 'hostname'
-                helloWorld "${firstname}"
+                helloWorld "${lastname}"
             }
         }
     }
