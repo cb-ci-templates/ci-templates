@@ -1,13 +1,17 @@
-library '_github.com_pipeline-demo-caternberg_pipeline_examples' _
-def agentPod = libraryResource 'podtemplates/podTemplate-curl.yaml'
-def testName="TESTNAME"
+//env.SHARED_LIB_TAG should be injected from (Folder) environment properties
+env.SHARED_LIB_TAG="main"
+library identifier: "ci-shared-library@${env.SHARED_LIB_TAG}", retriever: modernSCM(
+        [$class: 'GitSCMSource',
+         remote: 'https://github.com/cb-ci-templates/ci-shared-library.git'])
+
+
+
 // Uses Declarative syntax to run commands inside a container.
 pipeline {
     agent {
         kubernetes {
-            //#deprectatedlabel 'mavenPod'
             defaultContainer "custom-agent"
-            yaml agentPod
+            yaml libraryResource 'podtemplates/podTemplate-curl.yaml'
         }
     }
     stages {
