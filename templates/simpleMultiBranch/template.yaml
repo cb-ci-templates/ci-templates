@@ -24,4 +24,17 @@ multibranch:
       repository: ${repoName}
       credentialsId: ${githubToken}
   markerFile: ci-config.properties
+  strategy:
+  namedBranchesDifferent:
+    defaultProperties:
+    - suppressAutomaticTriggering:
+        triggeredBranchesRegex: ^.*$
+        strategy: INDEXING
+    namedExceptions:
+    - named:
+        name: PR-\d+
+        props:
+        - suppressAutomaticTriggering:
+            triggeredBranchesRegex: ''
+            strategy: NONE
 
