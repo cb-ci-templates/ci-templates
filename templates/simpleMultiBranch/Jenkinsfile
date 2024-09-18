@@ -4,9 +4,6 @@ env.SHARED_LIB_TAG="main"
 library identifier: "ci-shared-library@${env.SHARED_LIB_TAG}", retriever: modernSCM(
         [$class: 'GitSCMSource',
          remote: 'https://github.com/cb-ci-templates/ci-shared-library.git'])
-library identifier: "ci-shared-library_pt@${env.SHARED_LIB_TAG}", retriever: modernSCM(
-        [$class: 'GitSCMSource',
-         remote: 'https://github.com/cb-ci-templates/ci-shared-library-pt.git'])
 
 
 
@@ -28,4 +25,5 @@ println pipelineParams
 //###### START PIPELINE TEMPLATE###########
 //We call the template from ci_shared_library_pt
 //pt_ci_simple (pipelineParams)
-testPipeline (pipelineParams)
+pipelineInitConfigSimple (pipelineParams)
+
