@@ -1,86 +1,12 @@
-library identifier: 'ci-shared-library@main', retriever: modernSCM(
+//env.SHARED_LIB_TAG should be injected from (Folder) environment properties
+env.SHARED_LIB_TAG="main"
+
+library identifier: "ci-shared-library@${env.SHARED_LIB_TAG}", retriever: modernSCM(
         [$class: 'GitSCMSource',
-         remote: 'git@github.com:cb-ci-templates/ci-shared-library.git',
-         credentialsId: 'github-user-ssh'])
-def mavenPod = libraryResource 'podtemplates/podTemplate-maven.yaml'
-def testScript = libraryResource 'scripts/script.sh'
-
-//def MVN_COMMAND_PACKAGE = 'mvn -q clean package -Dembedd-dependencies -Dmaven.repo.local=/tmp/.m2'
-//def MVN_COMMAND_DEPLOY = "mvn -e  -Dembedd-dependencies -Dmaven.repo.local=/tmp/.m2  -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true spring-boot:run"
-//def MVN_COMMAND_DEPLOY = "mvn  -e -Djansi.force=true -Dstyle.color=always  -Dembedd-dependencies -Dmaven.repo.local=/tmp/.m2  -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true clean deploy "
-//def MVN_COMMAND_DEPLOY = "mvn  -e -Djansi.force=true -Dstyle.color=always  -Dembedd-dependencies clean deploy"
-def MVN_COMMAND_DEPLOY = "mvn -e -Djansi.force=true -Dstyle.color=always  -Dembedd-dependencies -Dmaven.repo.local=/tmp/.m2  -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true clean install"
+         remote: 'https://github.com/cb-ci-templates/ci-shared-library.git'])
 
 
-pipeline {
-    //When applied at the top-level of the pipeline block no global agent will be allocated for the entire Pipeline run and each stage section will need to contain its own agent section. For example: agent none
-    agent {
-        kubernetes {
-            defaultContainer "maven"
-            yaml mavenPod
-        }
-    }
-    options {
-        buildDiscarder(logRotator(numToKeepStr: '5'))
-        //https://www.jenkins.io/blog/2018/02/22/cheetah/}
-        //https://www.jenkins.io/doc/book/pipeline/scaling-pipeline/
-        durabilityHint('PERFORMANCE_OPTIMIZED')
-    }
+Map configMap = readYaml text: libraryResource("json/ci-config-defaults.yaml")
 
-    stages {
-        stage("build") {
 
-            steps {
-                container("maven") {
-                    //https://plugins.jenkins.io/pipeline-maven/
-                    withMaven(
-                            //Use `$WORKSPACE/.repository` for local repository folder to avoid shared repositories
-                            //consider to use CloudBees Workspace caching https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/cloudbees-cache-step
-                            mavenLocalRepo: '.m2',
-                            // Maven settings.xml file defined with the Jenkins Config File Provider Plugin
-                            // We recommend to define Maven settings.xml globally at the folder level using
-                            // navigating to the folder configuration in the section "Pipeline Maven Configuration / Override global Maven configuration"
-                            // or globally to the entire master navigating to  "Manage Jenkins / Global Tools Configuration"
-                            mavenSettingsConfig: 'global-maven-settings'
-                    ) {
-                        sh "${MVN_COMMAND_DEPLOY}"
-                        //https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/cloudbees-cache-step
-                        //writeCache name: 'maven-repo', includes: '.m2/repository/**', excludes: '**SNAPSHOT**'
-                    }
-                    junit '**/target/surefire-reports/TEST-*.xml'
-                    archive '**/target/*.jar'
-                }
-            }
-        }
-
-        stage("Docker") {
-            when {
-                branch 'main'
-            }
-            options {
-                skipDefaultCheckout(true)
-            }
-            steps {
-                container(name: 'kaniko', shell: '/busybox/sh') {
-                    withEnv(['PATH+EXTRA=/busybox:/kaniko']) {
-                        sh '''#!/busybox/sh
-                          /kaniko/executor  --dockerfile $(pwd)/Dockerfile --insecure --skip-tls-verify --cache=false  --context $(pwd) --destination caternberg/spring-boot-demo:${GIT_COMMIT_SHORT}
-                      '''
-                    }
-                }
-            }
-            post {
-                success {
-                    echo "Docker Build Successfully"
-                    //Slack notification....
-                    //Jira update
-                }
-                failure {
-                    echo "Docker Build Failed"
-                    //Slack notification....
-                    //Jira update
-                }
-            }
-        }
-    }
-}
+pipelineMaven (configMap)
