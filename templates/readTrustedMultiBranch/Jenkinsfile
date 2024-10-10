@@ -1,0 +1,14 @@
+//env.SHARED_LIB_TAG should be injected from (Folder) environment properties
+env.SHARED_LIB_TAG="main"
+
+library identifier: "ci-shared-library@${env.SHARED_LIB_TAG}", retriever: modernSCM(
+        [$class: 'GitSCMSource',
+         remote: 'https://github.com/cb-ci-templates/ci-shared-library.git'])
+
+
+Map configMap = readYaml text: libraryResource("json/ci-config-defaults.yaml")
+
+//###### START PIPELINE TEMPLATE###########
+
+pipelineReadTrusted (configMap)
+
