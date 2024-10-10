@@ -75,6 +75,24 @@ Be sure to consult the official CloudBees documentation or a knowledgeable colle
     * GH Access token (Type secret text). See  [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
 
 
+##  Branch Suppress Strategies
+
+```
+strategy:
+  namedBranchesDifferent:
+    defaultProperties:
+    - suppressAutomaticTriggering:
+        triggeredBranchesRegex: ^.*$
+        strategy: INDEXING
+    namedExceptions:
+    - named:
+        name: PR-\d+
+        props:
+        - suppressAutomaticTriggering:
+            triggeredBranchesRegex: ''
+            strategy: NONE
+```
+
 # Docs & Videos
 
 Pipeline Best Practice
