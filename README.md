@@ -31,7 +31,7 @@ Pipeline Templates are stored under the `/templates` folder, and each Pipeline T
 
 ```
 # Component diagram
-![Diagram](images/CI-Component-diagram.svg)
+![CI-Component-diagram.png](images/CI-Component-diagram.png)
 
 TODO: description and design
 
