@@ -19,7 +19,10 @@ if (!env.SHAREDLIB_GIT_TAG) {
 
 library identifier: "${env.SHAREDLIB_GIT_REPO}@${env.SHAREDLIB_GIT_TAG_}", retriever: modernSCM(
         [$class: 'GitSCMSource',
-         remote: '${env.SHAREDLIB_GIT_SERVER}/${env.SHAREDLIB_GIT_ORG}/${env.SHAREDLIB_GIT_REPO}.git'])
+         remote: "${env.SHAREDLIB_GIT_SERVER}/${env.SHAREDLIB_GIT_ORG}/${env.SHAREDLIB_GIT_REPO}.git",
+         credentialsId: "${env.SHAREDLIB_GIT_CREDENTIALS}"
+        ]
+)
 
 
 /*library identifier: "ci-shared-library@${env.SHARED_LIB_TAG}", retriever: modernSCM(
