@@ -1,10 +1,14 @@
 #! /bin/bash
 
+
 # Controller URL where to create/update the MB job
-export CONTROLLER_URL="https://sda.acaternberg.flow-training.beescloud.com/controller-test"
+export CONTROLLER_URL="https://<YOUR_CONTROLLER_URL>"
 
 # Admin Jenkins Token
 export TOKEN="ADMIN_ID:TOKEN"
+
+# Folder where to create the MB Jobs. we need this because we use Folder credentials
+export FOLDER_NAME="MB_TEMPLATES_JOBS"
 
 # MB JobName
 export MB_JOB_NAME=${1:-"MB_NEW_MB_JOB"}
@@ -17,7 +21,13 @@ export MB_GIT_REPO_NAME=${3:-"sample-app-spring-boot-maven"}
 
 # The credentials id of your GitHub App credentials
 #see https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth
-export MB_JOB_GIT_HUP_APP_CREDENTIAL_ID=${4:-"ci-template-gh-app"}
+export MB_JOB_GIT_HUP_APP_CREDENTIAL_ID="ci-template-gh-app"
+export MB_JOB_GIT_HUP_APP_ID="YOUR GH APP ID"
+export MB_JOB_GIT_HUP_APP_PRIVATE_KEY="""
+                    -----BEGIN PRIVATE KEY-----
+                    YOUR GH APP PRIVATE KEY
+                    -----END PRIVATE KEY-----
+"""
 
 # The custom marker yaml file name on your repo branch
 export MB_GIT_CONFIG_MARKER_YAML=${5:-"ci-config.yaml"}
@@ -34,7 +44,7 @@ export FOLDER_PATH="/"
 
 # We render the CasC template,all env variables  are going to be substituted
 envsubst < item-mb-job.yaml.template > ${MB_JOB_NAME}.yaml
-
+cat ${MB_JOB_NAME}.yaml
 echo "------------------  CREATING MANAGED CONTROLLER ------------------"
 curl -v -XPOST \
    --user $TOKEN \
