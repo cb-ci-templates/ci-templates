@@ -7,9 +7,6 @@ export CONTROLLER_URL="https://<YOUR_CONTROLLER_URL>"
 # Admin Jenkins Token
 export TOKEN="ADMIN_ID:TOKEN"
 
-# Folder where to create the MB Jobs. we need this because we use Folder credentials
-export FOLDER_NAME="MB_TEMPLATES_JOBS"
-
 # MB JobName
 export MB_JOB_NAME=${1:-"MB_NEW_MB_JOB"}
 
