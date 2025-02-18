@@ -32,8 +32,7 @@ export MB_JOB_TEMPLATE_GIT_PATH="templates/mavenMultiBranch/Jenkinsfile"
 #export FOLDER_PATH="/Pipeline-Demo"
 export FOLDER_PATH="/"
 
-# We render the CasC template instances for the casc-folder (target folder)
-# All variables from the envvars.sh will be substituted
+# We render the CasC template,all env variables  are going to be substituted
 envsubst < item-mb-job.yaml.template > ${MB_JOB_NAME}.yaml
 
 echo "------------------  CREATING MANAGED CONTROLLER ------------------"
