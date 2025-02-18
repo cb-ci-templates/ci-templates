@@ -27,7 +27,7 @@ export MB_JOB_GIT_HUP_APP_PRIVATE_KEY="""
 """
 
 # The custom marker yaml file name on your repo branch
-export MB_GIT_CONFIG_MARKER_YAML=${5:-"ci-config.yaml"}
+export MB_GIT_CONFIG_MARKER_YAML=${4:-"ci-config.yaml"}
 
 # The GIT repo URL oof your templates
 export MB_JOB_TEMPLATE_GIT_URL="https://github.com/cb-ci-templates/ci-templates.git"
