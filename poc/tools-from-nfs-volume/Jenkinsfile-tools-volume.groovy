@@ -2,7 +2,6 @@
 pipeline {
     agent {
         kubernetes {
-            // Rather than inline YAML, in a multibranch Pipeline you could use: yamlFile 'jenkins-pod.yaml'
             yaml '''
 apiVersion: v1
 kind: Pod
@@ -10,7 +9,7 @@ metadata:
   name: tools-pod
 spec:
   containers:
-    - name: amazonlinux
+    - name: shell
       image: amazonlinux
       command:
       - sleep
@@ -38,7 +37,6 @@ spec:
                 PATH="$PATH:$JAVA_HOME/bin"
             }
             steps {
-                sh 'hostname'
                 sh 'java --version'
             }
         }
