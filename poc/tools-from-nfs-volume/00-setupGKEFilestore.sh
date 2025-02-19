@@ -23,8 +23,6 @@ gcloud container clusters update $CLUSTER_NAME \
     --region $ZONE # Or --zone for zonal clusters
 
 #Verify
-#kubectl get pods -n kube-system -l app.kubernetes.io/name=gcp-filestore-csi-driver
-#kubectl get pods -n kube-system -l app.kubernetes.io/k8s-app=gcp-filestore-csi-driver
 kubectl get pods -n kube-system -l  k8s-app=gcp-filestore-csi-driver
 
 # runs test
