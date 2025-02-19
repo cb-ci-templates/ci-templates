@@ -31,7 +31,6 @@ echo "NOW YOU NEED TO WAIT SOME MINUTES UNTIL THE FILESTORE IS CREATED AND ASSIG
 POD_NAME=tools-pod
 while true; do
   STATUS=$(kubectl get pod $POD_NAME -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}')
-
   if [ "$STATUS" == "True" ]; then
     echo "Pod $POD_NAME is ready."
     break
