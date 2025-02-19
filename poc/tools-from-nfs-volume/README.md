@@ -11,7 +11,7 @@
 Quickstart
 
 
-* adjust the cariables in `00-setupGKEFilestore.sh` then run the scriot to enable the file store CSI driver in your cluster
-* run `01-installTools.sh` to install a tool on the volume
-* run the `Jenkinsfile-declarative-pipeline-tools-volume` on our controller
+* adjust the variables in `00-setupGKEFilestore.sh` then run the scriot to enable the file store CSI driver in your cluster
+* run `01-installTools.sh` to install a tool (here jdk) on the volume
+* run the `Jenkinsfile-declarative-pipeline-tools-volume` on your controller
 * apply `casc-k8s-podtemplate.yaml` on your Controller to test the `Jenkinsfile-scripted-pipeline-tools-volume`
