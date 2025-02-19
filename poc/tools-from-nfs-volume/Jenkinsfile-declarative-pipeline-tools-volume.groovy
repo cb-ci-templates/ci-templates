@@ -1,10 +1,10 @@
 // Uses Declarative syntax to run commands inside a container.
 pipeline {
     agent {
-        //you can slo reference by label
+        //you can also reference by label
         //label "tools"
 
-        //but for deme we use inline pod yaml
+        //but for demo we use inline pod yaml
         kubernetes {
             yaml '''
 apiVersion: v1
