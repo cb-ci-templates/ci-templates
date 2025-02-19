@@ -8,7 +8,7 @@ It can be referenced from:
 * [Pipeline Template catalogs](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipeline-templates-user-guide/)
 
 # Goal
-The goal is to serve opinionated Pipeline templates wih proper CI stages and phases as shown below
+The goal is to serve opinionated Pipeline templates with proper CI stages and phases as shown below
 
 ![CI-Pipeline.png](images/CI-Pipeline-1.png)
 
@@ -98,7 +98,7 @@ strategy:
 Pipeline Best Practice
 * [just-enough-pipeline](https://www.jenkins.io/blog/2021/10/26/just-enough-pipeline/)
 * [CloudBees Pipeline BestPractice](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-best-practices)
-* YouTube: [Scripted vs. declarative Pipelines:What is the difference?](https://www.youtube.com/watch?v=GJBlskiaRrI=)
+* YouTube: [Scripted vs. declarative Pipelines: What is the difference?](https://www.youtube.com/watch?v=GJBlskiaRrI=)
 * [Scripted vs. declarative Pipelines](https://e.printstacktrace.blog/jenkins-scripted-pipeline-vs-declarative-pipeline-the-4-practical-differences/)
 
 MultiBranchSource Pipelines
