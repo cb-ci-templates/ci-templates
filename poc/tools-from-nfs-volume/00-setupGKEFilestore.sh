@@ -25,27 +25,9 @@ gcloud container clusters update $CLUSTER_NAME \
 #kubectl get pods -n kube-system -l app.kubernetes.io/k8s-app=gcp-filestore-csi-driver
 kubectl get pods -n kube-system -l  k8s-app=gcp-filestore-csi-driver
 
-
-
-# Steps to Create a PVC with ReadWriteMany in GKE
-## Set Up Filestore Instance:
-# * Create a Filestore instance in your GCP project.
-# * Specify the desired tier (STANDARD, PREMIUM, etc.), region, and capacity for the instance.
-# * Note the NFS mount point of the Filestore instance (e.g., 10.x.x.x:/nfs-share).
-
-#gcloud filestore instances create my-filestore-instance \
-#    --zone $ZONE \
-#    --tier PREMIUM \
-#    --file-share=name="nfs_share",capacity=2560GB \
-#    --network=name="default"
-
-#gcloud filestore instances list
-
-#gcloud filestore instances describe my-filestore-instance --zone=$ZONE
-
 # runs test
 kubectl apply -f tools-volume-pvc.yml
-# NOW YOU NEED TO WAIT SOME MINUTES
+echo "NOW YOU NEED TO WAIT SOME MINUTES UNTIL THE FILESTORE IS CREATED AND ASSIGNED; CHECK YOUR GCP CONSOLE FOR READINESS"
 kubectl logs -n kube-system -l k8s-app=gcp-filestore-csi-driver
 
 
