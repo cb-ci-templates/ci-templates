@@ -1,8 +1,8 @@
 # Onboarding
 
-You can use the Casc items API to create a Multibranch or gitHub organsation folder Job using casc items.
+You can use the CasC items API to create a Multibranch or GitHubOrganisation Folder Job using casc items.
 
-## rename [set-env.sh.template](set-env.sh.template)set-env.template
+## rename set-env.sh.template
 
 > cp set-env.sh.template set-env.sh
 
@@ -12,12 +12,18 @@ see the comments in set-env.sh
 
 ## run the scripts
 
-To create a Multbranch Pipeline
+To create a Multibranch Pipeline
 > ./createMultiBranchJob.sh
 
 
 To create a GitHubOrganisation folder
 > ./createGHOrganisationFolder.sh
+
+
+# TODO
+
+* Docker push in the Kaniko push step fails.Docker credentials are missing. Need to add docker credentials
+* Add support for Pipeline Template Catalog 
 
 
 
