@@ -39,40 +39,52 @@ TODO: description and design
 
 ![Diagram](images/CI-Diagramms-CustomMarkerFiles.svg)
 
-[Custom marker files](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#custom-pac-scripts) in the context of CloudBees CI are special files that you can place in a repository to control the behavior of your build. 
-They are typically named and placed according to certain conventions recognized by your build system or CI/CD pipeline, and they can signal to CloudBees CI or Jenkins to perform specific actions or apply certain configurations.
-For example, you might use a custom marker file to:
-
-* Ignore certain job or pipeline runs: Placing a file like `.ci-ignore` might tell Jenkins to skip the build for a commit that includes this file.
-* Control build parameters: A file such as `build.properties`or `build-properties.yaml` might contain key-value pairs that are injected as parameters into the build process.
-
-Templates, on the other hand, are predefined configurations or job definitions that can be reused across multiple projects or repos. Templates can help enforce consistency and reduce duplication of pipeline code, making it easier to manage Jenkins jobs or CloudBees CI pipelines at scale.
-
-To use templates with custom marker files, you would:
-
-* Set Up Template Catalogs: Define a catalog of templates in your CloudBees CI system. This involves creating the pipeline configurations that will be used as templates, which can be written in Jenkinsfile or another supported format.
-* Centralize Templates Management: Store these templates in a source control management system that is accessible by your CloudBees CI instance. For instance, a Git repository dedicated to CI/CD templates can serve this purpose.
-* Integrate Marker Files with Templates: Configure your CloudBees CI or Jenkins instance to recognize custom marker files and map them to the corresponding template. This might require additional plugin support or scripting within your Jenkins configuration.
-* Create and Commit Custom Marker Files: Develop custom marker files that contain the necessary instructions or metadata to select and apply a template. When you commit these files to your repository, your CI/CD system should detect the marker file and execute the build using the template that matches the instructions.
-* Use a Templating Engine (optional): For more dynamic use of templates, you could use a templating engine that replaces placeholders within your template with values derived from the custom marker files.
-
-For instance, you might have a marker file .build-template containing:
-
-* TEMPLATE_NAME=java-build-pipeline
-* ADDITIONAL_FLAGS=-DskipTests
-
-* When the build runs, CloudBees CI or Jenkins would recognize the marker file, apply the java-build-pipeline template, and pass any additional flags (in this case, -DskipTests) to the build process.
-
-Please note that the exact steps and capabilities may vary based on the specific plugins and configuration of your CloudBees CI or Jenkins instance.
-Be sure to consult the official CloudBees documentation or a knowledgeable colleague for more details relevant to your setup.
-
-
-
 ## Pre-requirements:
 
-* Set up credentials for GitHub
-    * GH User and SSH key (Type SSH user and private key)
-    * GH Access token (Type secret text). See  [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
+* A CloudBees CI Controller (modern)
+* Plugins referenced in the sample template 
+  * https://plugins.jenkins.io/pipeline-maven
+  * https://www.jenkins.io/doc/pipeline/steps/junit
+  * https://plugins.jenkins.io/build-discarder  (will be removed soon)
+  * https://plugins.jenkins.io/pipeline-utility-steps
+* These Plugins are referenced from 
+  * https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile
+  * https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/pipelineMaven.groovy
+
+* Credential "Secret file" 
+  * credentialId: dockerconfig
+  * filecontent: dockerconfig.json
+    ```
+    {
+      "auths": {
+        "https://index.docker.io/v1/": {
+          "username": "<YOUR_USER>",
+          "password": "<YOUR_PASSWORD>",
+          "email": "<YOUR_EMAIL>",
+          "auth": "<YOUR_BASE64_USER:PASSWORD>"
+        }
+      }
+    }
+    ```
+  * GitHubApp Credentials
+    * credentialId: ci-template-gh-app
+    * See:  [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
+ 
+## Quick Start
+
+The steps how to get this demo running:
+
+### By CasC
+
+see [README.md](casc/README.md)
+
+The onboarding with CasC works but is under development but works 
+
+### Manual
+
+Create either Multibranch Pipeline, GH Organisation Folder or Pipeline Template Catalog manually and adjust the custom marker step to this repository
+
+TODO: Write detailed onboarding guide
 
 
 ##  Branch Suppress Strategies
