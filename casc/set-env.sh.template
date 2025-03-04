@@ -1,0 +1,39 @@
+#! /biun/bash
+
+# Controller URL where to create/update the MB job
+export CONTROLLER_URL="https://ci.example.com/controller-test"
+
+# Admin Jenkins Token
+export TOKEN="ADMIN_ID:TOKEN"
+
+# JobName
+export JOB_NAME=${1:-"TEST_JOB"}
+
+# The GIT Organisation name where the Application repository(for MB Job) or repositories (For Org Job) is located
+export GIT_REPO_OWNER=${2:-"cb-ci-templates"}
+
+# FOR MB Job: The GIT repo name (Your App repository name you want to scan)
+export GIT_REPO_NAME=${3:-"sample-app-spring-boot-maven"}
+
+# The credentials id of your GitHub App credentials
+#see https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth
+export GIT_HUP_APP_CREDENTIAL_ID="ci-template-gh-app"
+export GIT_HUP_APP_ID="ADD_YOUR_GH_APP_ID"
+export GIT_HUP_APP_PRIVATE_KEY="""
+                    -----BEGIN PRIVATE KEY-----
+                    ADD YOUR GH APP PRIVATE KEY HERE
+                    -----END PRIVATE KEY-----
+"""
+
+# The custom marker yaml file name on your repo branch
+export MARKER_YAML=${4:-"ci-config.yaml"}
+
+# The GIT repo URL oof your templates
+export GIT_TEMPLATE_URL="https://github.com/cb-ci-templates/ci-templates.git"
+
+# The path to Jenkinsfile in your MB_JOB_TEMPLATE_GIT_URL
+export GIT_TEMPLATE_PATH="templates/mavenMultiBranch/Jenkinsfile"
+
+# The Folder path under where to create the MB_JOB_NAME
+#export FOLDER_PATH="/Pipeline-Demo"
+export FOLDER_PATH=""

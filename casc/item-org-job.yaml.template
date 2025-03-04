@@ -1,0 +1,96 @@
+removeStrategy:
+  rbac: SYNC
+  items: NONE
+items:
+- kind: organizationFolder
+  name: ORG-${JOB_NAME}
+  displayName: ORG-${JOB_NAME}
+  navigators:
+  - github:
+      enableAvatar: true
+      apiUri: https://api.github.com
+      traits:
+   # NOTE: Enable to scan by github repo topics
+   #   - gitHubTopicsFilter:
+   #       topicList: maven
+      - gitHubBranchDiscovery:
+          strategyId: 1
+      - gitHubPullRequestDiscovery:
+          strategyId: 2
+      - gitHubForkDiscovery:
+          trust:
+            gitHubTrustPermissions: {
+              }
+          strategyId: 2
+      repoOwner: ${GIT_REPO_OWNER}
+      credentialsId: ${GIT_HUP_APP_CREDENTIAL_ID}
+  orphanedItemStrategy:
+    defaultOrphanedItemStrategy:
+      pruneDeadBranches: true
+      daysToKeep: -1
+      numToKeep: -1
+      abortBuilds: false
+  projectFactories:
+  - customMultiBranchProjectFactory:
+      factory:
+        customBranchProjectFactory:
+          marker: ${MARKER_YAML}
+          definition:
+            cpsScmFlowDefinition:
+              scriptPath: ${GIT_TEMPLATE_PATH}
+              scm:
+                scmGit:
+                  userRemoteConfigs:
+                  - userRemoteConfig:
+                      credentialsId: ${GIT_HUP_APP_CREDENTIAL_ID}
+                      url: ${GIT_TEMPLATE_URL}
+                  branches:
+                  - branchSpec:
+                      name: '*/main'
+              lightweight: true
+  properties:
+  - folderCredentialsProperty:
+      folderCredentials:
+        - credentials:
+            - gitHubAppCredentials:
+                privateKey: |  ${GIT_HUP_APP_PRIVATE_KEY}
+                apiUri: ''
+                appID: ${GIT_HUP_APP_ID}
+                description: ${GIT_HUP_APP_CREDENTIAL_ID}
+                id: ${GIT_HUP_APP_CREDENTIAL_ID}
+          domain: {
+          }
+  - organizationChildHealthMetricsProperty:
+      templates:
+      - worstChildHealthMetric:
+          recursive: true
+      - averageChildHealthMetric: {
+          }
+      - jobStatusHealthMetric:
+          unstable: true
+          countVirginJobs: false
+          failure: true
+          success: true
+          unbuilt: true
+      - projectEnabledHealthMetric: {
+          }
+  - organizationChildOrphanedItemsProperty:
+      strategy:
+        inherit: {
+          }
+  - organizationChildTriggersProperty:
+      templates:
+      - periodicFolderTrigger:
+          interval: 1d
+  - envVars: {
+      }
+  - suppressFolderAutomaticTriggering:
+      strategy: NONE
+      branches: .*
+  strategy:
+    allBranchesSame: {
+      }
+  trigger:
+    periodicFolderTrigger:
+      interval: 1d
+
