@@ -7,11 +7,13 @@ It can be referenced from:
   * [Pipeline Organisation Folders](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#_organization_folders)
 * [Pipeline Template catalogs](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipeline-templates-user-guide/)
 
-# Goal
-The goal is to serve opinionated Pipeline templates with proper CI stages and phases as shown below
+# Objective
+
+* The goal is to show an opinionated Pipeline templates approach with proper CI stages and phases as shown below
+* The implementation of steps has sample character, so the setup is as easy as it can bee with a few  dependencies to other environment system
 
 ![CI-Pipeline.png](images/CI-Pipeline-1.png)
-
+Yeah
 # Structure 
 The repository structure follows the recommended repository design for Pipeline Template catalogs, however, the Jenkinsfiles can be referenced as well from MultiBranch and Organisation Folder Pipelines (Custom Marker).
 Pipeline Templates are stored under the `/templates` folder, and each Pipeline Template is defined as a `subfolder` containing two files:
@@ -51,7 +53,9 @@ TODO: description and design
   * https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile
   * https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/pipelineMaven.groovy
 
-* Credential "Secret file" 
+* Credential Dockerconfig  
+  * description: "credential to pull/push to dockerhub"
+  * type: "Secret file"
   * credentialId: dockerconfig
   * filecontent: dockerconfig.json
     ```
@@ -67,6 +71,8 @@ TODO: description and design
     }
     ```
   * GitHubApp Credentials
+    * description: "GHApp credentials to scan repositories and to clone"
+    * type: "GitHub App"
     * credentialId: ci-template-gh-app
     * See:  [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
  
