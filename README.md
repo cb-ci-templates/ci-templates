@@ -84,7 +84,8 @@ The steps how to get this demo running:
 
 see [README.md](casc/README.md)
 
-The onboarding with CasC works but is under development but works 
+The onboarding with CasC works but is under development 
+The dockerconfig credential must be created manual in the current state 
 
 ### Manual
 
