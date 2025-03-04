@@ -9,8 +9,12 @@ It can be referenced from:
 
 # Objective
 
-* The goal is to show an opinionated Pipeline templates approach with proper CI stages and phases as shown below
-* The implementation of steps has sample character, so the setup is as easy as it can bee with a few  dependencies to other environment system
+* The goal is to show an opinionated Pipeline templates approach with proper CI stages and phases as shown in the diagram below
+* The implementation of steps has sample character, so the setup is as easy as it can bee with a few dependencies to other environment systems
+* A sample [spring-boot application](https://github.com/cb-ci-templates/sample-app-spring-boot-maven) is included in [this github organisation](https://github.com/cb-ci-templates):
+  * It contains a simple [ci-config.yaml](https://github.com/cb-ci-templates/sample-app-spring-boot-maven/blob/main/ci-config.yaml) used as a custom marker and config file
+  * It will be scanned by on of the supported jobtypes
+  * It will be referenced by an instance of this [template](https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile) for the CI work (clone, build, push etc.)
 
 ![CI-Pipeline.png](images/CI-Pipeline-1.png)
 
