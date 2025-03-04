@@ -3,9 +3,9 @@ removeStrategy:
   items: NONE
 items:
 - kind: multibranch
-  name: ${MB_JOB_NAME}
-  description: ${MB_JOB_NAME}
-  displayName: ${MB_JOB_NAME}
+  name: MB-${JOB_NAME}
+  description: MB-${JOB_NAME}
+  displayName: MB-${JOB_NAME}
   orphanedItemStrategy:
     defaultOrphanedItemStrategy:
       pruneDeadBranches: true
@@ -14,16 +14,16 @@ items:
       abortBuilds: false
   projectFactory:
     customBranchProjectFactory:
-      marker: ${MB_GIT_CONFIG_MARKER_YAML}
+      marker: ${MARKER_YAML}
       definition:
         cpsScmFlowDefinition:
-          scriptPath: ${MB_JOB_TEMPLATE_GIT_PATH}
+          scriptPath: ${GIT_TEMPLATE_PATH}
           scm:
             scmGit:
               userRemoteConfigs:
                 - userRemoteConfig:
-                    credentialsId: ${MB_JOB_GIT_HUP_APP_CREDENTIAL_ID}
-                    url: ${MB_JOB_TEMPLATE_GIT_URL}
+                    credentialsId: ${GIT_HUP_APP_CREDENTIAL_ID}
+                    url: ${GIT_TEMPLATE_URL}
               branches:
                 - branchSpec:
                     name: '*/main'
@@ -37,11 +37,11 @@ items:
         folderCredentials:
           - credentials:
               - gitHubAppCredentials:
-                  privateKey: |  ${MB_JOB_GIT_HUP_APP_PRIVATE_KEY}
+                  privateKey: |  ${GIT_HUP_APP_PRIVATE_KEY}
                   apiUri: ''
-                  appID: ${MB_JOB_GIT_HUP_APP_ID}
-                  description: ${MB_JOB_GIT_HUP_APP_CREDENTIAL_ID}
-                  id: ${MB_JOB_GIT_HUP_APP_CREDENTIAL_ID}
+                  appID: ${GIT_HUP_APP_ID}
+                  description: ${GIT_HUP_APP_CREDENTIAL_ID}
+                  id: ${GIT_HUP_APP_CREDENTIAL_ID}
             domain: {
             }
   sourcesList:
@@ -70,11 +70,11 @@ items:
                           }
                     - junit: {
                     }
-            repoOwner: ${MB_GIT_REPO_OWNER}
-            credentialsId: ${MB_JOB_GIT_HUP_APP_CREDENTIAL_ID}
-            repository: ${MB_GIT_REPO_NAME}
+            repoOwner: ${GIT_REPO_OWNER}
+            credentialsId: ${GIT_HUP_APP_CREDENTIAL_ID}
+            repository: ${GIT_REPO_NAME}
             configuredByUrl: true
-            repositoryUrl: https://github.com/${MB_GIT_REPO_OWNER}/${MB_GIT_REPO_NAME}.git
+            repositoryUrl: https://github.com/${GIT_REPO_OWNER}/${GIT_REPO_NAME}.git
         strategy:
           namedBranchesDifferent:
             defaultProperties:
