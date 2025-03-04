@@ -13,7 +13,7 @@ It can be referenced from:
 * The implementation of steps has sample character, so the setup is as easy as it can bee with a few  dependencies to other environment system
 
 ![CI-Pipeline.png](images/CI-Pipeline-1.png)
-Yeah
+
 # Structure 
 The repository structure follows the recommended repository design for Pipeline Template catalogs, however, the Jenkinsfiles can be referenced as well from MultiBranch and Organisation Folder Pipelines (Custom Marker).
 Pipeline Templates are stored under the `/templates` folder, and each Pipeline Template is defined as a `subfolder` containing two files:
