@@ -7,8 +7,6 @@ It can be referenced from:
   * [Pipeline Organisation Folders](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#_organization_folders)
   * [Pipeline Template catalogs](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipeline-templates-user-guide/)
 
-# Objective
-
 * The goal is to show an opinionated Pipeline templates approach with proper CI stages and phases as shown in the diagram below
 * The implementation of steps has sample character, so the setup is as easy as it can bee with a few dependencies to other environment systems
 * A sample [spring-boot application](https://github.com/cb-ci-templates/sample-app-spring-boot-maven) is included in [this github organisation](https://github.com/cb-ci-templates):
