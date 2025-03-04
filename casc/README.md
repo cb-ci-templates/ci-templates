@@ -6,7 +6,7 @@ You can use the CasC items API to create a Multibranch or GitHubOrganisation Fol
 
 > cp set-env.sh.template set-env.sh
 
-## Adjust you custom values
+## set your custom values
 
 see the comments in set-env.sh
 
