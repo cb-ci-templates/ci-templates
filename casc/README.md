@@ -1,28 +1,29 @@
-# Onboarding
+# Setup
 
-You can use this Controller CasC [controller-ci-templates](controller/controller-ci-templates) bundle to crate a Controller which has 
-* All the required plugins installed
-* All required Credentials setup
-* A pre-configured MultiBranch and GitHub Organisation Job setup, referencing this template repo
+You can use this Controller CasC [controller-ci-templates](controller/controller-ci-templates) bundle to create a Controller that has everything setup. including: 
+* all required plugins 
+* all required Credentials 
+* a pre-configured MultiBranch and GitHub Organisation Job setup (referencing this template repository)
 
 Notes:
 
 * This CasC setup reads credentials in CasC from K8s secret. However, In production, external secret managers are strongly recommended (aws secret manager, vault etc)
 
-## prepare
+## Set environment
 
-* rename set-env.sh.template
+* rename `set-env.sh.template`
 
 > cp set-env.sh.template set-env.sh
 
-* set your custom values, see the comments in set-env.sh
-* rename cbci-secrets.yaml.template
+## Create Credentials
+
+* set your custom values, see the comments in `set-env.sh`
+* rename `cbci-secrets.yaml.template`
 
 > cp cbci-secrets.yaml.template  cbci-secrets.yaml
 
-* Update the following with your secrets
+* Update `cbci-secrets.yaml` with your secrets
 
-.cbci-secrets.yaml
 ```
 gitHubAppId: "YOUR_GH_APP_ID"
 gitHubAppPrivateKey: |
@@ -46,18 +47,33 @@ dockerConfigJson: |
 
 > ./00-createCredentialSecrets.sh
 
-## create a CasC bundle location in Cjoc
+# Option1: Create a Controller from Controller CasC bundle
 
-* see https://docs.cloudbees.com/docs/cloudbees-ci/latest/casc-controller/add-bundle#scm-casc-bundle-location 
+## Install CasC plugins on CjoC
+
+* Install the following plugins on CjoC
+  ```
+  - id: cloudbees-casc-client
+  - id: cloudbees-casc-items-api
+  - id: cloudbees-casc-items-commons
+  - id: cloudbees-casc-items-server
+  - id: cloudbees-casc-server
+  - id: cloudbees-casc-shared
+  ```
+
+## Create a CasC bundle location on CjoC
+
 * assign this repository as a bundle location: https://github.com/cb-ci-templates/ci-templates.git
+  * `Manage Jenkins -> System -> Configuration as Code bundle location -> Load CasC bundles`
+  * see https://docs.cloudbees.com/docs/cloudbees-ci/latest/casc-controller/add-bundle#scm-casc-bundle-location 
 
 ![CJOC-BundleLocatinSCM.png](../images/CJOC-BundleLocatinSCM.png)
 
-You should see the bundles then under "Load casc bundles" (left side menu)
+You should see the bundles then under "Load CasC bundles" (left side menu)
 
 ![CJOC-LoadCasCBunlde.png](../images/CJOC-LoadCasCBunlde.png)
 
-in CasC the configuration looks like this for CjoC jenkins.yaml
+In CjoC CasC the configuration looks like this for the jenkins.yaml
 
 ```
 unclassified:
@@ -81,7 +97,7 @@ unclassified:
 ```
 
 
-## Create a Controller from  the bundle
+## Create a Controller from the bundle
 
 You cab eiter use this script [01-createManagedController.sh](01-createManagedController.sh)
 
@@ -211,12 +227,16 @@ You have now a Controller created with
 ![MBJob.png](../images/MBJob.png)
 ![ORGJob.png](../images/ORGJob.png)
 
-## Start the jobs
+## Start/run the jobs
+
+Note: Webhook management is not enabled by default in this demo
 
 ![PLExplorer.png](../images/PLExplorer.png)
 
 
-#  Create Jobs by CasC API on an existing Controller 
+
+
+#  Option2: Create Jobs by CasC API on an existing Controller 
 
 You can use the CasC items API to create a Multibranch or GitHubOrganisation Folder Job an existing Controller.
 
