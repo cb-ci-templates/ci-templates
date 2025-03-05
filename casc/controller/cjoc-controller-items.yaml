@@ -1,0 +1,78 @@
+removeStrategy:
+  rbac: SYNC
+  items: NONE
+items:
+  - kind: managedController
+    name: ${CONTROLLER_NAME:-"controller-ci-templates"}
+    #name: controller-ci-templates
+    configuration:
+      kubernetes:
+        allowExternalAgents: false
+        terminationGracePeriodSeconds: 1200
+        #image: CloudBees CI - Managed Controller - latest
+        memory: 3072
+        startupPeriodSeconds: 10
+        fsGroup: '1000'
+        cpus: 1.0
+        #envVars: MASTER_GLOBAL_JAVA_OPTIONS=-Djenkins.security.ManagePermission=true -Djenkins.security.SystemReadPermission=true
+        readinessTimeoutSeconds: 5
+        startupFailureThreshold: 100
+        livenessInitialDelaySeconds: 300
+        readinessInitialDelaySeconds: 30
+        clusterEndpointId: default
+        disk: 50
+        readinessFailureThreshold: 100
+        livenessTimeoutSeconds: 10
+        #storageClassName: ssd-cloudbees-ci-cloudbees-core
+        storageClassName: ${STORAGECLASS:-"ssd-cloudbees-ci-cloudbees-core"}
+        domain: controller-ci-templates
+        livenessPeriodSeconds: 10
+        startupTimeoutSeconds: 5
+        startupInitialDelaySeconds: 30
+        javaOptions: -XshowSettings:vm -XX:+AlwaysPreTouch -XX:+DisableExplicitGC -XX:+ParallelRefProcEnabled
+          -XX:+UseStringDeduplication -XX:+AlwaysActAsServerClassMachine -Dhudson.slaves.NodeProvisioner.initialDelay=0
+        yaml: |-
+          ---
+          apiVersion: "apps/v1"
+          kind: "StatefulSet"
+          spec:
+            template:
+              metadata:
+                annotations:
+                  cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+              spec:
+                containers:
+                  - name: "jenkins"
+                    env:
+                    - name: SECRETS
+                      value: /var/run/secrets/controller
+                    volumeMounts:
+                      - name: controller-secrets
+                        mountPath: /var/run/secrets/controller
+                        readOnly: true
+                volumes:
+                  - name: controller-secrets
+                    secret:
+                      defaultMode: 420
+                      secretName: controller-secrets
+    description: ''
+    displayName: ${CONTROLLER_NAME:-"controller-ci-templates"}
+    properties:
+      - configurationAsCode:
+          bundle: dev/controller-ci-templates
+      - customWebhookData: {}
+      - sharedHeaderLabelOptIn:
+          optIn: true
+      - healthReporting:
+          enabled: true
+      - optOutProperty:
+          securityEnforcerOptOutMode:
+            optOutNone: {
+            }
+      - owner:
+          delay: 5
+          owners: ''
+      - envelopeExtension:
+          allowExceptions: false
+      - sharedConfigurationOptOut:
+          optOut: false
