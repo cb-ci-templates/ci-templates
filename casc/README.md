@@ -202,9 +202,15 @@ You have now a Controller created with
 You can also create a Job on an existing Controller
 This requires a Controller with CasC plugins installed
 
-* You must install  plugins required by the Pipeline template first
+* You need to install plugins required by the Pipeline template first
   * pipeline-maven
   * pipeline-utility-steps
+  * ??? 
+
+* You need to create the following credentials
+  * see [credentials.yaml](controller/controller-ci-templates/credentials.yaml)
+
+
 
 ## run the scripts
 
