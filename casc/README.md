@@ -1,8 +1,8 @@
 # Onboarding
 
-You can use this Controller CasC to crate a Controller which has 
-* All thge required plugins installed
-* ERequired Crdentials setup
+You can use this Controller CasC [controller-ci-templates](controller/controller-ci-templates) bundle to crate a Controller which has 
+* All the required plugins installed
+* All required Credentials setup
 * A pre-configured MultiBranch and GitHub Organisation Job setup, referencing this template repo
 
 Notes:
@@ -46,7 +46,7 @@ dockerConfigJson: |
 
 > ./00-createCredentialSecrets.sh
 
-## create a casc bundle location in Cjoc
+## create a CasC bundle location in Cjoc
 
 * see https://docs.cloudbees.com/docs/cloudbees-ci/latest/casc-controller/add-bundle#scm-casc-bundle-location 
 * assign this repository as a bundle location: https://github.com/cb-ci-templates/ci-templates.git
