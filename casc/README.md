@@ -204,8 +204,12 @@ You have now a Controller created with
 * the required credentials created 
 * two jobs setup
 
+![MBJob.png](../images/MBJob.png)
+![ORGJob.png](../images/ORGJob.png)
+
 ## Start the jobs
 
+![PLExplorer.png](../images/PLExplorer.png)
 
 
 #  Create Jobs by CasC API on an existing Controller 
