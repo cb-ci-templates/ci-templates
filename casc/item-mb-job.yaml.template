@@ -35,15 +35,22 @@ items:
         override: false
     - folderCredentialsProperty:
         folderCredentials:
-          - credentials:
-              - gitHubAppCredentials:
-                  privateKey: |  ${GIT_HUP_APP_PRIVATE_KEY}
-                  apiUri: ''
-                  appID: ${GIT_HUP_APP_ID}
-                  description: ${GIT_HUP_APP_CREDENTIAL_ID}
-                  id: ${GIT_HUP_APP_CREDENTIAL_ID}
-            domain: {
-            }
+        - credentials:
+          - gitHubAppCredentials:
+              privateKey: |
+                  ${GIT_HUP_APP_PRIVATE_KEY}
+              apiUri: ''
+              appID: ${GIT_HUP_APP_ID}
+              description: ${GIT_HUP_APP_CREDENTIAL_ID}
+              id: ${GIT_HUP_APP_CREDENTIAL_ID}
+          - stringCredentialsImpl:
+              description: ${DOCKER_CREDENTIAL_ID}
+              id: ${DOCKER_CREDENTIAL_ID}
+              #secret: "mysecret"
+              secret: |
+                  ${DOCKER_CREDENTIAL}
+          domain: {
+          }
   sourcesList:
     - branchSource:
         source:
