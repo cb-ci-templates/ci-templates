@@ -43,57 +43,13 @@ TODO: description and design
 
 ![Diagram](images/CI-Diagramms-CustomMarkerFiles.svg)
 
-## Pre-requirements:
 
-* A CloudBees CI Controller (modern)
-* Plugins referenced in the sample template 
-  * https://plugins.jenkins.io/pipeline-maven
-  * https://www.jenkins.io/doc/pipeline/steps/junit
-  * https://plugins.jenkins.io/build-discarder  (will be removed soon)
-  * https://plugins.jenkins.io/pipeline-utility-steps
-* These Plugins are referenced from 
-  * https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile
-  * https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/pipelineMaven.groovy
-
-* Credential Dockerconfig  
-  * description: "credential to pull/push to dockerhub"
-  * type: "Secret file"
-  * credentialId: dockerconfig
-  * filecontent: dockerconfig.json
-    ```
-    {
-      "auths": {
-        "https://index.docker.io/v1/": {
-          "username": "<YOUR_USER>",
-          "password": "<YOUR_PASSWORD>",
-          "email": "<YOUR_EMAIL>",
-          "auth": "<YOUR_BASE64_USER:PASSWORD>"
-        }
-      }
-    }
-    ```
-  * GitHubApp Credentials
-    * description: "GHApp credentials to scan repositories and to clone"
-    * type: "GitHub App"
-    * credentialId: ci-template-gh-app
-    * See:  [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
  
 ## Quick Start
 
 The steps how to get this demo running:
 
-### By CasC
-
-see [README.md](casc/README.md)
-
-The onboarding with CasC works but is under development 
-The dockerconfig credential must be created manual in the current state 
-
-### Manual
-
-Create either Multibranch Pipeline, GH Organisation Folder or Pipeline Template Catalog manually and adjust the custom marker step to this repository
-
-TODO: Write detailed onboarding guide
+see [casc](casc/)
 
 
 ##  Branch Suppress Strategies

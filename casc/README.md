@@ -1,20 +1,26 @@
 # Onboarding
 
-You can use the CasC items API to create a Multibranch or GitHubOrganisation Folder Job using casc items.
+You can use this Controller CasC to crate a Controller which has 
+* All thge required plugins installed
+* ERequired Crdentials setup
+* A pre-configured MultiBranch and GitHub Organisation Job setup, referencing this template repo
 
-## rename set-env.sh.template
+Notes:
+
+* This CasC setup reads credentials in CasC from K8s secret. However, In production, external secret managers are strongly recommended (aws secret manager, vault etc)
+
+## prepare
+
+* rename set-env.sh.template
 
 > cp set-env.sh.template set-env.sh
 
-## set your custom values
-
-see the comments in set-env.sh
-
-## rename cbci-secrets.yaml.template
+* set your custom values, see the comments in set-env.sh
+* rename cbci-secrets.yaml.template
 
 > cp cbci-secrets.yaml.template  cbci-secrets.yaml
 
-Update the following with your secrets
+* Update the following with your secrets
 
 .cbci-secrets.yaml
 ```
@@ -35,6 +41,10 @@ dockerConfigJson: |
       }
     }
 ```
+
+* create the required credentials as K8s secrets
+
+> ./00-createCredentialSecrets.sh
 
 ## create a casc bundle location in Cjoc
 
@@ -194,22 +204,54 @@ You have now a Controller created with
 * the required credentials created 
 * two jobs setup
 
+![MBJob.png](../images/MBJob.png)
+![ORGJob.png](../images/ORGJob.png)
+
 ## Start the jobs
+
+![PLExplorer.png](../images/PLExplorer.png)
 
 
 #  Create Jobs by CasC API on an existing Controller 
 
-You can also create a Job on an existing Controller
+You can use the CasC items API to create a Multibranch or GitHubOrganisation Folder Job an existing Controller.
+
 This requires a Controller with CasC plugins installed
 
-* You need to install plugins required by the Pipeline template first
-  * pipeline-maven
-  * pipeline-utility-steps
-  * ??? 
+## Pre-requirements:
 
-* You need to create the following credentials
-  * see [credentials.yaml](controller/controller-ci-templates/credentials.yaml)
+* A CloudBees CI Controller (modern)
+* Plugins referenced in the sample template
+  * https://plugins.jenkins.io/pipeline-maven
+  * https://www.jenkins.io/doc/pipeline/steps/junit
+  * https://plugins.jenkins.io/build-discarder  (will be removed soon)
+  * https://plugins.jenkins.io/pipeline-utility-steps
+* These Plugins are referenced from
+  * https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile
+  * https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/pipelineMaven.groovy
 
+* Dockerconfig Credential 
+  * description: "credential to pull/push to dockerhub"
+  * type: "Secret file"
+  * credentialId: dockerconfig
+  * filecontent: dockerconfig.json
+    ```
+    {
+      "auths": {
+        "https://index.docker.io/v1/": {
+          "username": "<YOUR_USER>",
+          "password": "<YOUR_PASSWORD>",
+          "email": "<YOUR_EMAIL>",
+          "auth": "<YOUR_BASE64_USER:PASSWORD>"
+        }
+      }
+    }
+    ```
+  * GitHubApp Credentials
+    * description: "GHApp credentials to scan repositories and to clone"
+    * type: "GitHub App"
+    * credentialId: ci-template-gh-app
+    * See:  [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
 
 
 ## run the scripts

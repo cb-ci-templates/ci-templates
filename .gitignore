@@ -3,3 +3,4 @@
 /.gradle/
 /resources/scripts/kubectl-create-secret.sh
 /casc/set-env.sh
+/casc/set-env.sh
