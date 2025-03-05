@@ -1,4 +1,4 @@
-# Onboarding
+# Setup
 
 You can use this Controller CasC [controller-ci-templates](controller/controller-ci-templates) bundle to crate a Controller which has 
 * All the required plugins installed
