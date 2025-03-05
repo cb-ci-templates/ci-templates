@@ -99,7 +99,7 @@ unclassified:
 
 ## Create a Controller from the bundle
 
-You cab eiter use this script [01-createManagedController.sh](01-createManagedController.sh)
+You can either use this script [01-createManagedController.sh](01-createManagedController.sh)
 
 OR follow the manual steps below: 
 
@@ -107,7 +107,7 @@ OR follow the manual steps below:
 
 ![CJOC-Controller-provisioning-bundle.png](../images/CJOC-Controller-provisioning-bundle.png)
 
-* Apply the yaml patch for the secrets
+* Apply the yaml patch (to mount the credential secrets)
 
 ![CJOC-Controller-Yal_patch.png](../images/CJOC-Controller-Yal_patch.png)
 
@@ -138,7 +138,7 @@ template:
 ```
 
 
- In CasC the full configuration looks like: 
+In CasC the full configuration looks like: 
 
 ```
 kind: managedController
@@ -222,23 +222,21 @@ You have now a Controller created with
 
 * the required plugins pre-installed
 * the required credentials created 
-* two jobs setup
+* two jobs configured, ready to use
 
 ![MBJob.png](../images/MBJob.png)
 ![ORGJob.png](../images/ORGJob.png)
 
 ## Start/run the jobs
 
-Note: Webhook management is not enabled by default in this demo
+Note: Webhook management is not enabled by default in this demo.
+You need to start the Jobs manually 
 
 ![PLExplorer.png](../images/PLExplorer.png)
 
-
-
-
 #  Option2: Create Jobs by CasC API on an existing Controller 
 
-You can use the CasC items API to create a Multibranch or GitHubOrganisation Folder Job an existing Controller.
+You can use the CasC items API to create a Multibranch or GitHubOrganisation Folder Job on an existing Controller.
 
 This requires a Controller with CasC plugins installed
 
@@ -250,10 +248,9 @@ This requires a Controller with CasC plugins installed
   * https://www.jenkins.io/doc/pipeline/steps/junit
   * https://plugins.jenkins.io/build-discarder  (will be removed soon)
   * https://plugins.jenkins.io/pipeline-utility-steps
-* These Plugins are referenced from
-  * https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile
-  * https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/pipelineMaven.groovy
-
+  * These Plugins are referenced from
+    * https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile
+    * https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/pipelineMaven.groovy
 * Dockerconfig Credential 
   * description: "credential to pull/push to dockerhub"
   * type: "Secret file"
@@ -285,13 +282,14 @@ To create a Multibranch Pipeline
 cd jobs
 ./createMultiBranchJob.sh
 ```
+see: [item-mb-job.yaml.template](jobs/item-mb-job.yaml.template)
 
 To create a GitHubOrganisation folder
 ```
 cd jobs
 ./createGHOrganisationFolder.sh
 ```
-
+see: [item-org-job.yaml.template](jobs/item-org-job.yaml.template)
 
 # TODO
 
