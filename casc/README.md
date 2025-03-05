@@ -83,6 +83,10 @@ unclassified:
 
 ## Create a Controller from  the bundle
 
+You cab eiter use this script [01-createManagedController.sh](01-createManagedController.sh)
+
+OR follow the manual steps below: 
+
 * Assign the bundle `main/controller-ci-templates` to the Controller provisioning 
 
 ![CJOC-Controller-provisioning-bundle.png](../images/CJOC-Controller-provisioning-bundle.png)
