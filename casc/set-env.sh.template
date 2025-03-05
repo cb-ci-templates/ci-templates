@@ -24,6 +24,13 @@ export GIT_HUP_APP_PRIVATE_KEY="""
                     ADD YOUR GH APP PRIVATE KEY HERE
                     -----END PRIVATE KEY-----
 """
+export DOCKER_CREDENTIAL_ID="dockerconfig"
+#export DOCKER_CREDENTIAL=$(cat dockerconfig.json)
+
+# Your docker hub auth. Adjust, if you use another registry
+export DOCKER_CREDENTIAL='''
+                    {"auths":{"https://index.docker.io/v1/":{"username":"YOUR_USER","password":"YOUR_PASSWORD","email":"user@example.com","auth":"BASE64_USER:PASSWORD"}}}
+'''
 
 # The custom marker yaml file name on your repo branch
 export MARKER_YAML=${4:-"ci-config.yaml"}
@@ -31,7 +38,7 @@ export MARKER_YAML=${4:-"ci-config.yaml"}
 # The GIT repo URL oof your templates
 export GIT_TEMPLATE_URL="https://github.com/cb-ci-templates/ci-templates.git"
 
-# The path to Jenkinsfile in your MB_JOB_TEMPLATE_GIT_URL
+# The path to Jenkinsfile in your GIT_TEMPLATE_URL
 export GIT_TEMPLATE_PATH="templates/mavenMultiBranch/Jenkinsfile"
 
 # The Folder path under where to create the MB_JOB_NAME

@@ -1,0 +1,147 @@
+removeStrategy:
+  rbac: SYNC
+  items: NONE
+items:
+- kind: multibranch
+  name: MB-TEST_JOB
+  description: MB-TEST_JOB
+  displayName: MB-TEST_JOB
+  orphanedItemStrategy:
+    defaultOrphanedItemStrategy:
+      pruneDeadBranches: true
+      daysToKeep: -1
+      numToKeep: -1
+      abortBuilds: false
+  projectFactory:
+    customBranchProjectFactory:
+      marker: ci-config.yaml
+      definition:
+        cpsScmFlowDefinition:
+          scriptPath: templates/mavenMultiBranch/Jenkinsfile
+          scm:
+            scmGit:
+              userRemoteConfigs:
+              - userRemoteConfig:
+                  credentialsId: ci-template-gh-app
+                  url: https://github.com/cb-ci-templates/ci-templates.git
+              branches:
+              - branchSpec:
+                  name: '*/main'
+          lightweight: true
+  properties:
+  - envVars: {}
+  - mavenConfigFolderOverrideProperty:
+      override: false
+  sourcesList:
+  - branchSource:
+      source:
+        github:
+          apiUri: https://api.github.com
+          traits:
+          - gitHubBranchDiscovery:
+              strategyId: 3
+          - gitHubPullRequestDiscovery:
+              strategyId: 2
+          - gitHubForkDiscovery:
+              trust:
+                gitHubTrustPermissions: {}
+              strategyId: 2
+          - cloudBeesSCMReporting:
+              visibleLinesOnly: false
+              handlers:
+              - endBuildError:
+                  maxLogLines: 100
+              - stage:
+                  verbosity:
+                    all: {}
+              - junit: {}
+          repoOwner: cb-ci-templates
+          credentialsId: ci-template-gh-app
+          id: af4cc07b-5541-4fc2-aad1-cd6f4d5e5908
+          repository: sample-app-spring-boot-maven
+          configuredByUrl: true
+          repositoryUrl: https://github.com/cb-ci-templates/sample-app-spring-boot-maven.git
+      strategy:
+        namedBranchesDifferent:
+          defaultProperties:
+          - suppressAutomaticTriggering:
+              triggeredBranchesRegex: ^.*$
+              strategy: INDEXING
+          namedExceptions:
+          - named:
+              name: PR-\d+
+              props:
+              - suppressAutomaticTriggering:
+                  triggeredBranchesRegex: ''
+                  strategy: NONE
+- kind: organizationFolder
+  name: ORG-TEST_JOB
+  displayName: ORG-TEST_JOB
+  navigators:
+  - github:
+      enableAvatar: true
+      apiUri: https://api.github.com
+      traits:
+      - gitHubBranchDiscovery:
+          strategyId: 1
+      - gitHubPullRequestDiscovery:
+          strategyId: 2
+      - gitHubForkDiscovery:
+          trust:
+            gitHubTrustPermissions: {}
+          strategyId: 2
+      repoOwner: cb-ci-templates
+      credentialsId: ci-template-gh-app
+  orphanedItemStrategy:
+    defaultOrphanedItemStrategy:
+      pruneDeadBranches: true
+      daysToKeep: -1
+      numToKeep: -1
+      abortBuilds: false
+  projectFactories:
+  - customMultiBranchProjectFactory:
+      factory:
+        customBranchProjectFactory:
+          marker: ci-config.yaml
+          definition:
+            cpsScmFlowDefinition:
+              scriptPath: templates/mavenMultiBranch/Jenkinsfile
+              scm:
+                scmGit:
+                  userRemoteConfigs:
+                  - userRemoteConfig:
+                      credentialsId: ci-template-gh-app
+                      url: https://github.com/cb-ci-templates/ci-templates.git
+                  branches:
+                  - branchSpec:
+                      name: '*/main'
+              lightweight: true
+  properties:
+  - organizationChildHealthMetricsProperty:
+      templates:
+      - worstChildHealthMetric:
+          recursive: true
+      - averageChildHealthMetric: {}
+      - jobStatusHealthMetric:
+          unstable: true
+          countVirginJobs: false
+          failure: true
+          success: true
+          unbuilt: true
+      - projectEnabledHealthMetric: {}
+  - organizationChildOrphanedItemsProperty:
+      strategy:
+        inherit: {}
+  - organizationChildTriggersProperty:
+      templates:
+      - periodicFolderTrigger:
+          interval: 1d
+  - envVars: {}
+  - suppressFolderAutomaticTriggering:
+      strategy: NONE
+      branches: .*
+  strategy:
+    allBranchesSame: {}
+  trigger:
+    periodicFolderTrigger:
+      interval: 1d
