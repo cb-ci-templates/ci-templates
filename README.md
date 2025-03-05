@@ -9,12 +9,16 @@ It can be referenced from:
 
 * The goal is to show an opinionated Pipeline templates approach with proper CI stages and phases as shown in the diagram below
 * The implementation of steps has sample character, so the setup is as easy as it can bee with a few dependencies to other environment systems
-* A sample [spring-boot application](https://github.com/cb-ci-templates/sample-app-spring-boot-maven) is included in [this github organisation](https://github.com/cb-ci-templates):
-  * It contains a simple [ci-config.yaml](https://github.com/cb-ci-templates/sample-app-spring-boot-maven/blob/main/ci-config.yaml) used as a custom marker and config file (which are used properties for the template)
-  * The app repo will be scanned by one of the supported job types
+* A sample [spring-boot application](https://github.com/cb-ci-templates/sample-app-spring-boot-maven) is part of [this github organisation](https://github.com/cb-ci-templates)
+  * It contains a simple [ci-config.yaml](https://github.com/cb-ci-templates/sample-app-spring-boot-maven/blob/main/ci-config.yaml) used as a custom marker and config file (used as properties for the template)
+  * The sample spring-boot app repo will be scanned by one of the supported job types
   * It will be referenced by an instance of this [template](https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile) for the CI work (clone, build, push etc.)
 
 ![CI-Pipeline.png](images/CI-Pipeline-1.png)
+
+## Quick Start
+
+For quickstart and setup steps, see [casc](casc/)
 
 # Structure 
 The repository structure follows the recommended repository design for Pipeline Template catalogs, however, the Jenkinsfiles can be referenced as well from MultiBranch and Organisation Folder Pipelines (Custom Marker).
@@ -42,15 +46,9 @@ TODO: description and design
 # Custom marker files and Pipeline templates
 
 ![Diagram](images/CI-Diagramms-CustomMarkerFiles.svg)
-
-
  
-## Quick Start
 
-The steps how to get this demo running:
-
-see [casc](casc/)
-
+# Notes: Job settings
 
 ##  Branch Suppress Strategies
 
