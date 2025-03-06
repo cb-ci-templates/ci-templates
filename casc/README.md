@@ -5,9 +5,14 @@ You can use this Controller CasC [controller-ci-templates](controller/controller
 * all required Credentials 
 * a pre-configured MultiBranch and GitHub Organisation Job setup (referencing this template repository)
 
-Notes:
+## Steps
 
-* This CasC setup reads credentials in CasC from K8s secret. However, In production, external secret managers are strongly recommended (aws secret manager, vault etc)
+* fork the following repositories in your own GitHub organisation:
+  * https://github.com/cb-ci-templates/ci-templates
+  * https://github.com/cb-ci-templates/ci-shared-library
+  * https://github.com/cb-ci-templates/sample-app-spring-boot-maven
+* Clone the https://github.com/cb-ci-templates/ci-templates to your terminal and follow the instructions below
+*  
 
 ## Set environment
 
@@ -15,9 +20,14 @@ Notes:
 
 > cp set-env.sh.template set-env.sh
 
+* set your custom values, see all the comments `CHANGE ME` in `set-env.sh`
+
 ## Create Credentials
 
-* set your custom values, see the comments in `set-env.sh`
+Notes:
+
+* This CasC setup reads credentials in CasC from K8s secret. However, In production, external secret managers are strongly recommended (aws secret manager, vault etc)
+
 * rename `cbci-secrets.yaml.template`
 
 > cp cbci-secrets.yaml.template  cbci-secrets.yaml

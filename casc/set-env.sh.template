@@ -1,42 +1,37 @@
 #! /biun/bash
 
-# Controller URL where to create/update the MB job
-export CONTROLLER_URL="https://ci.example.com/controller-test"
+# Your Namespace
+export NAMESPACE=cloudbees-core
 
-# Admin Jenkins Token
+# CHANGE ME: Admin Jenkins Token
 export TOKEN="ADMIN_ID:TOKEN"
 
-# JobName
-export JOB_NAME=${1:-"TEST_JOB"}
+# CHANGE ME:The base URL
+export BASE_URL="https://ci.example.com"
 
-# The GIT Organisation name where the Application repository(for MB Job) or repositories (For Org Job) is located
-export GIT_REPO_OWNER=${2:-"cb-ci-templates"}
+# The name of the Controller you want to create
+export CONTROLLER_NAME="controller-ci-templates"
+
+# Controller URL where to create/update the MB job
+export CONTROLLER_URL="$BASE_URL/$CONTROLLER_NAME"
+
+# The URL of CJOC
+export CJOC_URL="$BASE_URL/cjoc"
+
+# JobName
+export JOB_NAME="TEMPLATE_JOB"
+
+#  CHANGE ME: The GIT Organisation name where the Application repository(for MB Job) or repositories (For Org Job) is located
+export GIT_REPO_OWNER="cb-ci-templates"
+
+# CHANGE ME: The GIT repo URL oof your templates
+export GIT_TEMPLATE_URL="https://github.com/cb-ci-templates/ci-templates.git"
 
 # FOR MB Job: The GIT repo name (Your App repository name you want to scan)
-export GIT_REPO_NAME=${3:-"sample-app-spring-boot-maven"}
-
-# The credentials id of your GitHub App credentials
-#see https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth
-export GIT_HUP_APP_CREDENTIAL_ID="ci-template-gh-app"
-export GIT_HUP_APP_ID="ADD_YOUR_GH_APP_ID"
-export GIT_HUP_APP_PRIVATE_KEY="""
-                    -----BEGIN PRIVATE KEY-----
-                    ADD YOUR GH APP PRIVATE KEY HERE
-                    -----END PRIVATE KEY-----
-"""
-export DOCKER_CREDENTIAL_ID="dockerconfig"
-#export DOCKER_CREDENTIAL=$(cat dockerconfig.json)
-
-# Your docker hub auth. Adjust, if you use another registry
-export DOCKER_CREDENTIAL='''
-                    {"auths":{"https://index.docker.io/v1/":{"username":"YOUR_USER","password":"YOUR_PASSWORD","email":"user@example.com","auth":"BASE64_USER:PASSWORD"}}}
-'''
+export GIT_REPO_NAME="sample-app-spring-boot-maven"
 
 # The custom marker yaml file name on your repo branch
-export MARKER_YAML=${4:-"ci-config.yaml"}
-
-# The GIT repo URL oof your templates
-export GIT_TEMPLATE_URL="https://github.com/cb-ci-templates/ci-templates.git"
+export MARKER_YAML="ci-config.yaml"
 
 # The path to Jenkinsfile in your GIT_TEMPLATE_URL
 export GIT_TEMPLATE_PATH="templates/mavenMultiBranch/Jenkinsfile"
