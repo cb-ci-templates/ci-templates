@@ -2,10 +2,10 @@
 //env.SHAREDLIB_GIT_TAG="dev"
 
 env.SHAREDLIB_GIT_SERVER="https://github.com"
-env.SHAREDLIB_GIT_ORG="cb-dragan" //"cb-ci-templates"
+env.SHAREDLIB_GIT_ORG="cb-ci-templates" //"cb-ci-templates"
 env.SHAREDLIB_GIT_REPO="ci-shared-library"
-env.SHAREDLIB_GIT_TAG_DEFAULT="EnchanceTemplate" //"main"
-env.SHAREDLIB_GIT_CREDENTIALS="cb-dragan-demo"
+env.SHAREDLIB_GIT_TAG_DEFAULT="main" //"dev"
+env.SHAREDLIB_GIT_CREDENTIALS="ci-template-gh-app"
 
 // Set the env.SHAREDLIB_GIT_TAG_ depending on whether env.SHAREDLIB_GIT_TAG is set or not on job/folder level. 
 // If not set, use default env.SHAREDLIB_GIT_TAG_DEFAULT
