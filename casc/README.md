@@ -1,18 +1,45 @@
 # Setup
 
-You can use this Controller CasC [controller-ci-templates](controller/controller-ci-templates) bundle to create a Controller that has everything setup. including: 
+The following instruction describes how to setup a pre-provisioned Controller by a CasC [controller-ci-templates](controller/controller-ci-templates) bundle which includes: 
 * all required plugins 
 * all required Credentials 
-* a pre-configured MultiBranch and GitHub Organisation Job setup (referencing this template repository)
+* a pre-configured MultiBranch and GitHub Organisation Job setup, ready to execute
+  * referencing this Pipeline template [Jenkinsfile](../templates/mavenMultiBranch/Jenkinsfile) 
+  * referencing a spring-boot sample application repo https://github.com/cb-ci-templates/sample-app-spring-boot-maven 
 
-## Steps
+# Steps
 
-* fork the following repositories in your own GitHub organisation:
+* Fork the following repositories in your own GitHub organisation:
   * https://github.com/cb-ci-templates/ci-templates
   * https://github.com/cb-ci-templates/ci-shared-library
   * https://github.com/cb-ci-templates/sample-app-spring-boot-maven
 * Clone the https://github.com/cb-ci-templates/ci-templates to your terminal and follow the instructions below
-*  
+
+## Optional:Update Shared Library references
+
+Update the reference to the shared library in the template [Jenkinsfile](../templates/mavenMultiBranch/Jenkinsfile)
+Currently, there is a reference to the shared library histed in hei GitHub organsiation.
+Since you cloned the Shared Library to your organisation, you might want to update the repository URL
+
+From
+
+```
+library identifier: "ci-shared-library@${env.SHARED_LIB_TAG}", retriever: modernSCM(
+        [$class: 'GitSCMSource',
+         remote: 'https://github.com/cb-ci-templates/ci-shared-library.git'])
+```
+
+To
+
+```
+library identifier: "ci-shared-library@${env.SHARED_LIB_TAG}", retriever: modernSCM(
+        [$class: 'GitSCMSource',
+         remote: 'https://github.com/<YOUR_GITHUB_ORGANSIATION>ci-shared-library.git'])
+```
+
+Then, push your updates to git
+
+If you don`t do it, the template references still to the original Library (Which is ok for testing/demo purpose)
 
 ## Set environment
 
