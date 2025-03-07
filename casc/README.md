@@ -23,18 +23,15 @@ Since you cloned the Shared Library to your organisation, you might want to upda
 
 From
 
+
 ```
-library identifier: "ci-shared-library@${env.SHARED_LIB_TAG}", retriever: modernSCM(
-        [$class: 'GitSCMSource',
-         remote: 'https://github.com/cb-ci-templates/ci-shared-library.git'])
+env.SHAREDLIB_GIT_ORG="cb-ci-templates" //"cb-ci-templates"
 ```
 
 To
 
 ```
-library identifier: "ci-shared-library@${env.SHARED_LIB_TAG}", retriever: modernSCM(
-        [$class: 'GitSCMSource',
-         remote: 'https://github.com/<YOUR_GITHUB_ORGANSIATION>ci-shared-library.git'])
+env.SHAREDLIB_GIT_ORG="<YOUR_GITHUB_ORGANISATON>" //"cb-ci-templates"
 ```
 
 Then, push your updates to git
