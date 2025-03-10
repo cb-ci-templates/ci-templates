@@ -34,15 +34,15 @@ The following instruction describes how to setup a pre-provisioned Controller by
     * type: "GitHub App"
     * credentialId: ci-template-gh-app
     * See:  [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
-  * Plugins: (setup managed by CasC, [plugins.yaml](controller/controller-ci-templates/plugins.yaml))
-    * Plugins referenced in the sample template
-      * https://plugins.jenkins.io/pipeline-maven
-      * https://www.jenkins.io/doc/pipeline/steps/junit
-      * https://plugins.jenkins.io/build-discarder  (will be removed soon)
-      * https://plugins.jenkins.io/pipeline-utility-steps (tier 3 plugin)
-      * These Plugins are referenced from
-        * https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile
-        * https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/pipelineMaven.groovy
+* Plugins: (setup managed by CasC, [plugins.yaml](controller/controller-ci-templates/plugins.yaml))
+  * Plugins referenced in the sample template
+    * https://plugins.jenkins.io/pipeline-maven
+    * https://www.jenkins.io/doc/pipeline/steps/junit
+    * https://plugins.jenkins.io/build-discarder  (will be removed soon)
+    * https://plugins.jenkins.io/pipeline-utility-steps (tier 3 plugin)
+    * These Plugins are referenced from
+      * https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile
+      * https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/pipelineMaven.groovy
 
 
 
