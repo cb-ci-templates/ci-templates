@@ -14,9 +14,9 @@ The following instruction describes how to setup a pre-provisioned Controller by
 * Credentials:
   * Dockerconfig Credential
     * description: "credential to pull/push to dockerhub"
-    * type: "Secret file"
+    * type: "Secret text"
     * credentialId: dockerconfig
-    * filecontent: dockerconfig.json
+    * content: 
       ```
       {
         "auths": {
