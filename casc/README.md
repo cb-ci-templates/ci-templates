@@ -7,6 +7,45 @@ The following instruction describes how to setup a pre-provisioned Controller by
   * referencing this Pipeline template [Jenkinsfile](../templates/mavenMultiBranch/Jenkinsfile) 
   * referencing a spring-boot sample application repo https://github.com/cb-ci-templates/sample-app-spring-boot-maven 
 
+
+# Pre-requirements:
+
+* A CloudBees CI Operations Center on modern platform (Kubernetes, setup managed by YOU) 
+* Credentials: (setup managed by CasC, [credentials.yaml](controller/controller-ci-templates/credentials.yaml))
+  * Dockerconfig Credential
+    * description: "credential to pull/push to dockerhub"
+    * type: "Secret text"
+    * credentialId: dockerconfig
+    * content: 
+      ```
+      {
+        "auths": {
+          "https://index.docker.io/v1/": {
+            "username": "<YOUR_USER>",
+            "password": "<YOUR_PASSWORD>",
+            "email": "<YOUR_EMAIL>",
+            "auth": "<YOUR_BASE64_USER:PASSWORD>"
+          }
+        }
+      }
+      ```
+  * GitHubApp Credentials
+    * description: "GHApp credentials to scan repositories and to clone"
+    * type: "GitHub App"
+    * credentialId: ci-template-gh-app
+    * See:  [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
+* Plugins: (setup managed by CasC, [plugins.yaml](controller/controller-ci-templates/plugins.yaml))
+  * Plugins referenced in the sample template
+    * https://plugins.jenkins.io/pipeline-maven
+    * https://www.jenkins.io/doc/pipeline/steps/junit
+    * https://plugins.jenkins.io/build-discarder  (will be removed soon)
+    * https://plugins.jenkins.io/pipeline-utility-steps (tier 3 plugin)
+    * These Plugins are referenced from
+      * https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile
+      * https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/pipelineMaven.groovy
+
+
+
 # Steps
 
 * Fork the following repositories in your own GitHub organisation:
@@ -15,21 +54,17 @@ The following instruction describes how to setup a pre-provisioned Controller by
   * https://github.com/cb-ci-templates/sample-app-spring-boot-maven
 * Clone the https://github.com/cb-ci-templates/ci-templates to your terminal and follow the instructions below
 
-## Optional:Update Shared Library references
+## Update Shared Library references
 
 Update the reference to the shared library in the template [Jenkinsfile](../templates/mavenMultiBranch/Jenkinsfile)
-Currently, there is a reference to the shared library histed in hei GitHub organsiation.
+Currently, there is a reference to the shared library hosted in thi GitHub Organisation.
 Since you cloned the Shared Library to your organisation, you might want to update the repository URL
 
 From
-
-
 ```
 env.SHAREDLIB_GIT_ORG="cb-ci-templates" //"cb-ci-templates"
 ```
-
 To
-
 ```
 env.SHAREDLIB_GIT_ORG="<YOUR_GITHUB_ORGANISATON>" //"cb-ci-templates"
 ```
@@ -48,6 +83,12 @@ If you don`t do it, the template references still to the original Library (Which
 
 ## Create Credentials
 
+Two credentials are required for:
+
+* GitHub App Authentication [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
+* Docker reqistry credentials to push 
+
+
 Notes:
 
 * This CasC setup reads credentials in CasC from K8s secret. However, In production, external secret managers are strongly recommended (aws secret manager, vault etc)
@@ -57,6 +98,7 @@ Notes:
 > cp cbci-secrets.yaml.template  cbci-secrets.yaml
 
 * Update `cbci-secrets.yaml` with your secrets
+  * NOTE: It is important to preserver the indents as shown below! 
 
 ```
 gitHubAppId: "YOUR_GH_APP_ID"
@@ -78,10 +120,11 @@ dockerConfigJson: |
 ```
 
 * create the required credentials as K8s secrets
+ * NOTE: This requires kubectl to access your c luster with the right permissions
 
 > ./00-createCredentialSecrets.sh
 
-# Option1: Create a Controller from Controller CasC bundle
+# Create a Controller from Controller CasC bundle
 
 ## Install CasC plugins on CjoC
 
@@ -97,9 +140,10 @@ dockerConfigJson: |
 
 ## Create a CasC bundle location on CjoC
 
-* assign this repository as a bundle location: https://github.com/cb-ci-templates/ci-templates.git
+* assign this repository as a bundle location: `https://github.com/<YOUR_GITHUB_ORGANISATION>/ci-templates.git`  (this Organisation here would be:  https://github.com/cb-ci-templates/ci-templates.git )
   * `Manage Jenkins -> System -> Configuration as Code bundle location -> Load CasC bundles`
   * see https://docs.cloudbees.com/docs/cloudbees-ci/latest/casc-controller/add-bundle#scm-casc-bundle-location 
+  * The setup of the CasC bundle from SCM assumes hat your repositoriy is public and no credentials are required to clone. (Can be secured if required, bzut than requirs )
 
 ![CJOC-BundleLocatinSCM.png](../images/CJOC-BundleLocatinSCM.png)
 
@@ -137,7 +181,7 @@ You can either use this script [01-createManagedController.sh](01-createManagedC
 
 OR follow the manual steps below: 
 
-* Assign the bundle `main/controller-ci-templates` to the Controller provisioning 
+* Assign the bundle `main/controller-ci-templates` during the Controller provisioning 
 
 ![CJOC-Controller-provisioning-bundle.png](../images/CJOC-Controller-provisioning-bundle.png)
 
@@ -150,105 +194,30 @@ OR follow the manual steps below:
 apiVersion: "apps/v1"
 kind: "StatefulSet"
 spec:
-template:
-  metadata:
-    annotations:
-      cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
-  spec:
-    containers:
-      - name: "jenkins"
-        env:
-        - name: SECRETS
-          value: /var/run/secrets/controller
-        volumeMounts:
-          - name: controller-secrets
-            mountPath: /var/run/secrets/controller
-            readOnly: true
-    volumes:
-      - name: controller-secrets
-        secret:
-          defaultMode: 420
-          secretName: controller-secrets
+  template:
+    metadata:
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+    spec:
+      containers:
+        - name: "jenkins"
+          env:
+          - name: SECRETS
+            value: /var/run/secrets/controller
+          volumeMounts:
+            - name: controller-secrets
+              mountPath: /var/run/secrets/controller
+              readOnly: true
+      volumes:
+        - name: controller-secrets
+          secret:
+            defaultMode: 420
+            secretName: controller-secrets
 ```
 
 
-In CasC the full configuration looks like: 
+* The Cjoc full controller-items.yaml configuration looks like this [cjoc-controller-items.yaml](controller/cjoc-controller-items.yaml)
 
-```
-kind: managedController
-name: controller-ci-templates
-configuration:
-  kubernetes:
-    allowExternalAgents: false
-    terminationGracePeriodSeconds: 1200
-    image: CloudBees CI - Managed Controller - latest
-    memory: 3072
-    startupPeriodSeconds: 10
-    fsGroup: '1000'
-    cpus: 1.0
-    readinessTimeoutSeconds: 5
-    startupFailureThreshold: 100
-    livenessInitialDelaySeconds: 300
-    readinessInitialDelaySeconds: 30
-    clusterEndpointId: default
-    disk: 50
-    readinessFailureThreshold: 100
-    livenessTimeoutSeconds: 10
-    storageClassName: ssd-cloudbees-ci-cloudbees-core
-    domain: controller-ci-templates
-    livenessPeriodSeconds: 10
-    startupTimeoutSeconds: 5
-    startupInitialDelaySeconds: 30
-    javaOptions: -XshowSettings:vm -XX:+AlwaysPreTouch -XX:+DisableExplicitGC -XX:+ParallelRefProcEnabled
-      -XX:+UseStringDeduplication -XX:+AlwaysActAsServerClassMachine -Dhudson.slaves.NodeProvisioner.initialDelay=0
-    yaml: |-
-      ---
-      apiVersion: "apps/v1"
-      kind: "StatefulSet"
-      spec:
-        template:
-          metadata:
-            annotations:
-              cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
-          spec:
-            containers:
-              - name: "jenkins"
-                env:
-                - name: SECRETS
-                  value: /var/run/secrets/controller
-                volumeMounts:
-                  - name: controller-secrets
-                    mountPath: /var/run/secrets/controller
-                    readOnly: true
-            volumes:
-              - name: controller-secrets
-                secret:
-                  defaultMode: 420
-                  secretName: controller-secrets
-description: ''
-displayName: controller-ci-templates
-properties:
-- configurationAsCode:
-    bundle: dev/controller-ci-templates
-- customWebhookData: {
-    }
-- sharedHeaderLabelOptIn:
-    optIn: true
-- healthReporting:
-    enabled: true
-- optOutProperty:
-    securityEnforcerOptOutMode:
-      optOutNone: {
-        }
-- owner:
-    delay: 5
-    owners: ''
-- envelopeExtension:
-    allowExceptions: false
-- sharedConfigurationOptOut:
-    optOut: false
-
-```
 
 ## Start the Controller
 
@@ -273,40 +242,6 @@ You need to start the Jobs manually
 You can use the CasC items API to create a Multibranch or GitHubOrganisation Folder Job on an existing Controller.
 
 This requires a Controller with CasC plugins installed
-
-## Pre-requirements:
-
-* A CloudBees CI Controller (modern)
-* Plugins referenced in the sample template
-  * https://plugins.jenkins.io/pipeline-maven
-  * https://www.jenkins.io/doc/pipeline/steps/junit
-  * https://plugins.jenkins.io/build-discarder  (will be removed soon)
-  * https://plugins.jenkins.io/pipeline-utility-steps
-  * These Plugins are referenced from
-    * https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile
-    * https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/pipelineMaven.groovy
-* Dockerconfig Credential 
-  * description: "credential to pull/push to dockerhub"
-  * type: "Secret file"
-  * credentialId: dockerconfig
-  * filecontent: dockerconfig.json
-    ```
-    {
-      "auths": {
-        "https://index.docker.io/v1/": {
-          "username": "<YOUR_USER>",
-          "password": "<YOUR_PASSWORD>",
-          "email": "<YOUR_EMAIL>",
-          "auth": "<YOUR_BASE64_USER:PASSWORD>"
-        }
-      }
-    }
-    ```
-  * GitHubApp Credentials
-    * description: "GHApp credentials to scan repositories and to clone"
-    * type: "GitHub App"
-    * credentialId: ci-template-gh-app
-    * See:  [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
 
 
 ## run the scripts
