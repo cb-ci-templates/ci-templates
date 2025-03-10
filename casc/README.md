@@ -119,10 +119,11 @@ dockerConfigJson: |
 ```
 
 * create the required credentials as K8s secrets
+ * NOTE: This requires kubectl to access your c luster with the right permissions
 
 > ./00-createCredentialSecrets.sh
 
-# Option1: Create a Controller from Controller CasC bundle
+# Create a Controller from Controller CasC bundle
 
 ## Install CasC plugins on CjoC
 
