@@ -24,7 +24,7 @@ items:
         readinessFailureThreshold: 100
         livenessTimeoutSeconds: 10
         #storageClassName: ssd-cloudbees-ci-cloudbees-core
-        storageClassName: ${STORAGECLASS:-"ssd-cloudbees-ci-cloudbees-core"}
+        #storageClassName: ${STORAGECLASS:-"ssd-cloudbees-ci-cloudbees-core"}
         domain: controller-ci-templates
         livenessPeriodSeconds: 10
         startupTimeoutSeconds: 5
@@ -60,7 +60,7 @@ items:
     properties:
       - configurationAsCode:
           bundle: dev/controller-ci-templates
-      - customWebhookData: {}
+      #- customWebhookData: {}
       - sharedHeaderLabelOptIn:
           optIn: true
       - healthReporting:

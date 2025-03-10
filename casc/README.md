@@ -143,6 +143,7 @@ dockerConfigJson: |
 * assign this repository as a bundle location: `https://github.com/<YOUR_GITHUB_ORGANISATION>/ci-templates.git`  (this Organisation here would be:  https://github.com/cb-ci-templates/ci-templates.git )
   * `Manage Jenkins -> System -> Configuration as Code bundle location -> Load CasC bundles`
   * see https://docs.cloudbees.com/docs/cloudbees-ci/latest/casc-controller/add-bundle#scm-casc-bundle-location 
+  * The setup of the CasC bundle from SCM assumes hat your repositoriy is public and no credentials are required to clone. (Can be secured if required, bzut than requirs )
 
 ![CJOC-BundleLocatinSCM.png](../images/CJOC-BundleLocatinSCM.png)
 
@@ -180,7 +181,7 @@ You can either use this script [01-createManagedController.sh](01-createManagedC
 
 OR follow the manual steps below: 
 
-* Assign the bundle `main/controller-ci-templates` to the Controller provisioning 
+* Assign the bundle `main/controller-ci-templates` during the Controller provisioning 
 
 ![CJOC-Controller-provisioning-bundle.png](../images/CJOC-Controller-provisioning-bundle.png)
 
@@ -193,25 +194,25 @@ OR follow the manual steps below:
 apiVersion: "apps/v1"
 kind: "StatefulSet"
 spec:
-template:
-  metadata:
-    annotations:
-      cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
-  spec:
-    containers:
-      - name: "jenkins"
-        env:
-        - name: SECRETS
-          value: /var/run/secrets/controller
-        volumeMounts:
-          - name: controller-secrets
-            mountPath: /var/run/secrets/controller
-            readOnly: true
-    volumes:
-      - name: controller-secrets
-        secret:
-          defaultMode: 420
-          secretName: controller-secrets
+  template:
+    metadata:
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+    spec:
+      containers:
+        - name: "jenkins"
+          env:
+          - name: SECRETS
+            value: /var/run/secrets/controller
+          volumeMounts:
+            - name: controller-secrets
+              mountPath: /var/run/secrets/controller
+              readOnly: true
+      volumes:
+        - name: controller-secrets
+          secret:
+            defaultMode: 420
+            secretName: controller-secrets
 ```
 
 
