@@ -11,23 +11,24 @@ The following instruction describes how to setup a pre-provisioned Controller by
 # Pre-requirements:
 
 * A CloudBees CI Operations Center on modern platform (Kubernetes)
-* Dockerconfig Credential
-  * description: "credential to pull/push to dockerhub"
-  * type: "Secret file"
-  * credentialId: dockerconfig
-  * filecontent: dockerconfig.json
-    ```
-    {
-      "auths": {
-        "https://index.docker.io/v1/": {
-          "username": "<YOUR_USER>",
-          "password": "<YOUR_PASSWORD>",
-          "email": "<YOUR_EMAIL>",
-          "auth": "<YOUR_BASE64_USER:PASSWORD>"
+* Credentials:
+  * Dockerconfig Credential
+    * description: "credential to pull/push to dockerhub"
+    * type: "Secret file"
+    * credentialId: dockerconfig
+    * filecontent: dockerconfig.json
+      ```
+      {
+        "auths": {
+          "https://index.docker.io/v1/": {
+            "username": "<YOUR_USER>",
+            "password": "<YOUR_PASSWORD>",
+            "email": "<YOUR_EMAIL>",
+            "auth": "<YOUR_BASE64_USER:PASSWORD>"
+          }
         }
       }
-    }
-    ```
+      ```
   * GitHubApp Credentials
     * description: "GHApp credentials to scan repositories and to clone"
     * type: "GitHub App"
