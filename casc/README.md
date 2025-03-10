@@ -138,7 +138,7 @@ dockerConfigJson: |
 
 ## Create a CasC bundle location on CjoC
 
-* assign this repository as a bundle location: https://github.com/cb-ci-templates/ci-templates.git
+* assign this repository as a bundle location: `https://github.com/<YOUR_GITHUB_ORGANISATION>/ci-templates.git`  (this Organisation here would be:  https://github.com/cb-ci-templates/ci-templates.git )
   * `Manage Jenkins -> System -> Configuration as Code bundle location -> Load CasC bundles`
   * see https://docs.cloudbees.com/docs/cloudbees-ci/latest/casc-controller/add-bundle#scm-casc-bundle-location 
 
@@ -213,83 +213,8 @@ template:
 ```
 
 
-In CasC the full configuration looks like: 
+* The Cjoc full controller-items.yaml configuration looks like this [cjoc-controller-items.yaml](controller/cjoc-controller-items.yaml)
 
-```
-kind: managedController
-name: controller-ci-templates
-configuration:
-  kubernetes:
-    allowExternalAgents: false
-    terminationGracePeriodSeconds: 1200
-    image: CloudBees CI - Managed Controller - latest
-    memory: 3072
-    startupPeriodSeconds: 10
-    fsGroup: '1000'
-    cpus: 1.0
-    readinessTimeoutSeconds: 5
-    startupFailureThreshold: 100
-    livenessInitialDelaySeconds: 300
-    readinessInitialDelaySeconds: 30
-    clusterEndpointId: default
-    disk: 50
-    readinessFailureThreshold: 100
-    livenessTimeoutSeconds: 10
-    storageClassName: ssd-cloudbees-ci-cloudbees-core
-    domain: controller-ci-templates
-    livenessPeriodSeconds: 10
-    startupTimeoutSeconds: 5
-    startupInitialDelaySeconds: 30
-    javaOptions: -XshowSettings:vm -XX:+AlwaysPreTouch -XX:+DisableExplicitGC -XX:+ParallelRefProcEnabled
-      -XX:+UseStringDeduplication -XX:+AlwaysActAsServerClassMachine -Dhudson.slaves.NodeProvisioner.initialDelay=0
-    yaml: |-
-      ---
-      apiVersion: "apps/v1"
-      kind: "StatefulSet"
-      spec:
-        template:
-          metadata:
-            annotations:
-              cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
-          spec:
-            containers:
-              - name: "jenkins"
-                env:
-                - name: SECRETS
-                  value: /var/run/secrets/controller
-                volumeMounts:
-                  - name: controller-secrets
-                    mountPath: /var/run/secrets/controller
-                    readOnly: true
-            volumes:
-              - name: controller-secrets
-                secret:
-                  defaultMode: 420
-                  secretName: controller-secrets
-description: ''
-displayName: controller-ci-templates
-properties:
-- configurationAsCode:
-    bundle: dev/controller-ci-templates
-- customWebhookData: {
-    }
-- sharedHeaderLabelOptIn:
-    optIn: true
-- healthReporting:
-    enabled: true
-- optOutProperty:
-    securityEnforcerOptOutMode:
-      optOutNone: {
-        }
-- owner:
-    delay: 5
-    owners: ''
-- envelopeExtension:
-    allowExceptions: false
-- sharedConfigurationOptOut:
-    optOut: false
-
-```
 
 ## Start the Controller
 
