@@ -3,7 +3,7 @@ removeStrategy:
   items: NONE
 items:
   - kind: managedController
-    name: ${CONTROLLER_NAME:-"controller-ci-templates"}
+    name: controller-ci-templates
     #name: controller-ci-templates
     configuration:
       kubernetes:
@@ -56,10 +56,10 @@ items:
                       defaultMode: 420
                       secretName: controller-secrets
     description: ''
-    displayName: ${CONTROLLER_NAME:-"controller-ci-templates"}
+    displayName: controller-ci-templates
     properties:
       - configurationAsCode:
-          bundle: dev/controller-ci-templates
+          bundle: main/controller-ci-templates
       #- customWebhookData: {}
       - sharedHeaderLabelOptIn:
           optIn: true
