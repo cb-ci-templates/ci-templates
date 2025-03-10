@@ -7,6 +7,35 @@ The following instruction describes how to setup a pre-provisioned Controller by
   * referencing this Pipeline template [Jenkinsfile](../templates/mavenMultiBranch/Jenkinsfile) 
   * referencing a spring-boot sample application repo https://github.com/cb-ci-templates/sample-app-spring-boot-maven 
 
+
+# Pre-requirements:
+
+* A CloudBees CI Operations Center on modern platform (Kubernetes)
+* Dockerconfig Credential
+  * description: "credential to pull/push to dockerhub"
+  * type: "Secret file"
+  * credentialId: dockerconfig
+  * filecontent: dockerconfig.json
+    ```
+    {
+      "auths": {
+        "https://index.docker.io/v1/": {
+          "username": "<YOUR_USER>",
+          "password": "<YOUR_PASSWORD>",
+          "email": "<YOUR_EMAIL>",
+          "auth": "<YOUR_BASE64_USER:PASSWORD>"
+        }
+      }
+    }
+    ```
+  * GitHubApp Credentials
+    * description: "GHApp credentials to scan repositories and to clone"
+    * type: "GitHub App"
+    * credentialId: ci-template-gh-app
+    * See:  [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
+
+
+
 # Steps
 
 * Fork the following repositories in your own GitHub organisation:
@@ -15,21 +44,17 @@ The following instruction describes how to setup a pre-provisioned Controller by
   * https://github.com/cb-ci-templates/sample-app-spring-boot-maven
 * Clone the https://github.com/cb-ci-templates/ci-templates to your terminal and follow the instructions below
 
-## Optional:Update Shared Library references
+## Update Shared Library references
 
 Update the reference to the shared library in the template [Jenkinsfile](../templates/mavenMultiBranch/Jenkinsfile)
-Currently, there is a reference to the shared library histed in hei GitHub organsiation.
+Currently, there is a reference to the shared library hosted in thi GitHub Organisation.
 Since you cloned the Shared Library to your organisation, you might want to update the repository URL
 
 From
-
-
 ```
 env.SHAREDLIB_GIT_ORG="cb-ci-templates" //"cb-ci-templates"
 ```
-
 To
-
 ```
 env.SHAREDLIB_GIT_ORG="<YOUR_GITHUB_ORGANISATON>" //"cb-ci-templates"
 ```
@@ -47,6 +72,12 @@ If you don`t do it, the template references still to the original Library (Which
 * set your custom values, see all the comments `CHANGE ME` in `set-env.sh`
 
 ## Create Credentials
+
+Two credentials are required for:
+
+* GitHub App Authentication [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
+* Docker reqistry credentials to push 
+
 
 Notes:
 
@@ -96,6 +127,17 @@ dockerConfigJson: |
   ```
 
 ## Create a CasC bundle location on CjoC
+
+NOTE: All required plugins referenced by the ci-template Pipeline are already configured in the [plugins.yaml](controller/controller-ci-templates/plugins.yaml)plugins.yaml
+
+* Plugins referenced in the sample template
+  * https://plugins.jenkins.io/pipeline-maven
+  * https://www.jenkins.io/doc/pipeline/steps/junit
+  * https://plugins.jenkins.io/build-discarder  (will be removed soon)
+  * https://plugins.jenkins.io/pipeline-utility-steps (tier 3 plugin)
+  * These Plugins are referenced from
+    * https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile
+    * https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/pipelineMaven.groovy
 
 * assign this repository as a bundle location: https://github.com/cb-ci-templates/ci-templates.git
   * `Manage Jenkins -> System -> Configuration as Code bundle location -> Load CasC bundles`
@@ -273,40 +315,6 @@ You need to start the Jobs manually
 You can use the CasC items API to create a Multibranch or GitHubOrganisation Folder Job on an existing Controller.
 
 This requires a Controller with CasC plugins installed
-
-## Pre-requirements:
-
-* A CloudBees CI Controller (modern)
-* Plugins referenced in the sample template
-  * https://plugins.jenkins.io/pipeline-maven
-  * https://www.jenkins.io/doc/pipeline/steps/junit
-  * https://plugins.jenkins.io/build-discarder  (will be removed soon)
-  * https://plugins.jenkins.io/pipeline-utility-steps
-  * These Plugins are referenced from
-    * https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile
-    * https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/pipelineMaven.groovy
-* Dockerconfig Credential 
-  * description: "credential to pull/push to dockerhub"
-  * type: "Secret file"
-  * credentialId: dockerconfig
-  * filecontent: dockerconfig.json
-    ```
-    {
-      "auths": {
-        "https://index.docker.io/v1/": {
-          "username": "<YOUR_USER>",
-          "password": "<YOUR_PASSWORD>",
-          "email": "<YOUR_EMAIL>",
-          "auth": "<YOUR_BASE64_USER:PASSWORD>"
-        }
-      }
-    }
-    ```
-  * GitHubApp Credentials
-    * description: "GHApp credentials to scan repositories and to clone"
-    * type: "GitHub App"
-    * credentialId: ci-template-gh-app
-    * See:  [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
 
 
 ## run the scripts
