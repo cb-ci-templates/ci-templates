@@ -98,6 +98,7 @@ Notes:
 > cp cbci-secrets.yaml.template  cbci-secrets.yaml
 
 * Update `cbci-secrets.yaml` with your secrets
+  * NOTE: It is important to preserver the indents as shown below! 
 
 ```
 gitHubAppId: "YOUR_GH_APP_ID"
