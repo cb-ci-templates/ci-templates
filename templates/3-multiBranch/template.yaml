@@ -1,27 +1,26 @@
 type: pipeline-template
 version: 1
-name: Template MB Simple CI
-description: Template MB MB Simple CI
+name: Template 3 MultiBranch
+description: Template MB Maven Kaniko
 templateType: MULTIBRANCH
 parameters:
   - name: repoName
     displayName: Git Repoistory
     type: string
-    defaultValue: sample-app-helloworld
-  - name: organisation
-    displayName: GH Organisation
+    defaultValue: spring-boot-demo
+  - name: organsisation
+    displayName: GH organsisation
     type: string
-    defaultValue: cb-ci-templates
+    defaultValue: ci-templates
   - name: githubToken
     displayName: GitHubUserToken
     type: CREDENTIALS
-    defaultValue: ci-template-gh-app
+    defaultValue: githubuseraccesstoken
 #see https://docs.cloudbees.com/docs/admin-resources/latest/pipeline-templates-user-guide/managing-multibranch-pipeline-options#_example
 multibranch:
   branchSource:
     github:
-      repoOwner: ${organisation}
+      repoOwner: ${organsisation}
       repository: ${repoName}
-      credentialsId: ${ci-template-gh-app}
-  markerFile: ci-config.yaml
-
+      credentialsId: ${githubToken}
+  markerFile: pom.xml
