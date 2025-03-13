@@ -8,19 +8,20 @@ parameters:
     displayName: Git Repoistory
     type: string
     defaultValue: sample-app-helloworld
-  - name: organsisation
-    displayName: GH organsisation
+  - name: organisation
+    displayName: GH Organisation
     type: string
     defaultValue: cb-ci-templates
   - name: githubToken
     displayName: GitHubUserToken
     type: CREDENTIALS
-    defaultValue: gh-user-token-ci-templates-repo-classic
+    defaultValue: ci-template-gh-app
 #see https://docs.cloudbees.com/docs/admin-resources/latest/pipeline-templates-user-guide/managing-multibranch-pipeline-options#_example
 multibranch:
   branchSource:
     github:
-      repoOwner: ${organsisation}
+      repoOwner: ${organisation}
       repository: ${repoName}
-      credentialsId: ${githubToken}
-  markerFile: ci-config.properties
+      credentialsId: ${ci-template-gh-app}
+  markerFile: ci-config.yaml
+
