@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('Stage hello') {
             steps {
-                helloWorld "${firstname}"
-                helloWorld "${lastname}"
+                helloWorld "${firstName}"
+                helloWorld "${lastName}"
             }
         }
     }
