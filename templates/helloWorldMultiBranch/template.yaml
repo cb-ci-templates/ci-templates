@@ -8,13 +8,10 @@ parameters:
     displayName: your firstMame
   - name: lastName
     displayName: your lastName
-  - name: k8_agent_yaml
-    displayName: k8_agent_yaml
-    defaultValue: podTemplate-simple.yaml
   - name: repoName
     displayName: Git Repoistory
     type: string
-    defaultValue: spring-boot-demo
+    defaultValue: sample-app-helloworld
   - name: organsisation
     displayName: GH organsisation
     type: string
@@ -30,5 +27,5 @@ multibranch:
       repoOwner: ${organsisation}
       repository: ${repoName}
       credentialsId: ${githubToken}
-  markerFile: pom.xml
+  markerFile: ci-config.yaml
 
