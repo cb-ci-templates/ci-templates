@@ -15,8 +15,8 @@ parameters:
   - name: organisation
     displayName: GH Organisation
     type: string
-    defaultValue: ci-templates
-  - name: githubAppToken
+    defaultValue: cb-ci-templates
+  - name: githubToken
     displayName: GitHubUserToken
     type: CREDENTIALS
     defaultValue: ci-template-gh-app
@@ -26,6 +26,6 @@ multibranch:
     github:
       repoOwner: ${organisation}
       repository: ${repoName}
-      credentialsId: ${githubAppToken}
+      credentialsId: ${ci-template-gh-app}
   markerFile: ci-config.yaml
 
