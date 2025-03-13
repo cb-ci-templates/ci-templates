@@ -19,12 +19,12 @@ It can be referenced from:
 ![CI-Pipeline.png](images/CI-Pipeline-1.png)
 
 ## Template sin this repository 
-| Template                                                                         | Description                                                                                                                                            |
-| -------------------------------------------------------------------------------- |--------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [0-helloWorldSimple](templates/0-helloWorldSimple)                               | Simple helloworld template, requires no agent, requires no marker file                                                                                 |
-| [1-multiBranch](templates/1-multiBranch)                                         | Simple hello world Multibranch, uses markerfile, <br> scans https://github.com/cb-ci-templates/sample-app-helloworld for branches                      |
-| [2-multiBranch](templates/2-multiBranch)[1-multiBranch](templates/1-multiBranch) | Same as `1-multiBranch` but uses Pipeline instance parameters and prints them                                                                          |
-| [3-multiBranch](templates/3-multiBranch)                                         | MultiBranch Template that scans a spring-boot repositry, uses custom marker config.yaml file, build maven and build and ush a docker image using kaniko |
+| Template                                           | Description                                                                                                                                        |
+|----------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| [0-helloWorldSimple](templates/0-helloWorldSimple) | Simple helloworld template, requires no agent, requires no marker file                                                                             |
+| [1-multiBranch](templates/1-multiBranch)           | Simple hello world Multibranch, uses markerfile,  scans https://github.com/cb-ci-templates/sample-app-helloworld for branches                      |
+| [2-multiBranch](templates/2-multiBranch)           | Same as `1-multiBranch` but uses Pipeline instance parameters and prints them                                                                      |
+| [3-multiBranch](templates/3-multiBranch)           | MultiBranch Template that scans a spring-boot repositry, uses custom marker config.yaml file, build maven and build and ush a docker image using kaniko |
 
 ## Quick Start
 
