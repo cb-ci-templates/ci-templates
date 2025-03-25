@@ -1,0 +1,31 @@
+type: pipeline-template
+version: 1
+name: Template 2 MultiBranch
+description: Template MB Hello World with template instance parameters
+templateType: MULTIBRANCH
+parameters:
+  - name: firstName
+    displayName: your firstMame
+  - name: lastName
+    displayName: your lastName
+  - name: repoName
+    displayName: Git Repoistory
+    type: string
+    defaultValue: sample-app-helloworld
+  - name: organisation
+    displayName: GH Organisation
+    type: string
+    defaultValue: cb-ci-templates
+  - name: githubToken
+    displayName: GitHubUserToken
+    type: CREDENTIALS
+    defaultValue: ci-template-gh-app
+#see https://docs.cloudbees.com/docs/admin-resources/latest/pipeline-templates-user-guide/managing-multibranch-pipeline-options#_example
+multibranch:
+  branchSource:
+    github:
+      repoOwner: ${organisation}
+      repository: ${repoName}
+      credentialsId: ${ci-template-gh-app}
+  markerFile: ci-config.yaml
+

@@ -1,13 +1,9 @@
 type: pipeline-template
 version: 1
-name: Template MB Hello World
-description: Template MB Hello World
+name: Template 1 MultiBranch
+description: Template 1 Hello World MultiBranch Sample
 templateType: MULTIBRANCH
 parameters:
-  - name: firstName
-    displayName: your firstMame
-  - name: lastName
-    displayName: your lastName
   - name: repoName
     displayName: Git Repoistory
     type: string

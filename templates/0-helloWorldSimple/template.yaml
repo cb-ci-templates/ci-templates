@@ -1,7 +1,7 @@
 type: pipeline-template
 version: 1
-name: Hello World Template
-description: Hello World Template
+name: Template 0 Hello World Simple
+description: Template 0 Hello World Simple
 parameters:
   - name: firstname
     displayName: your firstname
