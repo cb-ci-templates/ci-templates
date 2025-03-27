@@ -36,6 +36,10 @@ unclassified:
     autoPollingIntervalSeconds: 10
     enabled: true
     searchMaxIndexSize: 1000
+  inactiveItemsConfiguration:
+    analysisEnabled: true
+    analysisFrequencyInDays: 1
+    daysBeforeConsideredInactive: 1
   junitTestResultStorage:
     storage: "file"
   scmGit:
