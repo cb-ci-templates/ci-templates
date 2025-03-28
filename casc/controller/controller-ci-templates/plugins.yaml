@@ -24,6 +24,7 @@ plugins:
 - id: cloudbees-folders-plus
 - id: cloudbees-github-reporting
 - id: cloudbees-groovy-view
+- id: cloudbees-inactive-items
 - id: cloudbees-jenkins-advisor
 - id: cloudbees-license
 - id: cloudbees-monitoring
