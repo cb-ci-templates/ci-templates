@@ -9,7 +9,7 @@ jenkins:
       localhost
       127.0.0.1
       *.svc.cluster.local
-      *.flow-training.beescloud.com
+      *.beescloud.com
     port: 3128
     testUrl: "http://google.com"
 beekeeper:
