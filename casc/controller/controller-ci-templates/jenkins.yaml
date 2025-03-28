@@ -3,6 +3,15 @@ jenkins:
     loggedInUsersCanDoAnything:
       allowAnonymousRead: false
   numExecutors: 0
+  proxy:
+    name: "squid-dev-proxy.squid.svc.cluster.local"
+    noProxyHost: |-
+      localhost
+      127.0.0.1
+      *.svc.cluster.local
+      *.beescloud.com
+    port: 3128
+    testUrl: "http://google.com"
 beekeeper:
   enabled: true
   securityWarnings:
@@ -11,15 +20,6 @@ beekeeper:
   upgrades:
     autoDowngradePlugins: false
     autoUpgradePlugins: true
-proxy:
-  name: "squid-dev-proxy.squid.svc.cluster.local"
-  noProxyHost: |-
-    localhost
-    127.0.0.1
-    *.svc.cluster.local
-    *.flow-training.beescloud.com
-  port: 3128
-  testUrl: "http://google.com"
 security:
   cps:
     hideSandbox: false
