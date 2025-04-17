@@ -15,14 +15,14 @@ pipeline {
         }
     }
     stages {
-        stage('Hello') {
+        stage('Stage1') {
             steps {
                 sh 'hostname'
                 helloWorld "${firstname}"
                 helloWorld "${lastname}"
             }
         }
-        stage('Hello2') {
+        stage('Stage2') {
             steps {
                 sh 'hostname'
                 helloWorld "${firstname}"
