@@ -45,6 +45,30 @@ unclassified:
     autoPollingIntervalSeconds: 10
     enabled: true
     searchMaxIndexSize: 1000
+  globalConfigFiles:
+    configs:
+      - globalMavenSettings:
+          comment: "Global settings"
+          content: |
+            <?xml version="1.0" encoding="UTF-8"?>
+            <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+                <proxies>
+                    <proxy>
+                        <id>myproxy</id>
+                        <active>true</active>
+                        <protocol>http</protocol>
+                        <host>squid-dev-proxy.squid.svc.cluster.local</host>
+                        <port>3128</port>
+                        <nonProxyHosts>localhost|127.0.0.1|*.svc.cluster.local|*.beescloud.com|127.*|[::1]</nonProxyHosts>
+                    </proxy>
+                </proxies>
+            </settings>
+          id: "my-maven-settings"
+          isReplaceAll: true
+          name: "my-maven-settings"
+          providerId: "org.jenkinsci.plugins.configfiles.maven.GlobalMavenSettingsConfig"
   inactiveItemsConfiguration:
     analysisEnabled: true
     analysisFrequencyInDays: 1
