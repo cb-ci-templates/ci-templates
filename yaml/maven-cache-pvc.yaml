@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: cache-pv-volume
+  labels:
+    type: local
+spec:
+  #storageClassName: ssd-cloudbees-core-cloudbees-core
+  #storageClassName: ssd-cloudbees-ci-cjoc1
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/tmp/cache"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: maven-repo
+spec:
+  #storageClassName: ssd-cloudbees-core-cloudbees-core
+  #storageClassName: ssd-cloudbees-ci-cjoc1
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
