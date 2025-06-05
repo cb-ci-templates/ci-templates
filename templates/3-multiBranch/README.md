@@ -132,6 +132,45 @@ kubectl apply -f config/maven-cache-pvc.yaml
 
 # Environment Variables
 
+Required environment variables can be injected like this:
+
+Create a Kubernetes config map with required variables:
+See [configmap-env-vars-proxy.yaml](../../config/configmap-env-vars-proxy.yaml)
+
+```
+cat <<EOF | kubelctl apply -f -
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-envvars
+data:
+  HTTP_PROXY:  http://squid-dev-proxy.squid.svc.cluster.local:3128
+  HTTPS_PROXY: http://squid-dev-proxy.squid.svc.cluster.local:3128
+  NO_PROXY:    localhost,127.0.0.1,.svc.cluster.local,.cluster.local,.beescloud.com
+  http_proxy:  http://squid-dev-proxy.squid.svc.cluster.local:3128
+  https_proxy: http://squid-dev-proxy.squid.svc.cluster.local:3128
+  no_proxy:    localhost,127.0.0.1,.svc.cluster.local,.cluster.local,.beescloud.com
+EOF
+```
+
+Mount Configmap into build pod:
+
+```
+kind: Pod
+metadata:
+  name: maven
+spec:
+  containers:
+    - name: maven
+      image: maven:3.9.9-amazoncorretto-17
+      envFrom:
+        - configMapRef:
+            name: configmap-envvars
+ ....
+```
+
+
+
 # Credentials
 
 ## Kaniko
