@@ -3,4 +3,8 @@ kind: ConfigMap
 metadata:
   name: configmap-envvars
 data:
-  KEY: "val"
+  SHAREDLIB_GIT_SERVER: "https://github.com"
+  SHAREDLIB_GIT_ORG: "cb-ci-templates"
+  SHAREDLIB_GIT_REP: "ci-shared-library"
+  SHAREDLIB_GIT_TAG_DEFAULT: "main" # "dev" # v1.12
+  SHAREDLIB_GIT_CREDENTIALS: "ci-template-gh-app"
