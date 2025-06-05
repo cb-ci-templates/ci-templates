@@ -1,298 +1,183 @@
 # Required Plugins
-* Configfile provider
-* CloudBees Workspace Caching
-  * https://github.com/jenkinsci/artifact-manager-s3-plugin
+* [config-file-provider](https://plugins.jenkins.io/config-file-provider/) 
+* [pipeline-utility-steps](https://plugins.jenkins.io/pipeline-utility-steps/) 
+* [Pipeline Maven](https://plugins.jenkins.io/pipeline-maven/)
+* [CloudBees Workspace Caching](https://github.com/jenkinsci/artifact-manager-s3-plugin)
   * https://docs.cloudbees.com/docs/release-notes/latest/plugins/cloudbees-s3-cache-plugin
   * https://docs.cloudbees.com/docs/release-notes/latest/plugins/cloudbees-cache-step-plugin
-* WarningsNextNG
-* Pipeline Maven 
-  * https://plugins.jenkins.io/pipeline-maven/
-* TODO add other that are required for this Pipeline 
+* [WarningsNextNG](https://plugins.jenkins.io/warnings-ng/)
+* TODO verify and add required Plugin
 
+# Maven Settings
 
+If maven-settings are required, for example when http-proxies are required, maven needs to know where to get its maven settings file from.
 
-# kaniko
-Create dockersecrets
+For example: See [maven-proxy-settings.xml](../../config/maven-proxy-settings.xml)
 
 ```
-kubectl delete secret docker-credentials
-kubectl create secret docker-registry docker-credentials   --docker-username=$DOCKER_REGISTRY_USER --docker-password=$DOCKER_REGISTRY_PASSWORD --docker-email=$DOCKER_EMAIL
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <proxies>
+        <proxy>
+            <id>myproxy</id>
+            <active>true</active>
+            <protocol>http</protocol>
+            <host>squid-dev-proxy.squid.svc.cluster.local</host>
+            <port>3128</port>
+            <nonProxyHosts>localhost|127.0.0.1|*.svc.cluster.local|*.beescloud.com|127.*|[::1]</nonProxyHosts>
+        </proxy>
+    </proxies>
+</settings>
 ```
+
+There are several ways known on how to manage maven settings files across distributed  procecs.
+Using a common share, reading from configmaps etc.
+
+However, here we use the Configfile provider plugin to manage the maven-settings file for us
+We reference the maven settings file from our maven build step: https://github.com/cb-ci-templates/ci-shared-library/blob/3fbf41a52111875bb4b771ad8cac64d7108a0d55/vars/buildMaven.groovy#L11
+See https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/buildMaven.groovy
+
+```
+        withMaven(
+                ...
+                // Maven settings.xml file defined with the Jenkins Config File Provider Plugin
+                // We recommend to define Maven settings.xml globally at the folder level using
+                // navigating to the folder configuration in the section "Pipeline Maven Configuration / Override global Maven configuration"
+                // or globally to the entire master navigating to  "Manage Jenkins / Global Tools Configuration"
+                mavenSettingsConfig: 'my-maven-settings'
+        ) {
+
+```
+
+In CasC, the setup looks like this:
+See [jenkins.yaml](../../casc/controller/controller-ci-templates/jenkins.yaml)
+````
+unclassified:
+  globalConfigFiles:
+    configs:
+    - globalMavenSettings:
+        comment: "Global settings"
+        content: |
+          <?xml version="1.0" encoding="UTF-8"?>
+          <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+              <proxies>
+                  <proxy>
+                      <id>myproxy</id>
+                      <active>true</active>
+                      <protocol>http</protocol>
+                      <host>squid-dev-proxy.squid.svc.cluster.local</host>
+                      <port>3128</port>
+                      <nonProxyHosts>localhost|127.0.0.1|*.svc.cluster.local|*.beescloud.com|127.*|[::1]</nonProxyHosts>
+                  </proxy>
+              </proxies>
+          </settings>
+        id: "my-maven-settings"
+        isReplaceAll: true
+        name: "my-maven-settings"
+        providerId: "org.jenkinsci.plugins.configfiles.maven.GlobalMavenSettingsConfig"
+````
+
+
+# Maven Cache
+
+To avoid loading maven dependencies again for each new build, we use a simple host path volume mount to accelerate the build performance using a local maven cache. 
+
+See [maven-cache-pvc.yaml](../../config/maven-cache-pvc.yaml)
+
+This volume will be mounted to the related build pod
+See https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/buildMaven.groovy
+```
+kind: Pod
+metadata:
+  name: maven
+spec:
+  containers:
+    - name: maven
+      image: maven:3.9.9-amazoncorretto-17
+      envFrom:
+        - configMapRef:
+            name: configmap-envvars
+     ....
+      volumeMounts:
+        - name: maven-cache
+          mountPath: /tmp/.m2
+....
+  volumes:
+    - name: maven-cache
+      persistentVolumeClaim:
+        claimName: maven-repo
+```
+
+and the maven step will reference to the mounted volume
+
+See https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/buildMaven.groovy
+```
+        withMaven(
+                //Use `$WORKSPACE/.repository` for local repository folder to avoid shared repositories
+                //consider to use CloudBees Workspace caching https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/cloudbees-cache-step
+                mavenLocalRepo: '/tmp/.m2',
+                ....
+        ) {
+
+```
+
+
+Note: This approach is simple, but just used for the demo purpose of this repository. In production, other approaches should be considered. (Will not be discussed here)
+
+
+Create the cache volume:
+
+```kubectl apply -f config/maven-cache-pvc.yaml```
+
+# Environment Variables 
+
+# Credentials
+
+## kaniko
+
+* docker-config.json as string credential (Secret Text)
+
+```
+{
+  "auths": {
+    "https://index.docker.io/v1/": {
+      "username": "....",
+      "password": "....",
+      "email": "xxxx@yyy.com",
+      "auth": "....."
+    }
+  }
+}
+```
+
+## GitHub
+
+* GitHub App authentication is required, see https://docs.cloudbees.com/docs/cloudbees-ci/latest/cloud-admin-guide/github-app-auth
+
+
+##  Credentials CasC
+```
+credentials:
+  system:
+    domainCredentials:
+    - credentials:
+      - gitHubApp:
+          appID: "12345"
+          description: "ci-template-gh-app"
+          id: "ci-template-gh-app"
+          privateKey: ${....}
+      - string:
+          description: "dockerconfig"
+          id: "dockerconfig"
+          scope: GLOBAL
+          secret: ${....}
+```
+
 
 A simple Dockerfile to build with kaniko, see https://docs.cloudbees.com/docs/cloudbees-core/latest/cloud-admin-guide/using-kaniko#_create_a_new_kubernetes_secret   for further details
 
 
-# Maven workspace caching 
-
-TODO
-Set up workspace caching in S3
-https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/cloudbees-cache-step
-
-
-# Maven setting 
-* Install the Configfile-provider plugin
-* add a global maven config with id : global-vane-settings
-```
-    <?xml version="1.0" encoding="UTF-8"?>
-
-          <!--
-          Licensed to the Apache Software Foundation (ASF) under one
-          or more contributor license agreements.  See the NOTICE file
-          distributed with this work for additional information
-          regarding copyright ownership.  The ASF licenses this file
-          to you under the Apache License, Version 2.0 (the
-          "License"); you may not use this file except in compliance
-          with the License.  You may obtain a copy of the License at
-
-              http://www.apache.org/licenses/LICENSE-2.0
-
-          Unless required by applicable law or agreed to in writing,
-          software distributed under the License is distributed on an
-          "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-          KIND, either express or implied.  See the License for the
-          specific language governing permissions and limitations
-          under the License.
-          -->
-
-          <!--
-           | This is the configuration file for Maven. It can be specified at two levels:
-           |
-           |  1. User Level. This settings.xml file provides configuration for a single user,
-           |                 and is normally provided in ^${user.home}/.m2/settings.xml.
-           |
-           |                 NOTE: This location can be overridden with the CLI option:
-           |
-           |                 -s /path/to/user/settings.xml
-           |
-           |  2. Global Level. This settings.xml file provides configuration for all Maven
-           |                 users on a machine (assuming they're all using the same Maven
-           |                 installation). It's normally provided in
-           |                 ^${maven.conf}/settings.xml.
-           |
-           |                 NOTE: This location can be overridden with the CLI option:
-           |
-           |                 -gs /path/to/global/settings.xml
-           |
-           | The sections in this sample file are intended to give you a running start at
-           | getting the most out of your Maven installation. Where appropriate, the default
-           | values (values used when the setting is not specified) are provided.
-           |
-           |-->
-          <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
-            <!-- localRepository
-             | The path to the local repository maven will use to store artifacts.
-             |
-             | Default: ^${user.home}/.m2/repository
-            <localRepository>/path/to/local/repo</localRepository>
-            -->
-
-            <!-- interactiveMode
-             | This will determine whether maven prompts you when it needs input. If set to false,
-             | maven will use a sensible default value, perhaps based on some other setting, for
-             | the parameter in question.
-             |
-             | Default: true
-            <interactiveMode>true</interactiveMode>
-            -->
-
-            <!-- offline
-             | Determines whether maven should attempt to connect to the network when executing a build.
-             | This will have an effect on artifact downloads, artifact deployment, and others.
-             |
-             | Default: false
-            <offline>false</offline>
-            -->
-
-            <!-- pluginGroups
-             | This is a list of additional group identifiers that will be searched when resolving plugins by their prefix, i.e.
-             | when invoking a command line like "mvn prefix:goal". Maven will automatically add the group identifiers
-             | "org.apache.maven.plugins" and "org.codehaus.mojo" if these are not already contained in the list.
-             |-->
-            <pluginGroups>
-              <!-- pluginGroup
-               | Specifies a further group identifier to use for plugin lookup.
-              <pluginGroup>com.your.plugins</pluginGroup>
-              -->
-            </pluginGroups>
-
-            <!-- proxies
-             | This is a list of proxies which can be used on this machine to connect to the network.
-             | Unless otherwise specified (by system property or command-line switch), the first proxy
-             | specification in this list marked as active will be used.
-             |-->
-            <proxies>
-              <!-- proxy
-               | Specification for one proxy, to be used in connecting to the network.
-               |
-              <proxy>
-                <id>optional</id>
-                <active>true</active>
-                <protocol>http</protocol>
-                <username>proxyuser</username>
-                <password>proxypass</password>
-                <host>proxy.host.net</host>
-                <port>80</port>
-                <nonProxyHosts>local.net|some.host.com</nonProxyHosts>
-              </proxy>
-              -->
-            </proxies>
-
-            <!-- servers
-             | This is a list of authentication profiles, keyed by the server-id used within the system.
-             | Authentication profiles can be used whenever maven must make a connection to a remote server.
-             |-->
-            <servers>
-              <!-- server
-               | Specifies the authentication information to use when connecting to a particular server, identified by
-               | a unique name within the system (referred to by the 'id' attribute below).
-               |
-               | NOTE: You should either specify username/password OR privateKey/passphrase, since these pairings are
-               |       used together.
-               |
-              <server>
-                <id>deploymentRepo</id>
-                <username>repouser</username>
-                <password>repopwd</password>
-              </server>
-              -->
-                  <server>
-                          <id>nexus</id>
-                          <username>admin</username>
-                          <password>acaternberg</password>
-                  </server>
-              <!-- Another sample, using keys to authenticate.
-              <server>
-                <id>siteServer</id>
-                <privateKey>/path/to/private/key</privateKey>
-                <passphrase>optional; leave empty if not used.</passphrase>
-              </server>
-              -->
-            </servers>
-
-            <!-- mirrors
-             | This is a list of mirrors to be used in downloading artifacts from remote repositories.
-             |
-             | It works like this: a POM may declare a repository to use in resolving certain artifacts.
-             | However, this repository may have problems with heavy traffic at times, so people have mirrored
-             | it to several places.
-             |
-             | That repository definition will have a unique id, so we can create a mirror reference for that
-             | repository, to be used as an alternate download site. The mirror site will be the preferred
-             | server for that repository.
-             |-->
-            <mirrors>
-              <!-- mirror
-               | Specifies a repository mirror site to use instead of a given repository. The repository that
-               | this mirror serves has an ID that matches the mirrorOf element of this mirror. IDs are used
-               | for inheritance and direct lookup purposes, and must be unique across the set of mirrors.
-               |
-              <mirror>
-                <id>mirrorId</id>
-                <mirrorOf>repositoryId</mirrorOf>
-                <name>Human Readable Name for this Mirror.</name>
-                <url>http://my.repository.com/repo/path</url>
-              </mirror>
-               -->
-            </mirrors>
-
-            <!-- profiles
-             | This is a list of profiles which can be activated in a variety of ways, and which can modify
-             | the build process. Profiles provided in the settings.xml are intended to provide local machine-
-             | specific paths and repository locations which allow the build to work in the local environment.
-             |
-             | For example, if you have an integration testing plugin - like cactus - that needs to know where
-             | your Tomcat instance is installed, you can provide a variable here such that the variable is
-             | dereferenced during the build process to configure the cactus plugin.
-             |
-             | As noted above, profiles can be activated in a variety of ways. One way - the activeProfiles
-             | section of this document (settings.xml) - will be discussed later. Another way essentially
-             | relies on the detection of a system property, either matching a particular value for the property,
-             | or merely testing its existence. Profiles can also be activated by JDK version prefix, where a
-             | value of '1.4' might activate a profile when the build is executed on a JDK version of '1.4.2_07'.
-             | Finally, the list of active profiles can be specified directly from the command line.
-             |
-             | NOTE: For profiles defined in the settings.xml, you are restricted to specifying only artifact
-             |       repositories, plugin repositories, and free-form properties to be used as configuration
-             |       variables for plugins in the POM.
-             |
-             |-->
-            <profiles>
-              <!-- profile
-               | Specifies a set of introductions to the build process, to be activated using one or more of the
-               | mechanisms described above. For inheritance purposes, and to activate profiles via <activatedProfiles/>
-               | or the command line, profiles have to have an ID that is unique.
-               |
-               | An encouraged best practice for profile identification is to use a consistent naming convention
-               | for profiles, such as 'env-dev', 'env-test', 'env-production', 'user-jdcasey', 'user-brett', etc.
-               | This will make it more intuitive to understand what the set of introduced profiles is attempting
-               | to accomplish, particularly when you only have a list of profile id's for debug.
-               |
-               | This profile example uses the JDK version to trigger activation, and provides a JDK-specific repo.
-              <profile>
-                <id>jdk-1.4</id>
-
-                <activation>
-                  <jdk>1.4</jdk>
-                </activation>
-
-                <repositories>
-                  <repository>
-                    <id>jdk14</id>
-                    <name>Repository for JDK 1.4 builds</name>
-                    <url>http://www.myhost.com/maven/jdk14</url>
-                    <layout>default</layout>
-                    <snapshotPolicy>always</snapshotPolicy>
-                  </repository>
-                </repositories>
-              </profile>
-              -->
-
-              <!--
-               | Here is another profile, activated by the system property 'target-env' with a value of 'dev',
-               | which provides a specific path to the Tomcat instance. To use this, your plugin configuration
-               | might hypothetically look like:
-               |
-               | ...
-               | <plugin>
-               |   <groupId>org.myco.myplugins</groupId>
-               |   <artifactId>myplugin</artifactId>
-               |
-               |   <configuration>
-               |     <tomcatLocation>^${tomcatPath}</tomcatLocation>
-               |   </configuration>
-               | </plugin>
-               | ...
-               |
-               | NOTE: If you just wanted to inject this configuration whenever someone set 'target-env' to
-               |       anything, you could just leave off the <value/> inside the activation-property.
-               |
-              <profile>
-                <id>env-dev</id>
-
-                <activation>
-                  <property>
-                    <name>target-env</name>
-                    <value>dev</value>
-                  </property>
-                </activation>
-
-                <properties>
-                  <tomcatPath>/path/to/tomcat/instance</tomcatPath>
-                </properties>
-              </profile>
-              -->
-            </profiles>
-
-            <!-- activeProfiles
-             | List of profiles that are active for all builds.
-             |
-            <activeProfiles>
-              <activeProfile>alwaysActiveProfile</activeProfile>
-              <activeProfile>anotherAlwaysActiveProfile</activeProfile>
-            </activeProfiles>
-            -->
-          </settings>
-
-```
