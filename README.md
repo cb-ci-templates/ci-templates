@@ -1,120 +1,129 @@
-# About
 
-This repository contains CloudBees CI Pipeline Templates.
-It can be referenced from:
+# 🧪 About
 
-* [Marker files](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#custom-pac-scripts) in
+This repository contains **CloudBees CI Pipeline Templates**, intended for reuse across CI/CD projects. These templates can be referenced from:
 
-  * [MultiBranchSource Pipelines](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#_multibranch_pipeline_projects)
-  * [Pipeline Organisation Folders](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#_organization_folders)
-  * [Pipeline Template catalogs](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipeline-templates-user-guide/)
-* The goal is to show an opinionated Pipeline templates approach with proper CI stages and phases as shown in the diagram below
-* The implementation of steps has sample character, so the setup is as easy as it can bee with a few dependencies to other environment systems
-* A sample [spring-boot application](https://github.com/cb-ci-templates/sample-app-spring-boot-maven) is part of [this github organisation](https://github.com/cb-ci-templates)
+- [Marker files](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#custom-pac-scripts) in:
+  - [MultiBranch Pipeline Projects](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#_multibranch_pipeline_projects)
+  - [Pipeline Organization Folders](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#_organization_folders)
+  - [Pipeline Template Catalogs](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipeline-templates-user-guide/)
 
-  * It contains a simple [ci-config.yaml](https://github.com/cb-ci-templates/sample-app-spring-boot-maven/blob/main/ci-config.yaml) used as a custom marker and config file (used as properties for the template)
-  * The sample spring-boot app repo will be scanned by one of the supported job types
-  * It will be referenced by an instance of this [template](https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile) for the CI work (clone, build, push etc.)
+### ✨ Purpose
 
-![CI-Pipeline.png](images/CI-Pipeline-1.png)
+- Provide an opinionated CI pipeline structure with clearly defined stages and phases (see diagram below).
+- Simplify pipeline adoption with minimal external dependencies.
+- Enable real-world usage through a sample [Spring Boot app](https://github.com/cb-ci-templates/sample-app-spring-boot-maven), which includes:
+  - A simple [`ci-config.yaml`](https://github.com/cb-ci-templates/sample-app-spring-boot-maven/blob/main/ci-config.yaml) used as a custom marker and configuration file.
+  - A connection to [this template](https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile) for CI execution (e.g., clone, build, push).
 
-## Template sin this repository
+![CI Pipeline](images/CI-Pipeline-1.png)
 
-* [0-helloWorldSimple](templates/0-helloWorldSimple)
-  Simple helloworld template, requires no agent, requires no marker file
-* [1-multiBranch](templates/1-multiBranch)
-  Simple hello world Multibranch, uses markerfile,  scans https://github.com/cb-ci-templates/sample-app-helloworld for branches
-* [2-multiBranch](templates/2-multiBranch)
-  Same as`1-multiBranch` but uses Pipeline instance parameters and prints them
-* [3-multiBranch](templates/3-multiBranch)
-  MultiBranch Template that scans a spring-boot repositry
-  * uses custom marker config.yaml file
-  * build maven
-  * build and push a docker image using kaniko
+---
 
-## Quick Start
+## 📦 Templates in This Repository
 
-For quickstart and setup steps, see [casc](casc/)
+| Template                        | Description                                                                 |
+|----------------------------------|-----------------------------------------------------------------------------|
+| [`0-helloWorldSimple`](templates/0-helloWorldSimple) | Basic Hello World template, no agent or marker file required. |
+| [`1-multiBranch`](templates/1-multiBranch)           | Hello World using Multibranch scan on [`sample-app-helloworld`](https://github.com/cb-ci-templates/sample-app-helloworld). |
+| [`2-multiBranch`](templates/2-multiBranch)           | Extension of template 1, uses Pipeline instance parameters.               |
+| [`3-multiBranch`](templates/3-multiBranch)           | Full Spring Boot pipeline with: <br>• custom marker config.yaml <br>• Maven build <br>• Docker image build & push via Kaniko |
 
-# Structure
+---
 
-The repository structure follows the recommended repository design for Pipeline Template catalogs, however, the Jenkinsfiles can be referenced as well from MultiBranch and Organisation Folder Pipelines (Custom Marker).
-Pipeline Templates are stored under the `/templates` folder, and each Pipeline Template is defined as a `subfolder` containing two files:
+## ⚡ Quick Start
 
-* Jenkinsfile: A standard Pipeline `Jenkinsfile`, which supports either Declarative Pipeline syntax or Groovy scripting.
-* template.yaml: A YAML file containing the template’s parameters. This file is just required when using Pipeline Template Catalogs, not required when referencing from Custom Marker files
+To get started quickly, see the [casc directory](casc/) for setup and configuration examples.
 
-```
+---
+
+## 🗂️ Repository Structure
+
+This repository follows the recommended layout for Pipeline Template Catalogs. Templates are under `/templates`, and each contains:
+
+- `Jenkinsfile`: A Pipeline definition (Declarative or Scripted).
+- `template.yaml`: Template parameters (required only for Template Catalogs).
+
+```text
 ├── README.md
-├── catalog.yaml #Pipeline Template Catalog descriptor
-└── templates  # Pipeline Tenplate Catalog
-   ├── helloWorldSimple  #tenplate folder
-   │   ├── Jenkinsfile # Jenkins file used as temlate
-   │   │── README.md  
-   │   └── template.yaml #Pipeline Template descriptor
-   ├── ....  # more template folders 
-
+├── catalog.yaml              # Pipeline Template Catalog descriptor
+└── templates/                # Template catalog
+    ├── helloWorldSimple/
+    │   ├── Jenkinsfile       # Main pipeline file
+    │   ├── README.md
+    │   └── template.yaml     # Template descriptor (optional)
+    └── ...
 ```
 
-# Component diagram
+---
 
-![CI-Component-diagram.png](images/CI-Component-diagram.png)
+## 🧱 Component Diagram
 
-TODO: description and design
+![CI Component Diagram](images/CI-Component-diagram.png)
 
-# Custom marker files and Pipeline templates
+_TODO: Add description and technical design._
 
-![Diagram](images/CI-Diagramms-CustomMarkerFiles.svg)
+---
 
-# Notes: Job settings
+## 🧩 Custom Marker Files & Pipeline Templates
 
-## Branch Suppress Strategies
+This diagram explains how marker files integrate with templates:
 
-```
+![Custom Marker Diagram](images/CI-Diagramms-CustomMarkerFiles.svg)
+
+---
+
+## ⚙️ Job Settings: Branch Suppression Strategies
+
+Suppress automatic triggering for all branches, except PRs:
+
+```yaml
 strategy:
   namedBranchesDifferent:
     defaultProperties:
-    - suppressAutomaticTriggering:
-        triggeredBranchesRegex: ^.*$
-        strategy: INDEXING
+      - suppressAutomaticTriggering:
+          triggeredBranchesRegex: ^.*$
+          strategy: INDEXING
     namedExceptions:
-    - named:
-        name: PR-\d+
-        props:
-        - suppressAutomaticTriggering:
-            triggeredBranchesRegex: ''
-            strategy: NONE
+      - named:
+          name: PR-\d+
+          props:
+            - suppressAutomaticTriggering:
+                triggeredBranchesRegex: ''
+                strategy: NONE
 ```
 
-# Docs & Videos
+---
 
-Pipeline Best Practice
+## 📚 Documentation & Videos
 
-* [just-enough-pipeline](https://www.jenkins.io/blog/2021/10/26/just-enough-pipeline/)
-* [CloudBees Pipeline BestPractice](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-best-practices)
-* YouTube: [Scripted vs. declarative Pipelines: What is the difference?](https://www.youtube.com/watch?v=GJBlskiaRrI=)
-* [Scripted vs. declarative Pipelines](https://e.printstacktrace.blog/jenkins-scripted-pipeline-vs-declarative-pipeline-the-4-practical-differences/)
+### Pipeline Best Practices
 
-MultiBranchSource Pipelines
+- 📝 [Just Enough Pipeline](https://www.jenkins.io/blog/2021/10/26/just-enough-pipeline/)
+- 📘 [CloudBees CI Pipeline Best Practices](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-best-practices)
+- 🎥 [Scripted vs. Declarative Pipelines – YouTube](https://www.youtube.com/watch?v=GJBlskiaRrI=)
+- 🧠 [Scripted vs. Declarative - Blog](https://e.printstacktrace.blog/jenkins-scripted-pipeline-vs-declarative-pipeline-the-4-practical-differences/)
 
-* YouTube: [How to Create a GitHub Branch Source Multibranch Pipeline in CloudBees CI](https://www.youtube.com/watch?v=ZWwmh4gqia4)
-* [MultiBranchSource Pipelines](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#_multibranch_pipeline_projects)
+### Multibranch Pipelines
 
-Pipeline Template Catalogs
+- 🎥 [How to Create a GitHub Multibranch Pipeline – YouTube](https://www.youtube.com/watch?v=ZWwmh4gqia4)
+- 📘 [CloudBees Docs: Multibranch Pipelines](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#_multibranch_pipeline_projects)
 
-* YouTube: [Introduction to Pipeline Template Catalogs with CloudBees CI](https://www.youtube.com/watch?v=pPwI_kTSCmA)
-* [Pipeline Template catalogs](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipeline-templates-user-guide/)
+### Template Catalogs
 
-Pipeline Organisation Folders
+- 🎥 [Pipeline Template Catalogs – YouTube](https://www.youtube.com/watch?v=pPwI_kTSCmA)
+- 📘 [Pipeline Template Catalogs Docs](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipeline-templates-user-guide/)
 
-* YouTube: [How to Create a GitHub Organization in CloudBees CI](https://www.youtube.com/watch?v=w5YupbQ1vHI)
-* [Pipeline Organisation Folders](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#_organization_folders)
+### Organization Folders
 
-MarkerFiles
+- 🎥 [Create GitHub Org Folder – YouTube](https://www.youtube.com/watch?v=w5YupbQ1vHI)
+- 📘 [CloudBees Docs: Org Folders](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#_organization_folders)
 
-* [Marker files](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#custom-pac-scripts)
-* [ensuring-corporate-standards-pipelines-custom-marker-files](https://www.cloudbees.com/blog/ensuring-corporate-standards-pipelines-custom-marker-files)
+### Marker Files
 
-GitHub App Authentication
+- 📘 [Marker Files](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#custom-pac-scripts)
+- 🧠 [Using Marker Files for Governance](https://www.cloudbees.com/blog/ensuring-corporate-standards-pipelines-custom-marker-files)
 
-* [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
+### GitHub App Authentication
+
+- 🔐 [Using GitHub App Authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
