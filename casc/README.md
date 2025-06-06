@@ -10,38 +10,64 @@ The following instruction describes how to setup a pre-provisioned Controller by
 # Pre-requirements:
 
 * A CloudBees CI Operations Center on modern platform (Kubernetes, setup managed by YOU)
-* Credentials: (setup managed by CasC, [credentials.yaml](controller/controller-ci-templates/credentials.yaml))
-  * Dockerconfig Credential
-    * description: "credential to pull/push to dockerhub"
-    * type: "Secret text"
-    * credentialId: dockerconfig
-    * content:
-      ```
-      {
-        "auths": {
-          "https://index.docker.io/v1/": {
-            "username": "<YOUR_USER>",
-            "password": "<YOUR_PASSWORD>",
-            "email": "<YOUR_EMAIL>",
-            "auth": "<YOUR_BASE64_USER:PASSWORD>"
+* A CI Controller setup with the following:
+  * Credentials: (setup managed by CasC, [credentials.yaml](controller/controller-ci-templates/credentials.yaml))
+    * Dockerconfig Credential
+      * description: "credential to pull/push to dockerhub"
+      * type: "Secret text"
+      * credentialId: dockerconfig
+      * content:
+        ```
+        {
+          "auths": {
+            "https://index.docker.io/v1/": {
+              "username": "<YOUR_USER>",
+              "password": "<YOUR_PASSWORD>",
+              "email": "<YOUR_EMAIL>",
+              "auth": "<YOUR_BASE64_USER:PASSWORD>"
+            }
           }
         }
-      }
-      ```
-  * GitHubApp Credentials
-    * description: "GHApp credentials to scan repositories and to clone"
-    * type: "GitHub App"
-    * credentialId: ci-template-gh-app
-    * See:  [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
-* Plugins: (setup managed by CasC, [plugins.yaml](controller/controller-ci-templates/plugins.yaml))
-  * Plugins referenced in the sample template
-    * https://plugins.jenkins.io/pipeline-maven
-    * https://www.jenkins.io/doc/pipeline/steps/junit
-    * https://plugins.jenkins.io/build-discarder  (will be removed soon)
-    * https://plugins.jenkins.io/pipeline-utility-steps (tier 3 plugin)
-    * These Plugins are referenced from
-      * https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile
-      * https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/pipelineMaven.groovy
+        ```
+    * GitHubApp Credentials
+      * description: "GHApp credentials to scan repositories and to clone"
+      * type: "GitHub App"
+      * credentialId: ci-template-gh-app
+      * See:  [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
+  * Plugins: (setup managed by CasC, [plugins.yaml](controller/controller-ci-templates/plugins.yaml))
+    * Plugins referenced in the sample template
+      * https://plugins.jenkins.io/pipeline-maven
+      * https://www.jenkins.io/doc/pipeline/steps/junit
+      * https://plugins.jenkins.io/build-discarder  (will be removed soon)
+      * https://plugins.jenkins.io/pipeline-utility-steps (tier 3 plugin)
+      * These Plugins are referenced from
+        * https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile
+        * https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/pipelineMaven.groovy
+  * Kubenetes Config-map:
+     * To inject IT controller and environment variables to the Template, we use K8s configmaps
+     * We need at least an empty configmap named `configmap-envvars`
+     * see [configmap-env-vars-default.yaml](../config/configmap-env-vars-default.yaml)
+     * 
+  ```
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: configmap-envvars
+    data: {}
+  ```
+     * F.e. to setup proxy variables in our build comtext, we can use a configmap like this:
+     * see [configmap-env-vars-proxy.yaml](../config/configmap-env-vars-proxy.yaml)
+     *
+  ```
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: configmap-envvars
+    data:
+      HTTP_PROXY:  http://squid-dev-proxy.squid.svc.cluster.local:3128
+      HTTPS_PROXY: http://squid-dev-proxy.squid.svc.cluster.local:3128
+      .....
+  ```
 
 # Steps
 
@@ -49,7 +75,7 @@ The following instruction describes how to setup a pre-provisioned Controller by
   * https://github.com/cb-ci-templates/ci-templates
   * https://github.com/cb-ci-templates/ci-shared-library
   * https://github.com/cb-ci-templates/sample-app-spring-boot-maven
-* Clone the https://github.com/cb-ci-templates/ci-templates to your terminal and follow the instructions below
+* Clone them to your terminal
 
 ## Update Shared Library references
 
