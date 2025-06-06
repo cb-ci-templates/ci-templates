@@ -22,13 +22,12 @@ This repository contains **CloudBees CI Pipeline Templates**, intended for reuse
 
 ## 📦 Templates in This Repository
 
-| Template                        | Description                                                                                                                    |
-|----------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| [`0-helloWorldSimple`](templates/0-helloWorldSimple) | Pipeline template that utilizes a shared library and runs on a Kubernetes agent. 
-The pipeline executes a series of custom `helloworld`  steps inside a custom container.                                                                        |
-| [`1-multiBranch`](templates/1-multiBranch)           | Hello World using Multibranch                                                                                                  |
-| [`2-multiBranch`](templates/2-multiBranch)           | Extension of `1-multiBranch` uses Pipeline instance parameters.                                                                    |
-| [`3-multiBranch`](templates/3-multiBranch)           | Full Spring Boot pipeline with: <br>• custom marker config.yaml <br>• Maven build <br>• Docker image build & push via Kaniko. scan on [`sample-app-helloworld`](https://github.com/cb-ci-templates/sample-app-helloworld).  |
+| Template                                             | Description                                                                                                                                                                                                                |
+|------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`0-helloWorldSimple`](templates/0-helloWorldSimple) | Pipeline template that utilizes a shared library and runs on a Kubernetes agent. The pipeline executes a series of custom `helloworld`  steps inside a custom container.                                                   |
+| [`1-multiBranch`](templates/1-multiBranch)           | Hello World using Multibranch                                                                                                                                                                                              |
+| [`2-multiBranch`](templates/2-multiBranch)           | Extension of `1-multiBranch` uses Pipeline instance parameters.                                                                                                                                                            |
+| [`3-multiBranch`](templates/3-multiBranch)           | Full Spring Boot pipeline with: <br>• custom marker config.yaml <br>• Maven build <br>• Docker image build & push via Kaniko. scan on [`sample-app-helloworld`](https://github.com/cb-ci-templates/sample-app-helloworld). |
 
 ---
 
