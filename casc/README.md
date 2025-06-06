@@ -1,22 +1,21 @@
 # Setup
 
-The following instruction describes how to setup a pre-provisioned Controller by a CasC [controller-ci-templates](controller/controller-ci-templates) bundle which includes: 
-* all required plugins 
-* all required Credentials 
+The following instruction describes how to setup a pre-provisioned Controller by a CasC [controller-ci-templates](controller/controller-ci-templates) bundle which includes:
+* all required plugins
+* all required Credentials
 * a pre-configured MultiBranch and GitHub Organisation Job setup, ready to execute
-  * referencing this Pipeline template [Jenkinsfile](../templates/mavenMultiBranch/Jenkinsfile) 
-  * referencing a spring-boot sample application repo https://github.com/cb-ci-templates/sample-app-spring-boot-maven 
-
+  * referencing this Pipeline template [Jenkinsfile](../templates/mavenMultiBranch/Jenkinsfile)
+  * referencing a spring-boot sample application repo https://github.com/cb-ci-templates/sample-app-spring-boot-maven
 
 # Pre-requirements:
 
-* A CloudBees CI Operations Center on modern platform (Kubernetes, setup managed by YOU) 
+* A CloudBees CI Operations Center on modern platform (Kubernetes, setup managed by YOU)
 * Credentials: (setup managed by CasC, [credentials.yaml](controller/controller-ci-templates/credentials.yaml))
   * Dockerconfig Credential
     * description: "credential to pull/push to dockerhub"
     * type: "Secret text"
     * credentialId: dockerconfig
-    * content: 
+    * content:
       ```
       {
         "auths": {
@@ -43,8 +42,6 @@ The following instruction describes how to setup a pre-provisioned Controller by
     * These Plugins are referenced from
       * https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile
       * https://github.com/cb-ci-templates/ci-shared-library/blob/main/vars/pipelineMaven.groovy
-
-
 
 # Steps
 
@@ -86,8 +83,7 @@ If you don`t do it, the template references still to the original Library (Which
 Two credentials are required for:
 
 * GitHub App Authentication [Using GitHub App authentication](https://docs.cloudbees.com/docs/cloudbees-ci/latest/traditional-admin-guide/github-app-auth)
-* Docker reqistry credentials to push 
-
+* Docker reqistry credentials to push
 
 Notes:
 
@@ -98,7 +94,7 @@ Notes:
 > cp cbci-secrets.yaml.template  cbci-secrets.yaml
 
 * Update `cbci-secrets.yaml` with your secrets
-  * NOTE: It is important to preserver the indents as shown below! 
+  * NOTE: It is important to preserver the indents as shown below!
 
 ```
 gitHubAppId: "YOUR_GH_APP_ID"
@@ -120,7 +116,7 @@ dockerConfigJson: |
 ```
 
 * create the required credentials as K8s secrets
- * NOTE: This requires kubectl to access your c luster with the right permissions
+* NOTE: This requires kubectl to access your c luster with the right permissions
 
 > ./00-createCredentialSecrets.sh
 
@@ -142,7 +138,7 @@ dockerConfigJson: |
 
 * assign this repository as a bundle location: `https://github.com/<YOUR_GITHUB_ORGANISATION>/ci-templates.git`  (this Organisation here would be:  https://github.com/cb-ci-templates/ci-templates.git )
   * `Manage Jenkins -> System -> Configuration as Code bundle location -> Load CasC bundles`
-  * see https://docs.cloudbees.com/docs/cloudbees-ci/latest/casc-controller/add-bundle#scm-casc-bundle-location 
+  * see https://docs.cloudbees.com/docs/cloudbees-ci/latest/casc-controller/add-bundle#scm-casc-bundle-location
   * The setup of the CasC bundle from SCM assumes hat your repositoriy is public and no credentials are required to clone. (Can be secured if required, bzut than requirs )
 
 ![CJOC-BundleLocatinSCM.png](../images/CJOC-BundleLocatinSCM.png)
@@ -171,17 +167,15 @@ unclassified:
     checkOutTimeout: 600
     pollingPeriod: 60
     purgeOnDeactivation: false
-
 ```
-
 
 ## Create a Controller from the bundle
 
 You can either use this script [01-createManagedController.sh](01-createManagedController.sh)
 
-OR follow the manual steps below: 
+OR follow the manual steps below:
 
-* Assign the bundle `main/controller-ci-templates` during the Controller provisioning 
+* Assign the bundle `main/controller-ci-templates` during the Controller provisioning
 
 ![CJOC-Controller-provisioning-bundle.png](../images/CJOC-Controller-provisioning-bundle.png)
 
@@ -215,16 +209,14 @@ spec:
             secretName: controller-secrets
 ```
 
-
 * The Cjoc full controller-items.yaml configuration looks like this [cjoc-controller-items.yaml](controller/cjoc-controller-items.yaml)
-
 
 ## Start the Controller
 
 You have now a Controller created with
 
 * the required plugins pre-installed
-* the required credentials created 
+* the required credentials created
 * two jobs configured, ready to use
 
 ![MBJob.png](../images/MBJob.png)
@@ -233,16 +225,15 @@ You have now a Controller created with
 ## Start/run the jobs
 
 Note: Webhook management is not enabled by default in this demo.
-You need to start the Jobs manually 
+You need to start the Jobs manually
 
 ![PLExplorer.png](../images/PLExplorer.png)
 
-#  Option2: Create Jobs by CasC API on an existing Controller 
+#  Option2: Create Jobs by CasC API on an existing Controller
 
 You can use the CasC items API to create a Multibranch or GitHubOrganisation Folder Job on an existing Controller.
 
 This requires a Controller with CasC plugins installed
-
 
 ## run the scripts
 
@@ -262,7 +253,24 @@ see: [item-org-job.yaml.template](jobs/item-org-job.yaml.template)
 
 # TODO
 
-* Add support for Pipeline Template Catalog 
+* Add support for Pipeline Template Catalog
 
+## ⚙️ Job Settings: Branch Suppression Strategies
 
+Suppress automatic triggering for all branches, except PRs:
 
+```yaml
+strategy:
+  namedBranchesDifferent:
+    defaultProperties:
+      - suppressAutomaticTriggering:
+          triggeredBranchesRegex: ^.*$
+          strategy: INDEXING
+    namedExceptions:
+      - named:
+          name: PR-\d+
+          props:
+            - suppressAutomaticTriggering:
+                triggeredBranchesRegex: ''
+                strategy: NONE
+```
