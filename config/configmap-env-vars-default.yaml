@@ -2,4 +2,29 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: configmap-envvars
-data: {}
+data:
+  SECRETS: "/var/run/secrets/controller"
+  STAGE: "dev."
+  NAMESPACE: "cjoc1"
+  SHAREDLIB_GIT_SERVER: "https://github.com"
+  SHAREDLIB_GIT_ORG: "cb-ci-templates"
+  SHAREDLIB_GIT_REP: "ci-shared-library"
+  SHAREDLIB_GIT_TAG_DEFAULT: "dev" # "dev" # v1.12
+  SHAREDLIB_GIT_CREDENTIALS: "ci-template-gh-app"
+  maven-settings.xml: |
+    <?xml version="1.0" encoding="UTF-8"?>
+    <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+        <proxies>
+            <proxy>
+                <id>myproxy</id>
+                <active>true</active>
+                <protocol>http</protocol>
+                <host>squid-dev-proxy.squid.svc.cluster.local</host>
+                <port>3128</port>
+                <nonProxyHosts>localhost|127.0.0.1|*.svc.cluster.local|*.beescloud.com|127.*|[::1]</nonProxyHosts>
+            </proxy>
+        </proxies>
+    </settings>
+
