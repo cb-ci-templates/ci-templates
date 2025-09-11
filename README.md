@@ -67,7 +67,8 @@ _TODO: Add description and technical design._
 
 ## 🧩 Custom Marker Files & Pipeline Templates
 
-This diagram explains how marker files integrate with templates:
+This diagram shows the linkage of marker files and templates:
+(Many Jobs maps to only one Template!)
 
 ![Custom Marker Diagram](images/CI-Diagramms-CustomMarkerFiles.svg)
 
