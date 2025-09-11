@@ -1,4 +1,8 @@
-Add `<username>` and `<password>` under your `<proxy>` element. Plain-text works, but I strongly recommend using Maven’s built-in password encryption or Configfile provider user/password variable injection
+Add `<username>` and `<password>` under your `<proxy>` element. Plain-text works, but I strongly recommend using Maven’s built-in password encryption or Configfile-provider user/password variable injection
+See:
+* https://docs.cloudbees.com/docs/cloudbees-ci-kb/latest/best-practices/best-practices-for-managing-maven-configurations-in-jenkins
+* https://plugins.jenkins.io/config-file-provider/
+* https://plugins.jenkins.io/pipeline-maven 
 
 ## Quick (plain-text)
 
