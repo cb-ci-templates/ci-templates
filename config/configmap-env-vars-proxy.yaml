@@ -6,11 +6,6 @@ data:
   HTTP_PROXY:  http://squid-dev-proxy.squid.svc.cluster.local:3128
   HTTPS_PROXY: http://squid-dev-proxy.squid.svc.cluster.local:3128
   NO_PROXY:    localhost,127.0.0.1,.svc.cluster.local,.cluster.local,.beescloud.com
-  http_proxy:  http://squid-dev-proxy.squid.svc.cluster.local:3128
-  https_proxy: http://squid-dev-proxy.squid.svc.cluster.local:3128
-  no_proxy:    localhost,127.0.0.1,.svc.cluster.local,.cluster.local,.beescloud.com
-  SHAREDLIB_GIT_SERVER: "https://github.com"
-  SHAREDLIB_GIT_ORG: "cb-ci-templates"
-  SHAREDLIB_GIT_REP: "ci-shared-library"
-  SHAREDLIB_GIT_TAG_DEFAULT: "dev" # "dev" # v1.12
-  SHAREDLIB_GIT_CREDENTIALS: "ci-template-gh-app"
+  #http_proxy:  http://squid-dev-proxy.squid.svc.cluster.local:3128
+  #https_proxy: http://squid-dev-proxy.squid.svc.cluster.local:3128
+  #no_proxy:    localhost,127.0.0.1,.svc.cluster.local,.cluster.local,.beescloud.com

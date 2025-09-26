@@ -9,6 +9,10 @@
             <protocol>http</protocol>
             <host>squid-dev-proxy.squid.svc.cluster.local</host>
             <port>3128</port>
+            <!--
+             <username>MY_USER</username>
+             <password>{6dHG3...encrypted...==}</password>
+            -->
             <nonProxyHosts>localhost|127.0.0.1|*.svc.cluster.local|*.beescloud.com|127.*|[::1]</nonProxyHosts>
         </proxy>
     </proxies>

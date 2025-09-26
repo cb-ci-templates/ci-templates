@@ -65,9 +65,9 @@ unclassified:
                     </proxy>
                 </proxies>
             </settings>
-          id: "my-maven-settings"
+          id: "global-maven-settings"
           isReplaceAll: true
-          name: "my-maven-settings"
+          name: "global-maven-settings"
           providerId: "org.jenkinsci.plugins.configfiles.maven.GlobalMavenSettingsConfig"
   inactiveItemsConfiguration:
     analysisEnabled: true

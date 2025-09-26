@@ -1,4 +1,3 @@
-
 # 🧪 About
 
 This repository contains **CloudBees CI Pipeline Templates**, intended for reuse across CI/CD projects. These templates can be referenced from:
@@ -10,11 +9,14 @@ This repository contains **CloudBees CI Pipeline Templates**, intended for reuse
 
 ### ✨ Purpose
 
-- Provide an opinionated CI pipeline structure with clearly defined stages and phases (see diagram below).
-- Simplify pipeline adoption with minimal external dependencies.
+- Provide an opinionated CI pipeline structure with clearly defined stages and phases (see example diagram below)
+- Simplify pipeline adoption with minimal external dependencies
 - Enable real-world usage through a sample [Spring Boot app](https://github.com/cb-ci-templates/sample-app-spring-boot-maven), which includes:
-  - A simple [`ci-config.yaml`](https://github.com/cb-ci-templates/sample-app-spring-boot-maven/blob/main/ci-config.yaml) used as a custom marker and configuration file.
-  - A connection to [this template](https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile) for CI execution (e.g., clone, build, push).
+  - A simple [`ci-config.yaml`](https://github.com/cb-ci-templates/sample-app-spring-boot-maven/blob/main/ci-config.yaml) used as a custom marker and configuration file
+  - A connection to [this template](https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile) for CI execution (e.g., clone, build, push)
+* Governance focus: *Centralized governance and lifecycle control for pipelines and Jenkinsfile templates*
+* Developer-friendly: *Shared, centrally managed pipeline templates for consistent Jenkinsfile design*
+* Ops/Enterprise: *Enterprise-wide standardization and centralized control of pipeline definitions and templates*
 
 ![CI Pipeline](images/CI-Pipeline-1.png)
 
@@ -22,12 +24,12 @@ This repository contains **CloudBees CI Pipeline Templates**, intended for reuse
 
 ## 📦 Templates in This Repository
 
-| Template                        | Description                                                                                                                    |
-|----------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| [`0-helloWorldSimple`](templates/0-helloWorldSimple) | Pipeline template that utilizes a shared library and runs on a Kubernetes agent. The pipeline executes a series of custom `helloworld`  steps inside a custom container.                                                                        |
-| [`1-multiBranch`](templates/1-multiBranch)           | Hello World using Multibranch                                                                                                  |
-| [`2-multiBranch`](templates/2-multiBranch)           | Extension of `1-multiBranch` uses Pipeline instance parameters.                                                                    |
-| [`3-multiBranch`](templates/3-multiBranch)           | Full Spring Boot pipeline with: <br>• custom marker config.yaml <br>• Maven build <br>• Docker image build & push via Kaniko. scan on [`sample-app-helloworld`](https://github.com/cb-ci-templates/sample-app-helloworld).  |
+| Template                                             | Description                                                                                                                                                                                                                  |
+| ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`0-helloWorldSimple`](templates/0-helloWorldSimple) | Pipeline template that utilizes a shared library and runs on a Kubernetes agent. The pipeline executes a series of custom`helloworld`  steps inside a custom container.                                                      |
+| [`1-multiBranch`](templates/1-multiBranch)           | Hello World using Multibranch                                                                                                                                                                                                |
+| [`2-multiBranch`](templates/2-multiBranch)           | Extension of`1-multiBranch` uses Pipeline instance parameters.                                                                                                                                                               |
+| [`3-multiBranch`](templates/3-multiBranch)           | Full Spring Boot pipeline with:<br>• custom marker config.yaml <br>• Maven build <br>• Docker image build & push via Kaniko. scan on [`sample-app-helloworld`](https://github.com/cb-ci-templates/sample-app-helloworld). |
 
 ---
 
@@ -67,7 +69,8 @@ _TODO: Add description and technical design._
 
 ## 🧩 Custom Marker Files & Pipeline Templates
 
-This diagram explains how marker files integrate with templates:
+This diagram shows the linkage of marker files and templates:
+(Many Jobs maps to only one Template!)
 
 ![Custom Marker Diagram](images/CI-Diagramms-CustomMarkerFiles.svg)
 
