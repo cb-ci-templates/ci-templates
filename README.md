@@ -24,7 +24,6 @@ This repository contains **CloudBees CI Pipeline Templates**, intended for reuse
 
 ## 📦 Templates in This Repository
 
-
 | Template                                             | Description                                                                                                                                                                                                                  |
 | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [`0-helloWorldSimple`](templates/0-helloWorldSimple) | Pipeline template that utilizes a shared library and runs on a Kubernetes agent. The pipeline executes a series of custom`helloworld`  steps inside a custom container.                                                      |
