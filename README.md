@@ -77,7 +77,13 @@ This diagram shows the linkage of marker files and templates:
 
 ---
 
-## ⚙️ Job Settings: Branch Suppression Strategies
+## ⚙️ Job Settings
+
+### GitHub reference repositories
+
+See https://docs.cloudbees.com/docs/cloudbees-ci-kb/latest/client-and-managed-controllers/how-to-create-and-use-a-git-reference-repository 
+
+### Branch Suppression Strategies
 
 Suppress automatic triggering for all branches, except PRs:
 
