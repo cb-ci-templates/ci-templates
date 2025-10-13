@@ -69,6 +69,8 @@ unclassified:
           isReplaceAll: true
           name: "global-maven-settings"
           providerId: "org.jenkinsci.plugins.configfiles.maven.GlobalMavenSettingsConfig"
+  headerLabel:
+    text: "${CASC_CONTROLLER_HEADER}"
   inactiveItemsConfiguration:
     analysisEnabled: true
     analysisFrequencyInDays: 1
