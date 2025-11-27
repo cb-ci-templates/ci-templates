@@ -7,16 +7,21 @@ This repository contains **CloudBees CI Pipeline Templates**, intended for reuse
   - [Pipeline Organization Folders](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipelines/pipeline-as-code#_organization_folders)
   - [Pipeline Template Catalogs](https://docs.cloudbees.com/docs/cloudbees-ci/latest/pipeline-templates-user-guide/)
 
+
+
 ### ✨ Purpose
 
 - Provide an opinionated CI pipeline structure with clearly defined stages and phases (see example diagram below)
 - Simplify pipeline adoption with minimal external dependencies
 - Enable real-world usage through a sample [Spring Boot app](https://github.com/cb-ci-templates/sample-app-spring-boot-maven), which includes:
   - A simple [`ci-config.yaml`](https://github.com/cb-ci-templates/sample-app-spring-boot-maven/blob/main/ci-config.yaml) used as a custom marker and configuration file
-  - A connection to [this template](https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile) for CI execution (e.g., clone, build, push)
+  - A connection to [this template](https://github.com/cb-ci-templates/ci-templates/blob/main/templates/mavenMultiBranch/Jenkinsfile) for CI execution (e.g., clone, build, push). This template references this [Shared Library ](https://github.com/cb-ci-templates/ci-shared-library)
+
 * Governance focus: *Centralized governance and lifecycle control for pipelines and Jenkinsfile templates*
 * Developer-friendly: *Shared, centrally managed pipeline templates for consistent Jenkinsfile design*
 * Ops/Enterprise: *Enterprise-wide standardization and centralized control of pipeline definitions and templates*
+
+Sample CI process: 
 
 ![CI Pipeline](images/CI-Pipeline-1.png)
 
