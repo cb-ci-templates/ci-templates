@@ -43,9 +43,10 @@ items:
               spec:
                 containers:
                   - name: "jenkins"
-                    env:
-                    - name: SECRETS
-                      value: /var/run/secrets/controller
+                    envFrom:
+                      - configMapRef:
+                          name: casc-env
+                          optional: false
                     volumeMounts:
                       - name: controller-secrets
                         mountPath: /var/run/secrets/controller
